@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { Handle, Position, NodeResizer } from "@xyflow/react";
 import { Box } from "@mui/material";
 import BaseNode from "../BaseNode";
@@ -9,9 +9,13 @@ const defaultData = {
 };
 
 const WebNode = ({ selected, data }) => {
+  useEffect(() => {
+    console.log("selected 222: ", selected);
+  }, [selected]);
+
   return (
     <>
-      <BaseNode minWidth={200} minHeight={200}>
+      <BaseNode selected={selected} minWidth={200} minHeight={200}>
         <Box
           sx={{
             display: "grid",

@@ -7,6 +7,12 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
+    /* Aliases */
+    "baseUrl": ".", // This is usually the root of your project
+    "paths": {
+      "@/*": ["src/*"] // This maps the alias '@' to the 'src' directory
+    },
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

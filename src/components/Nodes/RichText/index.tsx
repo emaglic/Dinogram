@@ -5,12 +5,12 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import BaseNode from "../BaseNode";
 
-const RichTextNode = () => {
+const RichTextNode = ({ selected }) => {
   // Render the Slate context.
   const [value, setValue] = useState("");
   return (
     <>
-      <BaseNode minWidth={200} minHeight={200}>
+      <BaseNode selected={selected} minWidth={200} minHeight={200}>
         <Box
           sx={{
             margin: "1rem",

@@ -1,13 +1,13 @@
 import { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ReactFlow, MiniMap, Controls, Background } from "@xyflow/react";
 import {
-  ReactFlow,
-  MiniMap,
-  Controls,
-  Background,
-  useNodesState,
-  useEdgesState,
-  addEdge,
-} from "@xyflow/react";
+  onNodesChange,
+  onEdgesChange,
+  onConnect,
+  selectNodes,
+  selectEdges,
+} from "@/state/Chart/chartSlice";
 
 import "@xyflow/react/dist/style.css";
 import WebNode from "../../Nodes/Web";
@@ -18,46 +18,27 @@ const nodeTypes = {
   richText: RichTextNode,
 };
 
-const initialNodes = [
-  {
-    id: "1",
-    position: { x: 0, y: 0 },
-    data: { label: "Web", src: "https://www.nintendo.com" },
-    type: "web",
-  },
-  {
-    id: "2",
-    position: { x: 500, y: 0 },
-    data: { label: "Web" },
-    type: "richText",
-  },
-];
-
 const initialEdges = [
   /* { id: "e1-2", source: "1", target: "2" } */
 ];
 
-function Chart({ chartState }) {
-  const [nodes, setNodes, onNodesChange] = useNodesState(chartState.nodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+function Chart() {
+  const dispatch = useDispatch();
+  const nodes = useSelector(selectNodes);
+  const edges = useSelector(selectEdges);
 
-  const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
-  );
-
-  useEffect(() => {
-    console.log("chartState", chartState);
-  }, [chartState]);
+  // const [nodes, setNodes, onNodesChange] = useNodesState(chartState.nodes);
+  //const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   return (
     <ReactFlow
       nodes={nodes}
       edges={edges}
       nodeTypes={nodeTypes}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
+      onNodesChange={(evt) => dispatch(onNodesChange(evt))}
+      onEdgesChange={(evt) => dispatch(onEdgesChange(evt))}
+      onConnect={(evt) => dispatch(onConnect(evt))}
+      fitView
     >
       <Controls />
       <Background />

@@ -5,6 +5,7 @@ interface Node<TData extends BaseNodeData> {
   position: { x: number; y: number };
   data: TData;
   type: NodeTypes;
+  selected: boolean;
 }
 
 interface BaseNodeData {
