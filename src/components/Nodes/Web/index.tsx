@@ -9,13 +9,9 @@ const defaultData = {
 };
 
 const WebNode = ({ selected, data }) => {
-  useEffect(() => {
-    console.log("selected 222: ", selected);
-  }, [selected]);
-
   return (
     <>
-      <BaseNode selected={selected} minWidth={200} minHeight={200}>
+      <BaseNode data={data} selected={selected} minWidth={200} minHeight={200}>
         <Box
           sx={{
             display: "grid",
@@ -34,7 +30,11 @@ const WebNode = ({ selected, data }) => {
           >
             {data.label}
           </Box>
-          <iframe style={{ width: "100%", height: "100%" }} src={data.src} />
+          <iframe
+            className={"nodrag"}
+            style={{ width: "100%", height: "100%" }}
+            src={data.src}
+          />
         </Box>
       </BaseNode>
     </>

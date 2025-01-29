@@ -10,6 +10,8 @@ interface Node<TData extends BaseNodeData> {
 
 interface BaseNodeData {
   label: string;
+  zIndex: number;
+  type: "node";
 }
 
 interface RichTextNodeData extends BaseNodeData {}

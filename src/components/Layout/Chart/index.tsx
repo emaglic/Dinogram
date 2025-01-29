@@ -18,10 +18,6 @@ const nodeTypes = {
   richText: RichTextNode,
 };
 
-const initialEdges = [
-  /* { id: "e1-2", source: "1", target: "2" } */
-];
-
 function Chart() {
   const dispatch = useDispatch();
   const nodes = useSelector(selectNodes);

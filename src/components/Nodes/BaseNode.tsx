@@ -7,6 +7,7 @@ interface Props {
   minWidth: number;
   minHeight: number;
   selected?: boolean;
+  data: { zIndex?: number };
 }
 
 const BaseNode = ({
@@ -14,9 +15,17 @@ const BaseNode = ({
   minWidth = 100,
   minHeight = 100,
   selected,
+  data,
 }: Props) => {
   return (
-    <Box sx={{ border: selected ? "5px solid blue" : "1px solid black" }}>
+    <Box
+      sx={{
+        display: "flex",
+        border: selected ? "5px solid blue" : "1px solid black",
+        width: "100%",
+        height: "100%",
+      }}
+    >
       <NodeResizer minWidth={minWidth} minHeight={minHeight} />
 
       <Handle type="target" position={Position.Top} id="top-handle-target" />
