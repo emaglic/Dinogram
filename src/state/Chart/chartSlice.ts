@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
 import { ChartNode } from "../../components/Layout/Chart/types/node";
 import { EdgeType } from "@/components/Layout/Chart/types/edge";
 import { RootState } from "@/state/store";
@@ -22,14 +23,16 @@ const sortNodes = (nodes) => {
 };
 
 const initialNodes: ChartNode[] = [
-  {
+  /* {
     id: "1",
     position: { x: 0, y: 0 },
     data: {
       label: "Nintendo.com",
       src: "https://eben.design",
-      zIndex: 1,
+      zIndex: 0,
       type: "node",
+      visible: true,
+      locked: false,
     },
     type: "web",
     selected: false,
@@ -37,7 +40,13 @@ const initialNodes: ChartNode[] = [
   {
     id: "2",
     position: { x: 0, y: 0 },
-    data: { label: "My Text", zIndex: 2, type: "node" },
+    data: {
+      label: "My Text",
+      zIndex: 1,
+      type: "node",
+      visible: true,
+      locked: false,
+    },
     type: "richText",
     selected: false,
   },
@@ -47,8 +56,10 @@ const initialNodes: ChartNode[] = [
     data: {
       label: "Google.com",
       src: "https://google.com",
-      zIndex: 3,
+      zIndex: 2,
       type: "node",
+      visible: true,
+      locked: false,
     },
     type: "web",
     selected: false,
@@ -61,10 +72,12 @@ const initialNodes: ChartNode[] = [
       src: "https://apple.com",
       zIndex: 3,
       type: "node",
+      visible: true,
+      locked: false,
     },
     type: "web",
     selected: false,
-  },
+  }, */
 ];
 
 interface ChartSlice {
@@ -83,7 +96,8 @@ const chartSlice = createSlice({
   reducers: {
     onNodesChange: (state, action) => {
       const a = applyNodeChanges(action.payload, state.nodes);
-      state.nodes = sortNodes(a);
+      //state.nodes = sortNodes(a);
+      state.nodes = a;
     },
     onEdgesChange: (state, action) => {
       state.edges = applyEdgeChanges(action.payload, state.edges);
@@ -92,20 +106,29 @@ const chartSlice = createSlice({
       state.edges = addEdge(action.payload, state.edges);
     },
     onSelectNode: (state, action) => {
-      console.log("action: ", action);
-
+      const id = action.payload.id;
+      const modifierKeys = action.payload.modifierKeys;
       state.nodes = state.nodes.map((node) => {
-        if (node.id === action.payload.id) {
+        if (node.id === id) {
           node.selected = !node.selected;
+        } else {
+          if (!modifierKeys?.ctrl) {
+            node.selected = false;
+          }
         }
         return node;
       });
     },
+    createNode: (state, action) => {
+      state.nodes = [
+        ...state.nodes.map((node) => ({ ...node, selected: false })),
+        action.payload,
+      ];
+    },
     updateNodeOrder: (state, action) => {
-      console.log("action.payload: ", action.payload);
       state.nodes = action.payload;
     },
-    updateNodeProperties: (state, action) => {
+    updateNodeData: (state, action) => {
       state.nodes = state.nodes.map((node) => {
         if (node.id === action.payload.id) {
           node.data = {
@@ -125,8 +148,13 @@ export const {
   onConnect,
   onSelectNode,
   updateNodeOrder,
-  updateNodeProperties,
+  updateNodeData,
+  createNode,
 } = chartSlice.actions;
-export const selectNodes = (state: RootState) => state.chart.nodes;
+
+const _selectNodes = (state: RootState) => state.chart.nodes;
+export const selectNodes = createSelector([_selectNodes], (nodes) => {
+  return sortNodes(nodes);
+});
 export const selectEdges = (state: RootState) => state.chart.edges;
 export default chartSlice.reducer;

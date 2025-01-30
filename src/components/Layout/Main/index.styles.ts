@@ -11,7 +11,7 @@ const Styles = (theme: Theme) => ({
     width: "100%",
     height: "100%",
     display: "grid",
-    gridTemplateColumns: "350px 1fr",
+    gridTemplateColumns: "350px auto 1fr",
   },
 });
 

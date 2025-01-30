@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@fontsource/roboto": "^5.1.1",
@@ -24,9 +27,11 @@
     "react-dom": "^18.3.1",
     "react-quill": "^2.0.0",
     "react-redux": "^9.2.0",
+    "reselect": "^5.1.1",
     "slate": "^0.112.0",
     "slate-history": "^0.110.3",
-    "slate-react": "^0.112.0"
+    "slate-react": "^0.112.0",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",

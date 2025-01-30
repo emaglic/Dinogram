@@ -11,31 +11,18 @@ const defaultData = {
 const WebNode = ({ selected, data }) => {
   return (
     <>
-      <BaseNode data={data} selected={selected} minWidth={200} minHeight={200}>
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateRows: "auto 1fr",
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <Box
-            sx={{
-              width: "100%",
-              backgroundColor: "gray",
-              padding: "0.5rem",
-              boxSizing: "border-box",
-            }}
-          >
-            {data.label}
-          </Box>
-          <iframe
-            className={"nodrag"}
-            style={{ width: "100%", height: "100%" }}
-            src={data.src}
-          />
-        </Box>
+      <BaseNode
+        data={data}
+        label={data.label}
+        selected={selected}
+        minWidth={200}
+        minHeight={200}
+      >
+        <iframe
+          className={"nodrag"}
+          style={{ width: "100%", height: "100%", border: "none" }}
+          src={data.src}
+        />
       </BaseNode>
     </>
   );

@@ -10,13 +10,7 @@ import {
 } from "@/state/Chart/chartSlice";
 
 import "@xyflow/react/dist/style.css";
-import WebNode from "../../Nodes/Web";
-import RichTextNode from "../../Nodes/RichText";
-
-const nodeTypes = {
-  web: WebNode,
-  richText: RichTextNode,
-};
+import { nodeTypes } from "@/components/Nodes";
 
 function Chart() {
   const dispatch = useDispatch();

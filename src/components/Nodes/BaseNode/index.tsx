@@ -1,13 +1,17 @@
 import React, { useEffect } from "react";
 import { Handle, Position, NodeResizer } from "@xyflow/react";
 import { Box } from "@mui/material";
+import NodeHeader from "./NodeHeader";
+import { useTheme } from "@mui/material/styles";
+import Styles from "./index.styles";
 
 interface Props {
   children: React.ReactNode;
   minWidth: number;
   minHeight: number;
   selected?: boolean;
-  data: { zIndex?: number };
+  label: string;
+  data: { visible: boolean; label: string; id: string; locked: boolean };
 }
 
 const BaseNode = ({
@@ -15,18 +19,19 @@ const BaseNode = ({
   minWidth = 100,
   minHeight = 100,
   selected,
+  label,
   data,
 }: Props) => {
+  const theme = useTheme();
+  const styles = Styles(theme);
   return (
     <Box
-      sx={{
-        display: "flex",
-        border: selected ? "5px solid blue" : "1px solid black",
-        width: "100%",
-        height: "100%",
-      }}
+      sx={styles.container(selected, data.visible)}
+      className={data?.locked || !data?.visible ? "nodrag" : undefined}
     >
-      <NodeResizer minWidth={minWidth} minHeight={minHeight} />
+      <NodeHeader label={label} />
+
+      {selected && <NodeResizer minWidth={minWidth} minHeight={minHeight} />}
 
       <Handle type="target" position={Position.Top} id="top-handle-target" />
       <Handle
