@@ -1,4 +1,4 @@
-const getSVGShape = (shape, fill, stroke) => {
+/* const getSVGShape = (shape, fill, stroke) => {
   const svgShapes = {
     circle: `<circle cx="50" cy="50" r="40" fill="${fill}" stroke="${stroke}" stroke-width="5"/>`,
     triangle: `<polygon points="50,10 90,90 10,90" fill="${fill}" stroke="${stroke}" stroke-width="5"/>`,
@@ -23,3 +23,4 @@ const getSVGBackground = (shape, width, height, fill, stroke) => {
 };
 
 export default { getSVGShape, getSVGString, getSVGBackground };
+ */

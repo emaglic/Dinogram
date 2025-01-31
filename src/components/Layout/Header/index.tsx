@@ -12,13 +12,10 @@ const Header = () => {
           color="inherit"
           aria-label="menu"
           sx={{ mr: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
+        ></IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Chartel
         </Typography>
-        <Button color="inherit">Login</Button>
       </Toolbar>
     </AppBar>
   );

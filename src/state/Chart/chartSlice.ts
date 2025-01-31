@@ -17,6 +17,7 @@ import {
   applyEdgeChanges,
 } from "@xyflow/react";
 import { node } from "slate";
+import getNewChart from "@/base/chart";
 
 const sortNodes = (nodes) => {
   return [...nodes].sort((a, b) => a.data.zIndex - b.data.zIndex);
@@ -85,10 +86,7 @@ interface ChartSlice {
   edges: EdgeType[];
 }
 
-const initialState: ChartSlice = {
-  nodes: initialNodes,
-  edges: [],
-};
+const initialState: ChartSlice = getNewChart();
 
 const chartSlice = createSlice({
   name: "chart",
@@ -118,6 +116,9 @@ const chartSlice = createSlice({
         }
         return node;
       });
+    },
+    createNewChart: (state, action) => {
+      return action.payload;
     },
     createNode: (state, action) => {
       state.nodes = [
@@ -150,6 +151,7 @@ export const {
   updateNodeOrder,
   updateNodeData,
   createNode,
+  createNewChart,
 } = chartSlice.actions;
 
 const _selectNodes = (state: RootState) => state.chart.nodes;
@@ -157,4 +159,5 @@ export const selectNodes = createSelector([_selectNodes], (nodes) => {
   return sortNodes(nodes);
 });
 export const selectEdges = (state: RootState) => state.chart.edges;
+export const selectChart = (state: RootState) => state.chart;
 export default chartSlice.reducer;
