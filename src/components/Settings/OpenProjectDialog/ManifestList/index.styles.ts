@@ -9,15 +9,30 @@ const Styles = (theme: Theme) => ({
 
     marginBottom: "1rem",
   },
-  item: {
+  itemHeader: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    justifyItems: "center",
+    gap: "1rem",
     padding: "1rem",
     width: "100%",
-    border: "1px solid #ccc",
+    border: `1px solid ${theme.palette.primary.main}`,
+  },
+  item: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "1rem",
+    padding: "1rem",
+    width: "100%",
     cursor: "pointer",
+    border: `1px solid ${theme.palette.primary.main}`,
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.primary.contrastText,
     },
+  },
+  itemContents: {
+    border: `1px solid ${theme.palette.primary.main}`,
   },
 });
 

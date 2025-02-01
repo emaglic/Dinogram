@@ -94,7 +94,8 @@ const chartSlice = createSlice({
   reducers: {
     onNodesChange: (state, action) => {
       const a = applyNodeChanges(action.payload, state.nodes);
-      //state.nodes = sortNodes(a);
+      //console.log("onNodesChange: ", a);
+      // state.nodes = sortNodes(a);
       state.nodes = a;
     },
     onEdgesChange: (state, action) => {
@@ -158,6 +159,8 @@ const _selectNodes = (state: RootState) => state.chart.nodes;
 export const selectNodes = createSelector([_selectNodes], (nodes) => {
   return sortNodes(nodes);
 });
+
+//export const selectNodes = (state: RootState) => state.chart.nodes;
 export const selectEdges = (state: RootState) => state.chart.edges;
 export const selectChart = (state: RootState) => state.chart;
 export default chartSlice.reducer;

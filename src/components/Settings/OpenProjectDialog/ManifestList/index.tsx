@@ -17,6 +17,10 @@ const ManifestList = ({ manifest, handleLoadProject }) => {
 
   return (
     <Box sx={styles.container}>
+      <Box sx={styles.itemHeader}>
+        <Typography>Project Name</Typography>
+        <Typography>Created Date</Typography>
+      </Box>
       {manifest.map((item) => (
         <Box
           sx={styles.item}
@@ -26,6 +30,7 @@ const ManifestList = ({ manifest, handleLoadProject }) => {
           key={item.name}
         >
           <Typography>{item.name}</Typography>
+          <Typography>{item.createdDate}</Typography>
         </Box>
       ))}
     </Box>

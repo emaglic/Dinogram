@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useLSLoadJSON, loadLSJSON } from "@/hooks/LocalStorage/load";
-import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import {
+  Box,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Typography,
+} from "@mui/material";
 import ManifestList from "./ManifestList";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.styles";
@@ -30,21 +37,35 @@ const OpenProjectDialog = () => {
   };
 
   const handleLoadProject = (projectName: string) => {
+    if (!projectName) return;
     const project = loadLSJSON(projectName, null);
-    if (project) {
-      setDialogOpen(false);
-    }
+    setDialogOpen(false);
+    if (!project) return;
+    const { chart, ...projectProps } = project;
+    dispatch(updateProject(projectProps));
+    dispatch(createNewChart(chart));
   };
 
   return (
     <Dialog sx={styles.container} open={dialogOpen}>
-      <DialogTitle>Open Project</DialogTitle>
+      <DialogTitle>Project Settings</DialogTitle>
       <DialogContent>
         <Box sx={styles.contentContainer}>
-          <ManifestList
-            manifest={manifest}
-            handleLoadProject={handleLoadProject}
-          />
+          {manifest && manifest.length ? (
+            <>
+              <Typography textAlign="center" variant={"h6"}>
+                Open Existing Project
+              </Typography>
+              <ManifestList
+                manifest={manifest}
+                handleLoadProject={handleLoadProject}
+              />
+              <Divider />
+            </>
+          ) : (
+            <></>
+          )}
+
           <NewProject handleCreateNewProject={handleCreateNewProject} />
         </Box>
       </DialogContent>
