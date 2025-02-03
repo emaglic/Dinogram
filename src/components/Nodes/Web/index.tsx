@@ -8,11 +8,12 @@ const defaultData = {
   src: "https://www.nintendo.com",
 };
 
-const WebNode = ({ selected, data }) => {
+const WebNode = ({ selected, type, data }) => {
   return (
     <>
       <BaseNode
         data={data}
+        type={type}
         label={data.label}
         selected={selected}
         minWidth={200}

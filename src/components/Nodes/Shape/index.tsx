@@ -6,20 +6,30 @@ import { useTheme } from "@mui/material/styles";
 import Styles from "./index.styles";
 import ShapeBackground from "./Shape";
 
-const ShapeNode = ({ selected, data }) => {
+const minWidth = 25;
+const minHeight = 25;
+
+const ShapeNode = ({ selected, type, data }) => {
   const theme = useTheme();
   const styles = Styles(theme);
 
   return (
     <>
       <BaseNode
+        type={type}
         data={data}
         label={data.label}
         selected={selected}
-        minWidth={0}
-        minHeight={0}
+        minWidth={minWidth}
+        minHeight={minHeight}
       >
-        <Box sx={styles.container}>
+        <Box
+          sx={{
+            ...styles.container,
+            minWidth: `${minWidth}px`,
+            minHeight: `${minHeight}px`,
+          }}
+        >
           <ShapeBackground
             shape={data.shape}
             width={"100%"}

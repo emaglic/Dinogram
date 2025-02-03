@@ -12,6 +12,7 @@ interface Props {
   selected?: boolean;
   label: string;
   data: { visible: boolean; label: string; id: string; locked: boolean };
+  type: string;
 }
 
 const BaseNode = ({
@@ -20,6 +21,7 @@ const BaseNode = ({
   minHeight = 100,
   selected,
   label,
+  type,
   data,
 }: Props) => {
   const theme = useTheme();
@@ -29,7 +31,7 @@ const BaseNode = ({
       sx={styles.container(selected, data.visible)}
       className={data?.locked || !data?.visible ? "nodrag" : undefined}
     >
-      <NodeHeader label={label} />
+      {type !== "shape" ? <NodeHeader label={label} /> : null}
 
       {selected && <NodeResizer minWidth={minWidth} minHeight={minHeight} />}
 

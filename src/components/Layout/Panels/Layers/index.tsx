@@ -18,7 +18,11 @@ const LayersPanel = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const handleDragEnd = (array) => {
-    dispatch(updateNodeOrder(array.reverse()));
+    const updatedArray = [...array].reverse().map((item, index) => {
+      return { ...item, data: { ...item.data, zIndex: index } };
+    });
+
+    dispatch(updateNodeOrder(updatedArray));
   };
 
   useEffect(() => {

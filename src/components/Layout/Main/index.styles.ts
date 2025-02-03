@@ -6,12 +6,13 @@ const Styles = (theme: Theme) => ({
     height: "100vh",
     display: "flex",
     flexDirection: "column",
+    overflowX: "hidden",
   },
   lowerContainer: {
     width: "100%",
     height: "100%",
     display: "grid",
-    gridTemplateColumns: "350px auto 1fr",
+    gridTemplateColumns: "350px auto 1fr 350px",
   },
 });
 

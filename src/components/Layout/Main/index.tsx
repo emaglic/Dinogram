@@ -8,6 +8,7 @@ import Styles from "./index.styles";
 import { Box } from "@mui/material";
 import { RootState } from "@/state/store";
 import LeftPanel from "../LeftPanel";
+import RightPanel from "../RightPanel";
 import FloatingControlBar from "../Controls/Left";
 import OpenProjectDialog from "@/components/Settings/OpenProjectDialog";
 import { selectManifest } from "@/state/Chart/manifestSlice";
@@ -35,6 +36,7 @@ const Main = () => {
           <LeftPanel />
           <FloatingControlBar />
           <Chart />
+          <RightPanel />
         </Box>
       </Box>
     </>

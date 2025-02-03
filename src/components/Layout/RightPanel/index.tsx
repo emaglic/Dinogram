@@ -6,7 +6,7 @@ import Styles from "./index.style";
 import AutoTabs from "@/components/AutoTabs";
 import Sidebar from "../Sidebar";
 
-const LeftPanel = () => {
+const RightPanel = () => {
   const theme = useTheme();
   const styles = Styles(theme);
 
@@ -17,4 +17,4 @@ const LeftPanel = () => {
   );
 };
 
-export default LeftPanel;
+export default RightPanel;

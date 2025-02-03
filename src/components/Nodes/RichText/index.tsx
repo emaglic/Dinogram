@@ -5,7 +5,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import BaseNode from "../BaseNode";
 
-const RichTextNode = ({ selected, data }) => {
+const RichTextNode = ({ selected, type, data }) => {
   const ref = useRef<ReactQuill | null>(null);
   const [value, setValue] = useState("");
 
@@ -18,6 +18,7 @@ const RichTextNode = ({ selected, data }) => {
   return (
     <>
       <BaseNode
+        type={type}
         data={data}
         label={data.label}
         selected={selected}

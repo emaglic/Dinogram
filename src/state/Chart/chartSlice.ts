@@ -155,12 +155,12 @@ export const {
   createNewChart,
 } = chartSlice.actions;
 
-const _selectNodes = (state: RootState) => state.chart.nodes;
+/* const _selectNodes = (state: RootState) => state.chart.nodes;
 export const selectNodes = createSelector([_selectNodes], (nodes) => {
   return sortNodes(nodes);
-});
+}); */
 
-//export const selectNodes = (state: RootState) => state.chart.nodes;
+export const selectNodes = (state: RootState) => state.chart.nodes;
 export const selectEdges = (state: RootState) => state.chart.edges;
 export const selectChart = (state: RootState) => state.chart;
 export default chartSlice.reducer;
