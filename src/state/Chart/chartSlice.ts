@@ -130,6 +130,14 @@ const chartSlice = createSlice({
     updateNodeOrder: (state, action) => {
       state.nodes = action.payload;
     },
+    updateNode: (state, action) => {
+      state.nodes = state.nodes.map((node) => {
+        if (node.id === action.payload.id) {
+          return action.payload;
+        }
+        return node;
+      });
+    },
     updateNodeData: (state, action) => {
       state.nodes = state.nodes.map((node) => {
         if (node.id === action.payload.id) {
@@ -150,6 +158,7 @@ export const {
   onConnect,
   onSelectNode,
   updateNodeOrder,
+  updateNode,
   updateNodeData,
   createNode,
   createNewChart,
