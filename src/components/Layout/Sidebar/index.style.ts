@@ -6,7 +6,6 @@ const Styles = (theme: Theme) => ({
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    borderRight: `1px solid ${theme.palette.divider}`,
   },
 });
 

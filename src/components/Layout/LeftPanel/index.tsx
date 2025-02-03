@@ -11,9 +11,9 @@ const LeftPanel = () => {
   const styles = Styles(theme);
 
   return (
-    <>
+    <Box sx={styles.container}>
       <Sidebar />
-    </>
+    </Box>
   );
 };
 

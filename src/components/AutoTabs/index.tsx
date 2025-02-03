@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { Box, Tab, Tabs, Tooltip } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import Styles from "./index.style";
 
 const AutoTabs = ({ tabs, iconOnly }) => {
+  const theme = useTheme();
+  const styles = Styles(theme);
   const [tabSelected, setTabSelected] = useState(0);
 
   const handleChange = (event, newValue) => {
     setTabSelected(newValue);
   };
 
-  console.log("tabs: ", tabs);
-
-  console.log("iconOnly: ", iconOnly);
-
   return (
     <>
       <Tabs
+        sx={styles.tabContainer}
         value={tabSelected}
         onChange={handleChange}
         aria-label="basic tabs example"
