@@ -21,6 +21,7 @@ const ElementProperties = ({ selectedChartElements }) => {
   const uischema = schemas[element.type].uischema;
 
   const handleChange = (data) => {
+    if (JSON.stringify(data) === JSON.stringify(element)) return;
     dispatch(updateNode(data));
   };
 
