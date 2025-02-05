@@ -22,6 +22,7 @@ const ShapeSVG = ({
   component,
   sx = {},
 }: Props) => {
+  // theme.palette.text.primary
   return (
     <SvgIcon
       component={component} // Pass component directly

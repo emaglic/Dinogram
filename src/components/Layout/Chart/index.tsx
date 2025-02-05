@@ -27,6 +27,8 @@ function Chart() {
       nodeTypes={nodeTypes}
       onNodesChange={(evt) => dispatch(onNodesChange(evt))}
       onEdgesChange={(evt) => dispatch(onEdgesChange(evt))}
+      onNodeDragStart={(evt) => console.log("drag start", evt)}
+      onNodeDragStop={(evt) => console.log("drag end", evt)}
       onConnect={(evt) => dispatch(onConnect(evt))}
       fitView
     >

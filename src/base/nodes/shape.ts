@@ -14,7 +14,7 @@ const getNewShapeNode = (nodes: ChartNode[], shape: ShapeNodeData) => {
     height: 50,
     data: {
       ...baseNode.data,
-      label: `${shape.label} ${nodes.length}`,
+      label: `${shape.label} [${nodes.length}]`,
       // shape: shape.key,
       iconKey: shape.key,
     },

@@ -11,7 +11,7 @@ const getNewWebNode = (nodes: ChartNode[]) => {
     data: {
       ...baseNode.data,
       iconKey: "web",
-      label: `Web ${nodes.length}`,
+      label: `Web [${nodes.length}]`,
       src: "",
     },
     type: "web",

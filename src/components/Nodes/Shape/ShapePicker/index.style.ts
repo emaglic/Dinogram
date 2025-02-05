@@ -3,9 +3,9 @@ import { Theme } from "@mui/system/createTheme";
 
 const Styles = (theme: Theme) => ({
   iconContainer: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
+    display: "grid",
+    gridTemplateColumns: "repeat(5, 1fr)",
+    gridAutoRows: "1fr",
     gap: "1rem",
   },
   icon: {
@@ -19,6 +19,10 @@ const Styles = (theme: Theme) => ({
     alignItems: "center",
     padding: "0.5rem",
     border: `1px solid ${theme.palette.divider}`,
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+    },
   },
 });
 

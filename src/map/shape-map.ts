@@ -111,7 +111,7 @@ export default {
   triangle: { key: "triangle", label: "Triangle", icon: Triangle },
 
   // General UI Elements
-  globe: { key: "globe", label: "Globe", icon: LanguageIcon },
+  web: { key: "web", label: "Web", icon: LanguageIcon },
   text: { key: "text", label: "Rich Text", icon: ArticleIcon },
   storage: { key: "storage", label: "Storage", icon: StorageIcon },
   arrow: { key: "arrow", label: "Arrow", icon: ArrowForwardIcon },

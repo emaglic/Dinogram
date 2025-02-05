@@ -54,9 +54,7 @@ const ShapePicker = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Pick a Shape for your Node"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Pick a Shape"}</DialogTitle>
         <DialogContent>
           <Box sx={styles.iconContainer}>
             {Object.entries(shapeMap).map((shape) => {
@@ -76,7 +74,7 @@ const ShapePicker = () => {
                     width={"24px"}
                     height={"24px"}
                   />
-                  <Typography>{shape[1].label}</Typography>
+                  <Typography variant="body2">{shape[1].label}</Typography>
                 </Box>
               );
             })}
