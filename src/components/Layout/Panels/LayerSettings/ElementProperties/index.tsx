@@ -10,6 +10,7 @@ import { updateNode } from "@/state/Chart/chartSlice";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
+import schemaGenerator from "./data/SchemaGenerator";
 
 const ElementProperties = ({ selectedChartElements }) => {
   const theme = useTheme();
@@ -17,8 +18,17 @@ const ElementProperties = ({ selectedChartElements }) => {
   const dispatch = useDispatch();
   const element = selectedChartElements[0];
 
-  const schema = schemas[element.type].schema;
-  const uischema = schemas[element.type].uischema;
+  //const schema = schemas[element.type].schema;
+  //const uischema = schemas[element.type].uischema;
+
+  const schemas = schemaGenerator
+    .setBase("node")
+    .setElement(element.type)
+    .getSchema();
+  const schema = schemas.schema;
+  const uischema = schemas.uischema;
+
+  // console.log("schemas: ", schemas);
 
   const handleChange = (data) => {
     if (JSON.stringify(data) === JSON.stringify(element)) return;

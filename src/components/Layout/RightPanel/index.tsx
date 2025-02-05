@@ -12,7 +12,7 @@ const RightPanel = () => {
 
   return (
     <Box sx={styles.container}>
-      <Sidebar />
+      <Sidebar defaultTab={1} />
     </Box>
   );
 };

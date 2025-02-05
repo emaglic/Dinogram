@@ -8,7 +8,11 @@ import LayerSettings from "../Panels/LayerSettings/inex";
 import LayersIcon from "@mui/icons-material/Layers";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 
-const Sidebar = () => {
+interface Props {
+  defaultTab?: number;
+}
+
+const Sidebar = ({ defaultTab }: Props) => {
   const theme = useTheme();
   const styles = Styles(theme);
 
@@ -27,7 +31,7 @@ const Sidebar = () => {
 
   return (
     <Box sx={styles.container}>
-      <AutoTabs iconOnly={true} tabs={tabs} />
+      <AutoTabs iconOnly={true} tabs={tabs} defaultTab={defaultTab} />
     </Box>
   );
 };

@@ -13,12 +13,13 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
+import shapeMap from "@/map/shape-map";
+import ShapeSVG from "@/components/Nodes/Shape/ShapeSVG";
 
 const NodeLayer = ({ node, modifierKeys }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const styles = Styles(theme);
-  const NodeIcon = NodeIconMap[node.type];
 
   const handleSelected = () => {
     dispatch(onSelectNode({ id: node.id, modifierKeys }));
@@ -52,7 +53,10 @@ const NodeLayer = ({ node, modifierKeys }) => {
     <Box onClick={handleSelected} sx={{ ...styles.container(node) }}>
       {/* <Checkbox checked={node.selected} onChange={handleClicked} /> */}
       <Box sx={styles.left}>
-        <NodeIcon sx={styles.icon} />
+        <ShapeSVG
+          sx={styles.icon}
+          component={shapeMap[node.data.iconKey].icon}
+        />
         <Typography variant="caption">{node.data.label}</Typography>
       </Box>
       <Box sx={styles.right}>

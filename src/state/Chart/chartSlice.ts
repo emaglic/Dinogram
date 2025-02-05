@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
-import { ChartNode } from "../../components/Layout/Chart/types/node";
-import { EdgeType } from "@/components/Layout/Chart/types/edge";
+import { ChartNode } from "@/types/chart/nodes";
+import { EdgeType } from "@/types/chart/edges";
 import { RootState } from "@/state/store";
 import {
   Connection,

@@ -1,10 +1,10 @@
 import React from "react";
 import { Box } from "@mui/material";
-import ShapeMap from "@/map/shape-map";
 import BaseNode from "@/components/Nodes/BaseNode";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.styles";
-import ShapeBackground from "./Shape";
+import ShapeSVG from "./ShapeSVG";
+import shapeMap from "@/map/shape-map";
 
 const minWidth = 25;
 const minHeight = 25;
@@ -30,8 +30,8 @@ const ShapeNode = ({ selected, type, data }) => {
             minHeight: `${minHeight}px`,
           }}
         >
-          <ShapeBackground
-            shape={data.shape}
+          <ShapeSVG
+            component={shapeMap[data.iconKey].icon}
             width={"100%"}
             height={"100%"}
             fill={"#000"}

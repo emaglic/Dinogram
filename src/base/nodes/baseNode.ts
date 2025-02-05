@@ -1,6 +1,7 @@
+import { ChartNode } from "@/types/chart/nodes";
 import { v4 as uuidv4 } from "uuid";
 
-const getBaseNode = (nodes) => {
+const getBaseNode = (nodes: ChartNode[]) => {
   return {
     id: uuidv4(),
     position: { x: 0, y: 0 },

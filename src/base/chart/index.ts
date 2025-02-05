@@ -1,5 +1,5 @@
-import { EdgeType } from "@/components/Layout/Chart/types/edge";
-import { ChartNode } from "@/components/Layout/Chart/types/node";
+import { EdgeType } from "@/types/chart/edges";
+import { ChartNode } from "@/types/chart/nodes";
 
 const getNewChart = () => {
   return {

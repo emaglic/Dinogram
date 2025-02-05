@@ -7,10 +7,6 @@ const ManifestList = ({ manifest, handleLoadProject }) => {
   const theme = useTheme();
   const styles = Styles(theme);
 
-  useEffect(() => {
-    console.log("manifest: ", manifest);
-  }, [manifest]);
-
   if (!manifest || !manifest.length) {
     return <Typography>No projects found</Typography>;
   }

@@ -3,10 +3,10 @@ import { Box, Tab, Tabs, Tooltip } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
 
-const AutoTabs = ({ tabs, iconOnly }) => {
+const AutoTabs = ({ tabs, iconOnly, defaultTab }) => {
   const theme = useTheme();
   const styles = Styles(theme);
-  const [tabSelected, setTabSelected] = useState(0);
+  const [tabSelected, setTabSelected] = useState(defaultTab || 0);
 
   const handleChange = (event, newValue) => {
     setTabSelected(newValue);
