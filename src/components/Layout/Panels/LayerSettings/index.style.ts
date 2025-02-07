@@ -9,6 +9,7 @@ const Styles = (theme: Theme) => ({
     justifyContent: "center",
     alignItems: "center",
     padding: "0.5rem",
+    overflowY: "hidden'",
   },
 });
 

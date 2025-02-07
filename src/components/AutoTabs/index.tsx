@@ -31,7 +31,11 @@ const AutoTabs = ({ tabs, iconOnly, defaultTab }) => {
       </Tabs>
       <>
         {tabs.map((tab, index) => (
-          <Box key={tab.label} hidden={tabSelected !== index}>
+          <Box
+            sx={styles.tabContentContainer}
+            key={tab.label}
+            hidden={tabSelected !== index}
+          >
             {tab.component}
           </Box>
         ))}
