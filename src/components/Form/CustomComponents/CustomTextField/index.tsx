@@ -6,7 +6,7 @@ import {
   OutlinedInput,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import shapeMap from "@/map/shape-map";
 
 type InputAdornmentType =
@@ -54,11 +54,16 @@ const CustomTextField = ({
   type,
   options,
 }: CustomTextFieldProps) => {
+  const [inputValue, setInputValue] = useState(value);
   const startAdornment = getInputAdornment(options?.startAdornment, "start");
   const endAdornment = getInputAdornment(options?.endAdornment, "end");
 
   let componentType =
     type === "number" || type === "integer" ? "number" : "text";
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
 
   return (
     <Box
@@ -72,12 +77,16 @@ const CustomTextField = ({
         id="custom-text-field"
         fullWidth
         size="small"
-        value={value}
+        value={inputValue}
         startAdornment={startAdornment}
         endAdornment={endAdornment}
         type={componentType}
-        onChange={(evt) => {
+        onBlur={(evt) => {
           updateValue(evt.target.value);
+        }}
+        onChange={(evt) => {
+          // updateValue(evt.target.value);
+          setInputValue(evt.target.value);
         }}
         placeholder={options?.placeholder || ""}
       />
