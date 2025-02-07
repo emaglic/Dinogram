@@ -9,8 +9,12 @@ export default {
           type: "HorizontalLayout",
           elements: [
             {
+              label: "Label",
               type: "Control",
               scope: "#/properties/data/properties/label",
+              options: {
+                marginY: "bottom",
+              },
             },
           ],
         },
@@ -21,10 +25,22 @@ export default {
             {
               type: "Control",
               scope: "#/properties/position/properties/x",
+              options: {
+                startAdornment: {
+                  type: "text",
+                  value: "X",
+                },
+              },
             },
             {
               type: "Control",
               scope: "#/properties/position/properties/y",
+              options: {
+                startAdornment: {
+                  type: "text",
+                  value: "Y",
+                },
+              },
             },
           ],
         },
@@ -34,10 +50,22 @@ export default {
             {
               type: "Control",
               scope: "#/properties/width",
+              options: {
+                startAdornment: {
+                  type: "text",
+                  value: "W",
+                },
+              },
             },
             {
               type: "Control",
               scope: "#/properties/height",
+              options: {
+                startAdornment: {
+                  type: "text",
+                  value: "H",
+                },
+              },
             },
           ],
         },

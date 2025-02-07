@@ -11,6 +11,7 @@ import {
 
 import "@xyflow/react/dist/style.css";
 import { nodeTypes } from "@/components/Nodes";
+import { setDragging } from "@/state/Chart/settingsSlice";
 
 function Chart() {
   const dispatch = useDispatch();
@@ -27,8 +28,8 @@ function Chart() {
       nodeTypes={nodeTypes}
       onNodesChange={(evt) => dispatch(onNodesChange(evt))}
       onEdgesChange={(evt) => dispatch(onEdgesChange(evt))}
-      onNodeDragStart={(evt) => console.log("drag start", evt)}
-      onNodeDragStop={(evt) => console.log("drag end", evt)}
+      onNodeDragStart={() => dispatch(setDragging(true))}
+      onNodeDragStop={() => dispatch(setDragging(false))}
       onConnect={(evt) => dispatch(onConnect(evt))}
       fitView
     >

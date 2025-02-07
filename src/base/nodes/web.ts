@@ -12,7 +12,7 @@ const getNewWebNode = (nodes: ChartNode[]) => {
       ...baseNode.data,
       iconKey: "web",
       label: `Web [${nodes.length}]`,
-      src: "",
+      src: "https://eben.design",
     },
     type: "web",
   };

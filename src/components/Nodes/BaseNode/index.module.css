@@ -1,0 +1,10 @@
+.handle {
+  width: 10px;
+  height: 10px;
+  opacity: 1;
+  border: 0px solid transparent;
+}
+
+.handleHidden {
+  opacity: 0;
+}

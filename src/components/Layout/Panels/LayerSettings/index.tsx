@@ -3,9 +3,10 @@ import { selectChart } from "@/state/Chart/chartSlice";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ElementProperties from "./ElementProperties";
+import ElementProperties from "@/components/Layout/Panels/LayerSettings/LayerProps";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
+import MultiLayerOpts from "./MultiLayerOpts";
 
 const getContent = (selectedChartElements) => {
   switch (selectedChartElements.length) {
@@ -16,7 +17,7 @@ const getContent = (selectedChartElements) => {
         <ElementProperties selectedChartElements={selectedChartElements} />
       );
     default:
-      return <Typography>Multiple Elements Selected</Typography>;
+      return <MultiLayerOpts />;
   }
 };
 

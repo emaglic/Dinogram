@@ -4,7 +4,7 @@ import LayersPanel from "../Panels/Layers";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
 import AutoTabs from "@/components/AutoTabs";
-import LayerSettings from "../Panels/LayerSettings/inex";
+import LayerSettings from "../Panels/LayerSettings/index";
 import LayersIcon from "@mui/icons-material/Layers";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 

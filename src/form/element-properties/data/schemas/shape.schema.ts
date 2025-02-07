@@ -8,17 +8,26 @@ export default {
           description: "Please select the shape of the element",
           enum: Object.keys(shapeMap),
         },
-        fill: {
-          type: "string",
-          description: "Please provide a fill color",
+        showLabel: {
+          type: "boolean",
+          description: "Display the label of the element",
         },
-        stroke: {
+        fill: {
           type: "object",
           properties: {
             color: {
               type: "string",
-              description: "Please provide a stroke color",
+              description: "Please provide a fill color",
             },
+          },
+        },
+        stroke: {
+          type: "object",
+          properties: {
+            /* color: {
+              type: "string",
+              description: "Please provide a stroke color",
+            }, */
             width: {
               type: "number",
               description: "Please provide a stroke width",

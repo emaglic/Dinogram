@@ -4,22 +4,32 @@ import {
   materialRenderers,
   materialCells,
 } from "@jsonforms/material-renderers";
-import schemas from "./json";
 import { useDispatch, useSelector } from "react-redux";
 import { updateNode } from "@/state/Chart/chartSlice";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
-import schemaGenerator from "./data/SchemaGenerator";
+import schemaGenerator from "@/form/element-properties/data/SchemaGenerator";
+import { selectIsDragging } from "@/state/Chart/settingsSlice";
+import ColorPickerControl, {
+  colorPickerControlTester,
+} from "@/components/Form/ColorPickerControl";
+import CustomTextFieldControl, {
+  CustomTextFieldTester,
+} from "@/components/Form/CustomTextFieldControl";
 
 const ElementProperties = ({ selectedChartElements }) => {
   const theme = useTheme();
   const styles = Styles(theme);
   const dispatch = useDispatch();
   const element = selectedChartElements[0];
+  const isDragging = useSelector(selectIsDragging);
 
-  //const schema = schemas[element.type].schema;
-  //const uischema = schemas[element.type].uischema;
+  const renderers = [
+    ...materialRenderers,
+    { tester: colorPickerControlTester, renderer: ColorPickerControl },
+    { tester: CustomTextFieldTester, renderer: CustomTextFieldControl },
+  ];
 
   const schemas = schemaGenerator
     .setBase("node")
@@ -28,10 +38,9 @@ const ElementProperties = ({ selectedChartElements }) => {
   const schema = schemas.schema;
   const uischema = schemas.uischema;
 
-  // console.log("schemas: ", schemas);
-
   const handleChange = (data) => {
-    if (JSON.stringify(data) === JSON.stringify(element)) return;
+    if (isDragging) return;
+    // if (JSON.stringify(data) === JSON.stringify(element)) return;
     dispatch(updateNode(data));
   };
 
@@ -41,7 +50,7 @@ const ElementProperties = ({ selectedChartElements }) => {
         schema={schema}
         uischema={uischema}
         data={element}
-        renderers={materialRenderers}
+        renderers={renderers}
         cells={materialCells}
         onChange={({ data, errors }) => handleChange(data)}
       />

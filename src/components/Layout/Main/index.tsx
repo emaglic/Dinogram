@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import Chart from "../Chart";
 import Header from "../Header";
@@ -15,23 +15,21 @@ import { selectManifest } from "@/state/Chart/manifestSlice";
 import { selectProject } from "@/state/Chart/projectSlice";
 import { selectChart } from "@/state/Chart/chartSlice";
 import { useLSSaveManifest, useLSSaveProject } from "@/hooks/LocalStorage/save";
+import TopControls from "../Controls/Top";
+import { updateHistory } from "@/state/Chart/settingsSlice";
+import StateSaver from "@/components/Settings/StateSaver";
 
 const Main = () => {
   const theme = useTheme();
   const styles = Styles(theme);
 
-  const manifest = useSelector(selectManifest);
-  const project = useSelector(selectProject);
-  const chart = useSelector(selectChart);
-
-  useLSSaveManifest(manifest);
-  useLSSaveProject(project, chart);
-
   return (
     <>
+      <StateSaver />
       <OpenProjectDialog />
       <Box sx={styles.container}>
         <Header />
+        <TopControls />
         <Box sx={styles.lowerContainer}>
           <LeftPanel />
           <FloatingControlBar />

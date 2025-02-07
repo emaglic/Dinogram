@@ -37,7 +37,7 @@ const ShapeNode = ({ selected, type, data }) => {
             fill={"#000"}
             stroke={"transparent"}
           />
-          <Box sx={styles.text}>{data.label}</Box>
+          {data.showLabel && <Box sx={styles.text}>{data.label}</Box>}
         </Box>
       </BaseNode>
     </>

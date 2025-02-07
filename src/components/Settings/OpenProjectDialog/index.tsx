@@ -16,7 +16,7 @@ import getNewProject from "@/base/project";
 import { useDispatch } from "react-redux";
 import { updateProject } from "@/state/Chart/projectSlice";
 import getNewChart from "@/base/chart";
-import { createNewChart } from "@/state/Chart/chartSlice";
+import { replaceChart } from "@/state/Chart/chartSlice";
 import { setManifest, updateManifest } from "@/state/Chart/manifestSlice";
 
 const OpenProjectDialog = () => {
@@ -32,7 +32,7 @@ const OpenProjectDialog = () => {
     const newChart = getNewChart();
     dispatch(setManifest([...manifest, newProject]));
     dispatch(updateProject(newProject));
-    dispatch(createNewChart(newChart));
+    dispatch(replaceChart(newChart));
     setDialogOpen(false);
   };
 
@@ -43,7 +43,7 @@ const OpenProjectDialog = () => {
     if (!project) return;
     const { chart, ...projectProps } = project;
     dispatch(updateProject(projectProps));
-    dispatch(createNewChart(chart));
+    dispatch(replaceChart(chart));
   };
 
   return (

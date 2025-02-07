@@ -93,9 +93,8 @@ const chartSlice = createSlice({
   initialState,
   reducers: {
     onNodesChange: (state, action) => {
+      // console.log("action.payload: ", action.payload);
       const a = applyNodeChanges(action.payload, state.nodes);
-      //console.log("onNodesChange: ", a);
-      // state.nodes = sortNodes(a);
       state.nodes = a;
     },
     onEdgesChange: (state, action) => {
@@ -118,7 +117,7 @@ const chartSlice = createSlice({
         return node;
       });
     },
-    createNewChart: (state, action) => {
+    replaceChart: (state, action) => {
       return action.payload;
     },
     createNode: (state, action) => {
@@ -129,6 +128,24 @@ const chartSlice = createSlice({
     },
     updateNodeOrder: (state, action) => {
       state.nodes = action.payload;
+    },
+    updateNodes: (state, action) => {
+      state.nodes = state.nodes.map((node) => {
+        const updatedNode = action.payload.find(
+          (newNode) => newNode.id === node.id
+        );
+
+        return updatedNode
+          ? {
+              ...node,
+              ...updatedNode, // Spread top-level properties
+              data: {
+                ...node.data, // Preserve existing data
+                ...updatedNode.data, // Override only updated fields
+              },
+            }
+          : node;
+      });
     },
     updateNode: (state, action) => {
       state.nodes = state.nodes.map((node) => {
@@ -158,10 +175,11 @@ export const {
   onConnect,
   onSelectNode,
   updateNodeOrder,
+  updateNodes,
   updateNode,
   updateNodeData,
   createNode,
-  createNewChart,
+  replaceChart,
 } = chartSlice.actions;
 
 /* const _selectNodes = (state: RootState) => state.chart.nodes;
