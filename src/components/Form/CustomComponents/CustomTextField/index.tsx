@@ -72,7 +72,9 @@ const CustomTextField = ({
         margin: options?.margin || "0 0 0.5rem 0",
       }}
     >
-      <InputLabel htmlFor="custom-text-field">{label}</InputLabel>
+      <InputLabel htmlFor="custom-text-field" sx={{ fontSize: "0.875rem" }}>
+        {label}
+      </InputLabel>
       <OutlinedInput
         id="custom-text-field"
         fullWidth

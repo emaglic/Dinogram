@@ -10,6 +10,10 @@ const getNewWebNode = (nodes: ChartNode[]) => {
     height: 200,
     data: {
       ...baseNode.data,
+      baseNodeComponent: {
+        showHeader: true,
+        autoSize: false,
+      },
       iconKey: "web",
       label: `Web [${nodes.length}]`,
       src: "https://eben.design",

@@ -1,6 +1,13 @@
 import { ChromePicker } from "react-color";
 import React, { useState, useEffect } from "react";
-import { Box, Button, InputLabel, OutlinedInput, Popover } from "@mui/material";
+import {
+  Box,
+  Button,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Popover,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
 
@@ -33,13 +40,10 @@ const ColorPicker = ({ label, value, updateValue }: Props) => {
 
   return (
     <>
-      <InputLabel htmlFor="color-picker-field">{label}</InputLabel>
+      <InputLabel htmlFor="color-picker-field" sx={{ fontSize: "0.875rem" }}>
+        {label}
+      </InputLabel>
       <Box id="color-picker-field" sx={styles.container}>
-        <Box
-          ria-describedby={id}
-          sx={styles.swatch(color)}
-          onClick={handleClick}
-        ></Box>
         <OutlinedInput
           fullWidth
           size="small"
@@ -48,6 +52,11 @@ const ColorPicker = ({ label, value, updateValue }: Props) => {
             setColor(evt.target.value);
           }}
           placeholder=""
+          startAdornment={
+            <InputAdornment position="start">
+              <Box sx={styles.swatch(color)} onClick={handleClick}></Box>
+            </InputAdornment>
+          }
         />
       </Box>
       <Popover

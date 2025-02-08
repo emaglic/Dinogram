@@ -2,6 +2,7 @@ import Home from "@/assets/svg/home.svg?react";
 import Circle from "@/assets/svg/circle.svg?react";
 import Square from "@/assets/svg/square.svg?react";
 import Triangle from "@/assets/svg/triangle.svg?react";
+import FormatSizeIcon from "@mui/icons-material/FormatSize";
 
 import {
   AcUnit as AcUnitIcon,
@@ -112,7 +113,8 @@ export default {
 
   // General UI Elements
   web: { key: "web", label: "Web", icon: LanguageIcon },
-  text: { key: "text", label: "Rich Text", icon: ArticleIcon },
+  richText: { key: "richText", label: "Rich Text", icon: ArticleIcon },
+  text: { key: "text", label: "Text", icon: FormatSizeIcon },
   storage: { key: "storage", label: "Storage", icon: StorageIcon },
   arrow: { key: "arrow", label: "Arrow", icon: ArrowForwardIcon },
 

@@ -1,6 +1,14 @@
 import { withJsonFormsControlProps } from "@jsonforms/react";
 import ColorPicker from "@/components/Controls/ColorPicker";
-import { rankWith, or, schemaTypeIs } from "@jsonforms/core";
+import {
+  rankWith,
+  or,
+  schemaTypeIs,
+  and,
+  not,
+  formatIs,
+  optionIs,
+} from "@jsonforms/core";
 import CustomTextField, {
   CustomTextFieldProps,
 } from "@/components/Form/CustomComponents/CustomTextField";
@@ -36,5 +44,11 @@ export default withJsonFormsControlProps(CustomTextFieldControl);
 
 export const CustomTextFieldTester = rankWith(
   3, //increase rank as needed
-  or(schemaTypeIs("string"), schemaTypeIs("number"))
+  and(
+    or(schemaTypeIs("string"), schemaTypeIs("number")), // Matches string or number types
+    not(optionIs("fieldType", "select")) // Ensures format is NOT "select"
+  )
 );
+function formatIsNot(arg0: string): import("@jsonforms/core").Tester {
+  throw new Error("Function not implemented.");
+}

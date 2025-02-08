@@ -7,9 +7,13 @@ const getBaseNode = (nodes: ChartNode[]) => {
     position: { x: 0, y: 0 },
     data: {
       zIndex: nodes.length,
+      showBaseNodeHeader: false,
       type: "node",
       visible: true,
       locked: false,
+      baseNodeComponent: {
+        showHeader: true,
+      },
     },
     selected: true,
   };

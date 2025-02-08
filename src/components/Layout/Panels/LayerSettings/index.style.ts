@@ -6,10 +6,16 @@ const Styles = (theme: Theme) => ({
     height: "100%",
     display: "flex",
     flexDirection: "column",
+    //justifyContent: "center",
+    alignItems: "center",
+    padding: "0 1rem",
+    overflowY: "hidden",
+  },
+  innerContainer: {
+    height: "100%",
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: "0.5rem",
-    overflowY: "hidden'",
   },
 });
 

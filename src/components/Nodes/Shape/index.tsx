@@ -34,8 +34,8 @@ const ShapeNode = ({ selected, type, data }) => {
             component={shapeMap[data.iconKey].icon}
             width={"100%"}
             height={"100%"}
-            fill={"#000"}
-            stroke={"transparent"}
+            fill={data.fill}
+            stroke={data.stroke}
           />
           {data.showLabel && <Box sx={styles.text}>{data.label}</Box>}
         </Box>

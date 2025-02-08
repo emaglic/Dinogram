@@ -4,8 +4,7 @@ import { ChartNode } from "@/types/chart/nodes";
 import { ShapeNodeData } from "@/types/chart/nodes/shape";
 import shapeMap from "@/map/shape-map";
 
-const getNewShapeNode = (nodes: ChartNode[], shape: ShapeNodeData) => {
-  console.log("shape: ", shape);
+const getNewTextNode = (nodes: ChartNode[]) => {
   const baseNode = getBaseNode(nodes);
 
   return {
@@ -16,13 +15,17 @@ const getNewShapeNode = (nodes: ChartNode[], shape: ShapeNodeData) => {
       ...baseNode.data,
       baseNodeComponent: {
         showHeader: false,
+        autoSize: true,
       },
-      showLabel: false,
-      label: `${shape.label} [${nodes.length}]`,
-      // shape: shape.key,
-      iconKey: shape.key,
-      fill: {
+      label: `Text [${nodes.length}]`,
+      iconKey: "text",
+      text: {
+        size: "h1",
         color: "#000000",
+        opacity: 100,
+      },
+      fill: {
+        color: "#ffffff",
         opacity: 100,
       },
       stroke: {
@@ -31,8 +34,8 @@ const getNewShapeNode = (nodes: ChartNode[], shape: ShapeNodeData) => {
         opacity: 100,
       },
     },
-    type: "shape",
+    type: "text",
   };
 };
 
-export default getNewShapeNode;
+export default getNewTextNode;

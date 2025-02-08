@@ -12,7 +12,16 @@ interface Props {
   minHeight: number;
   selected?: boolean;
   label: string;
-  data: { visible: boolean; label: string; id: string; locked: boolean };
+  data: {
+    visible: boolean;
+    label: string;
+    id: string;
+    locked: boolean;
+    baseNodeComponent?: {
+      showHeader?: boolean;
+      autoSize?: boolean;
+    };
+  };
   type: string;
 }
 
@@ -29,14 +38,22 @@ const BaseNode = ({
   const styles = Styles(theme);
   const [hovered, setHovered] = useState(false);
 
+  const autoSize = data?.baseNodeComponent?.autoSize || false;
+
   return (
     <Box
-      sx={styles.container(selected, data.visible)}
+      sx={styles.container(
+        selected,
+        data.visible,
+        data?.baseNodeComponent?.autoSize // NOT USED CURRENTLY
+      )}
       className={data?.locked || !data?.visible ? "nodrag" : undefined}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {type !== "shape" ? <NodeHeader label={label} /> : null}
+      {data?.baseNodeComponent?.showHeader ? (
+        <NodeHeader label={label} />
+      ) : null}
 
       {selected && <NodeResizer minWidth={minWidth} minHeight={minHeight} />}
 

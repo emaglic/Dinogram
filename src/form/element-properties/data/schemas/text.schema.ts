@@ -1,16 +1,37 @@
-import shapeMap from "@/map/shape-map";
 export default {
   properties: {
     data: {
       properties: {
-        iconKey: {
-          type: "string",
-          description: "Please select the shape of the element",
-          enum: Object.keys(shapeMap),
-        },
-        showLabel: {
-          type: "boolean",
-          description: "Display the label of the element",
+        text: {
+          type: "object",
+          properties: {
+            size: {
+              type: "string",
+              enum: [
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6",
+                "subtitle1",
+                "subtitle2",
+                "body1",
+                "body2",
+                "button",
+                "caption",
+                "overline",
+              ],
+            },
+            color: {
+              type: "string",
+              description: "Please provide a text color",
+            },
+            opacity: {
+              type: "number",
+              description: "Please provide a text opacity",
+            },
+          },
         },
         fill: {
           type: "object",

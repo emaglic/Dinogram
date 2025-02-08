@@ -27,6 +27,12 @@ const FloatingControlBar = () => {
         Icon={nodeTypes.web.icon}
         defaultData={nodeTypes.web.defaultData}
       />
+      <BasicNodeGenerator
+        type={nodeTypes.text.type}
+        label={nodeTypes.text.label}
+        Icon={nodeTypes.text.icon}
+        defaultData={nodeTypes.text.defaultData}
+      />
       <ShapePicker />
     </Box>
   );

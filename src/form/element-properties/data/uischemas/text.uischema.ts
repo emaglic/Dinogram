@@ -3,7 +3,7 @@ export default {
   elements: [
     {
       type: "Header",
-      label: "Shape Properties",
+      label: "Text Properties",
       options: {
         variant: "body1",
         divider: {
@@ -12,15 +12,38 @@ export default {
       },
     },
     {
-      type: "Control",
-      scope: "#/properties/data/properties/showLabel",
-    },
-    {
-      type: "Control",
-      scope: "#/properties/data/properties/iconKey",
-      options: {
-        fieldType: "select",
-      },
+      type: "VerticalLayout",
+      elements: [
+        {
+          type: "Header",
+          label: "Text",
+          options: {
+            variant: "caption",
+
+            margin: "0rem 0 1rem 0",
+          },
+        },
+        {
+          type: "Control",
+          scope: "#/properties/data/properties/text/properties/size",
+          options: {
+            fieldType: "select",
+          },
+        },
+        {
+          type: "HorizontalLayout",
+          elements: [
+            {
+              type: "Control",
+              scope: "#/properties/data/properties/text/properties/color",
+            },
+            {
+              type: "Control",
+              scope: "#/properties/data/properties/text/properties/opacity",
+            },
+          ],
+        },
+      ],
     },
     {
       type: "VerticalLayout",

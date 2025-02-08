@@ -17,6 +17,7 @@ import ColorPickerControl, {
 import CustomTextFieldControl, {
   CustomTextFieldTester,
 } from "@/components/Form/CustomTextFieldControl";
+import HeaderRenderer, { headerTester } from "@/components/Form/HeaderRenderer";
 
 const ElementProperties = ({ selectedChartElements }) => {
   const theme = useTheme();
@@ -27,6 +28,7 @@ const ElementProperties = ({ selectedChartElements }) => {
 
   const renderers = [
     ...materialRenderers,
+    { tester: headerTester, renderer: HeaderRenderer },
     { tester: colorPickerControlTester, renderer: ColorPickerControl },
     { tester: CustomTextFieldTester, renderer: CustomTextFieldControl },
   ];
@@ -45,7 +47,7 @@ const ElementProperties = ({ selectedChartElements }) => {
   };
 
   return (
-    <Box>
+    <Box sx={styles.container}>
       <JsonForms
         schema={schema}
         uischema={uischema}

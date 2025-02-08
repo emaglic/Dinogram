@@ -2,7 +2,7 @@ import { boxSizing } from "@mui/system";
 import { Theme } from "@mui/system/createTheme";
 
 const Styles = (theme: Theme) => ({
-  container: (selected?: boolean, visible?: boolean) => ({
+  container: (selected?: boolean, visible?: boolean, autoSize?: boolean) => ({
     boxSizing: "border-box",
     display: visible ? "flex" : "none",
     flexDirection: "column",

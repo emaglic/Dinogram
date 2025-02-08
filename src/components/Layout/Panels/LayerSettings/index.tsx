@@ -9,9 +9,15 @@ import Styles from "./index.style";
 import MultiLayerOpts from "./MultiLayerOpts";
 
 const getContent = (selectedChartElements) => {
+  const theme = useTheme();
+  const styles = Styles(theme);
   switch (selectedChartElements.length) {
     case 0:
-      return <Typography>Nothing Selected</Typography>;
+      return (
+        <Box sx={styles.innerContainer}>
+          <Typography>Nothing Selected</Typography>
+        </Box>
+      );
     case 1:
       return (
         <ElementProperties selectedChartElements={selectedChartElements} />
