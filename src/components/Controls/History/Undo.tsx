@@ -28,7 +28,7 @@ const Undo = ({ tooltipPlacement = "top" }) => {
   return (
     <Tooltip title="Undo" arrow placement={tooltipPlacement}>
       <Box sx={styles.icon} onClick={handleClick}>
-        <UndoIcon />
+        <UndoIcon sx={styles.svg} />
       </Box>
     </Tooltip>
   );

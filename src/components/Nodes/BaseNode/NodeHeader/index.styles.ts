@@ -9,7 +9,10 @@ const Styles = (theme: Theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     gap: "0.5rem",
-    backgroundColor: theme.palette.divider,
+    backgroundColor:
+      theme.palette.mode === "dark"
+        ? theme.palette.grey[700]
+        : theme.palette.grey[300],
     border: `1px solid ${theme.palette.divider}`,
     cursor: "move",
     padding: "0 0.5rem",

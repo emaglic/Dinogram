@@ -30,6 +30,7 @@ const ExpandVertical = ({ tooltipPlacement = "top" }) => {
     <Tooltip title="Expand Vertically" arrow placement={tooltipPlacement}>
       <Box sx={styles.icon} onClick={handleClick}>
         <SvgIcon
+          sx={styles.svg}
           component={ExpandIcon} // Pass component directly
           inheritViewBox // Ensures SVG retains its own viewBox
         />

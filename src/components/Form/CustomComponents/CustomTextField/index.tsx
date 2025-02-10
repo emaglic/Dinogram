@@ -8,6 +8,12 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import shapeMap from "@/map/shape-map";
+import useDebounce from "@/hooks/useDebounce";
+
+export enum UpdateType {
+  BLUR = "onBlur",
+  CHANGE = "onChange",
+}
 
 type InputAdornmentType =
   | {
@@ -18,10 +24,11 @@ type InputAdornmentType =
 
 export interface CustomTextFieldProps {
   value: string;
-  updateValue: (value: string) => void;
+  updateValue: <T>(value: T) => void;
   label?: string;
   placeholder?: string;
   type: "text" | "number" | "integer";
+  updateType: UpdateType;
   options?: {
     startAdornment?: InputAdornmentType;
     endAdornment?: InputAdornmentType;
@@ -53,17 +60,32 @@ const CustomTextField = ({
   updateValue,
   type,
   options,
+  updateType = UpdateType.CHANGE,
 }: CustomTextFieldProps) => {
   const [inputValue, setInputValue] = useState(value);
+  const debounceValue = useDebounce(inputValue);
   const startAdornment = getInputAdornment(options?.startAdornment, "start");
   const endAdornment = getInputAdornment(options?.endAdornment, "end");
+  const [isFocused, setIsFocused] = useState(false);
 
   let componentType =
     type === "number" || type === "integer" ? "number" : "text";
 
   useEffect(() => {
-    setInputValue(value);
-  }, [value]);
+    if (!isFocused) {
+      setInputValue(value);
+    }
+  }, [value, isFocused]);
+
+  const handleUpdateValue = (newValue) => {
+    updateValue(componentType === "number" ? parseFloat(newValue) : newValue);
+  };
+
+  useEffect(() => {
+    if (isFocused && updateType !== UpdateType.BLUR) {
+      handleUpdateValue(debounceValue);
+    }
+  }, [debounceValue]);
 
   return (
     <Box
@@ -71,6 +93,8 @@ const CustomTextField = ({
         width: "100%",
         margin: options?.margin || "0 0 0.5rem 0",
       }}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
     >
       <InputLabel htmlFor="custom-text-field" sx={{ fontSize: "0.875rem" }}>
         {label}
@@ -83,11 +107,10 @@ const CustomTextField = ({
         startAdornment={startAdornment}
         endAdornment={endAdornment}
         type={componentType}
-        onBlur={(evt) => {
-          updateValue(evt.target.value);
+        onBlur={() => {
+          if (updateType === UpdateType.BLUR) handleUpdateValue(inputValue);
         }}
         onChange={(evt) => {
-          // updateValue(evt.target.value);
           setInputValue(evt.target.value);
         }}
         placeholder={options?.placeholder || ""}

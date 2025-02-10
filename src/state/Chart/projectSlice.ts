@@ -2,11 +2,22 @@ import { RootState } from "../store";
 import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 
-const initialValues = {
-  projectName: null,
-  projectDescription: null,
-  createdDate: null,
-  lastUpdated: null,
+export interface ProjectState {
+  id: string;
+  name: string;
+  projectDescription: string;
+  createdDate: string;
+  lastUpdated: string;
+  mode: "light" | "dark";
+}
+
+const initialValues: ProjectState = {
+  id: "",
+  name: "",
+  projectDescription: "",
+  createdDate: "",
+  lastUpdated: "",
+  mode: undefined,
 };
 
 const projectSlice = createSlice({
@@ -16,10 +27,13 @@ const projectSlice = createSlice({
     updateProject: (state, action) => {
       return action.payload;
     },
+    updateProjectProps: (state, action) => {
+      return { ...state, ...action.payload };
+    },
   },
 });
 
-export const { updateProject } = projectSlice.actions;
+export const { updateProject, updateProjectProps } = projectSlice.actions;
 
 export const selectProject = (state: RootState) => state.project;
 export default projectSlice.reducer;

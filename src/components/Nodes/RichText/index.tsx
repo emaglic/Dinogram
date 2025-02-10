@@ -1,19 +1,39 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useTheme } from "@mui/material/styles";
+import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import { Handle, Position, NodeResizer } from "@xyflow/react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import "./dark-mode.css";
 import BaseNode from "../BaseNode";
+import useDebounce from "@/hooks/useDebounce";
+import { updateNodeData } from "@/state/Chart/chartSlice";
 
-const RichTextNode = ({ selected, type, data }) => {
+const RichTextNode = ({ selected, type, data, id }) => {
+  const theme = useTheme();
+  const dispatch = useDispatch();
+
   const ref = useRef<ReactQuill | null>(null);
-  const [value, setValue] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  const [value, setValue] = useState(data?.content || "");
+  const debouncedValue = useDebounce(value);
 
   const handleFocus = () => {
     if (ref.current) {
       ref.current.focus();
     }
   };
+
+  useEffect(() => {
+    if (!isFocused) {
+      setValue(data.content);
+    }
+  }, [data.content]);
+
+  useEffect(() => {
+    dispatch(updateNodeData({ id, data: { content: debouncedValue } }));
+  }, [debouncedValue]);
 
   return (
     <>
@@ -33,14 +53,23 @@ const RichTextNode = ({ selected, type, data }) => {
             boxSizing: "border-box",
             width: "100%",
             height: "100%",
+            overflowY: "auto",
           }}
           onClick={handleFocus}
         >
           <ReactQuill
+            // className={theme.palette.mode === "dark" ? "dark-mode" : ""}
             style={{
               display: "grid",
               gridTemplateRows: "auto 1fr",
               height: "100%",
+              color: "#000",
+            }}
+            onFocus={() => {
+              setIsFocused(true);
+            }}
+            onBlur={() => {
+              setIsFocused(false);
             }}
             ref={ref}
             theme="snow"

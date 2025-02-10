@@ -18,10 +18,16 @@ export default {
             color: {
               type: "string",
               description: "Please provide a fill color",
+              options: {
+                updateType: "onChange",
+              },
             },
             opacity: {
               type: "number",
               description: "Please provide a fill opacity",
+              options: {
+                updateType: "onChange",
+              },
             },
           },
         },
@@ -31,14 +37,23 @@ export default {
             color: {
               type: "string",
               description: "Please provide a stroke color",
+              options: {
+                updateType: "onChange",
+              },
             },
             width: {
               type: "number",
               description: "Please provide a stroke width",
+              options: {
+                updateType: "onChange",
+              },
             },
             opacity: {
               type: "number",
               description: "Please provide a stroke opacity",
+              options: {
+                updateType: "onChange",
+              },
             },
           },
         },

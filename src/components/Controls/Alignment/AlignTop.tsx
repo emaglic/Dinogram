@@ -28,7 +28,7 @@ const AlignTop = ({ tooltipPlacement = "top" }) => {
   return (
     <Tooltip title="Align Top" arrow placement={tooltipPlacement}>
       <Box sx={styles.icon} onClick={handleClick}>
-        <AlignVerticalTopIcon />
+        <AlignVerticalTopIcon sx={styles.svg} />
       </Box>
     </Tooltip>
   );

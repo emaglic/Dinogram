@@ -2,7 +2,6 @@ import { ChromePicker } from "react-color";
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Button,
   InputAdornment,
   InputLabel,
   OutlinedInput,
@@ -10,6 +9,7 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
+import useDebounce from "@/hooks/useDebounce"; // Import debounce hook
 
 interface Props {
   value: string;
@@ -19,8 +19,12 @@ interface Props {
 const ColorPicker = ({ label, value, updateValue }: Props) => {
   const theme = useTheme();
   const styles = Styles(theme);
-  const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
   const [color, setColor] = useState(value);
+  const [isFocused, setIsFocused] = useState(false);
+
+  // Debounce the color state before updating Redux
+  const debouncedColor = useDebounce(color);
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     setAnchorEl(event.currentTarget);
@@ -28,18 +32,31 @@ const ColorPicker = ({ label, value, updateValue }: Props) => {
 
   const handleClose = () => {
     setAnchorEl(null);
-    updateValue(color);
   };
 
   const open = Boolean(anchorEl);
   const id = open ? "color-popover" : undefined;
 
+  const handleSetColor = (newColor: string) => {
+    setColor(newColor);
+  };
+
+  // Sync with Redux state when input is NOT focused
   useEffect(() => {
-    setColor(value);
-  }, [value]);
+    if (!isFocused) {
+      setColor(value);
+    }
+  }, [value, isFocused]);
+
+  // Use the debounced value before updating Redux to avoid missing characters
+  useEffect(() => {
+    if (isFocused) {
+      updateValue(debouncedColor);
+    }
+  }, [debouncedColor]);
 
   return (
-    <>
+    <Box onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}>
       <InputLabel htmlFor="color-picker-field" sx={{ fontSize: "0.875rem" }}>
         {label}
       </InputLabel>
@@ -48,9 +65,7 @@ const ColorPicker = ({ label, value, updateValue }: Props) => {
           fullWidth
           size="small"
           value={color || ""}
-          onChange={(evt) => {
-            setColor(evt.target.value);
-          }}
+          onChange={(evt) => handleSetColor(evt.target.value)}
           placeholder=""
           startAdornment={
             <InputAdornment position="start">
@@ -73,12 +88,10 @@ const ColorPicker = ({ label, value, updateValue }: Props) => {
           className={styles.popover}
           color={color}
           disableAlpha={true}
-          onChange={(color) => {
-            setColor(color.hex);
-          }}
+          onChange={(color) => handleSetColor(color.hex)}
         />
       </Popover>
-    </>
+    </Box>
   );
 };
 

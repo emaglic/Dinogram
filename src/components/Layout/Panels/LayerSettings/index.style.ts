@@ -9,7 +9,6 @@ const Styles = (theme: Theme) => ({
     //justifyContent: "center",
     alignItems: "center",
     padding: "0 1rem",
-    overflowY: "hidden",
   },
   innerContainer: {
     height: "100%",

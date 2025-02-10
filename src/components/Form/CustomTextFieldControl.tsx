@@ -11,13 +11,19 @@ import {
 } from "@jsonforms/core";
 import CustomTextField, {
   CustomTextFieldProps,
+  UpdateType,
 } from "@/components/Form/CustomComponents/CustomTextField";
 
 interface Props {
   data: any;
   handleChange(path: string, value: string): void;
   path: string;
-  schema: any;
+  schema: {
+    type: CustomTextFieldProps["type"];
+    options?: {
+      updateType?: CustomTextFieldProps["updateType"];
+    };
+  };
   uischema: {
     label?: string;
     options?: CustomTextFieldProps["options"];
@@ -35,6 +41,7 @@ const CustomTextFieldControl = ({
     type={schema.type}
     label={uischema.label}
     value={data}
+    updateType={schema.options?.updateType || UpdateType.CHANGE}
     options={uischema.options}
     updateValue={(newValue: string) => handleChange(path, newValue)}
   />

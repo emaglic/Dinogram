@@ -7,6 +7,10 @@ import baseNodeUISchema from "./uischemas/node.uischema";
 import baseEdgeUISchema from "./uischemas/edge.uischema";
 import shapeUISchema from "./uischemas/shape.uischema";
 import textUISchema from "./uischemas/text.uischema";
+import webSchema from "./schemas/web.schema";
+import webUischema from "./uischemas/web.uischema";
+import settingsSchema from "./schemas/settings.schema";
+import settingsUIschema from "./uischemas/settings.uischema";
 
 const schemaDefinitions = {
   node: {
@@ -24,6 +28,14 @@ const schemaDefinitions = {
   text: {
     schema: textSchema,
     uischema: textUISchema,
+  },
+  web: {
+    schema: webSchema,
+    uischema: webUischema,
+  },
+  settings: {
+    schema: settingsSchema,
+    uischema: settingsUIschema,
   },
 };
 

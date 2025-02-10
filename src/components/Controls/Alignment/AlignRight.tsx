@@ -34,7 +34,7 @@ const AlignRight = ({ tooltipPlacement = "top" }) => {
   return (
     <Tooltip title="Align Right" arrow placement={tooltipPlacement}>
       <Box sx={styles.icon} onClick={handleClick}>
-        <AlignHorizontalRightIcon />
+        <AlignHorizontalRightIcon sx={styles.svg} />
       </Box>
     </Tooltip>
   );

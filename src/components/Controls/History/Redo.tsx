@@ -25,7 +25,7 @@ const Redo = ({ tooltipPlacement = "top" }) => {
   return (
     <Tooltip title="Redo" arrow placement={tooltipPlacement}>
       <Box sx={styles.icon} onClick={handleClick}>
-        <RedoIcon />
+        <RedoIcon sx={styles.svg} />
       </Box>
     </Tooltip>
   );

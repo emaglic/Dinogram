@@ -36,7 +36,7 @@ const AlignCenterVert = ({ tooltipPlacement = "top" }) => {
   return (
     <Tooltip title="Align Center Vertical" arrow placement={tooltipPlacement}>
       <Box sx={styles.icon} onClick={handleClick}>
-        <AlignVerticalCenterIcon />
+        <AlignVerticalCenterIcon sx={styles.svg} />
       </Box>
     </Tooltip>
   );

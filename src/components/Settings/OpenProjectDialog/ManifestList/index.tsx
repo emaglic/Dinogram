@@ -21,7 +21,7 @@ const ManifestList = ({ manifest, handleLoadProject }) => {
         <Box
           sx={styles.item}
           onClick={() => {
-            handleLoadProject(item.name);
+            handleLoadProject(item.id);
           }}
           key={item.name}
         >

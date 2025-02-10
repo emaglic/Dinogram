@@ -30,6 +30,7 @@ const CompressHorizontal = ({ tooltipPlacement = "top" }) => {
     <Tooltip title="Compress Vertically" arrow placement={tooltipPlacement}>
       <Box sx={styles.icon} onClick={handleClick}>
         <SvgIcon
+          sx={styles.svg}
           component={CompressIcon} // Pass component directly
           inheritViewBox // Ensures SVG retains its own viewBox
         />

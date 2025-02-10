@@ -11,7 +11,12 @@ const manifestSlice = createSlice({
       return action.payload;
     },
     updateManifest: (state, action) => {
-      return [...state, action.payload];
+      return state.map((project) => {
+        if (project.id === action.payload.id) {
+          return action.payload;
+        }
+        return project;
+      });
     },
   },
 });

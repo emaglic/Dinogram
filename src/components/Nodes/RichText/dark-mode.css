@@ -1,0 +1,19 @@
+/* Dark mode styles */
+.dark-mode .ql-toolbar {
+  background: #333;
+  border-color: #555;
+}
+
+.dark-mode .ql-container {
+  background: #222;
+  color: #fff;
+  border-color: #555;
+}
+
+.dark-mode .ql-editor {
+  color: #fff;
+}
+
+.dark-mode .ql-picker {
+  color: #fff;
+}

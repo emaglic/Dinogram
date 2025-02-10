@@ -16,7 +16,7 @@ const getNewWebNode = (nodes: ChartNode[]) => {
       },
       iconKey: "web",
       label: `Web [${nodes.length}]`,
-      src: "https://eben.design",
+      url: "https://eben.design",
     },
     type: "web",
   };

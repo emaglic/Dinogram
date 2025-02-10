@@ -49,6 +49,7 @@ const DistributeHorizontal = ({ tooltipPlacement = "top" }) => {
     <Tooltip title="Distribute Horizontally" arrow placement={tooltipPlacement}>
       <Box sx={styles.icon} onClick={handleClick}>
         <SvgIcon
+          sx={styles.svg}
           component={DistributeHorizontalIcon} // Pass component directly
           inheritViewBox // Ensures SVG retains its own viewBox
         />

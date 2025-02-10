@@ -34,7 +34,7 @@ const AlignCenterHorz = ({ tooltipPlacement = "top" }) => {
   return (
     <Tooltip title="Align Center Horziontal" arrow placement={tooltipPlacement}>
       <Box sx={styles.icon} onClick={handleClick}>
-        <AlignHorizontalCenterIcon />
+        <AlignHorizontalCenterIcon sx={styles.svg} />
       </Box>
     </Tooltip>
   );

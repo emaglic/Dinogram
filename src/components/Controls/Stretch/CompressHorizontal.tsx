@@ -30,7 +30,7 @@ const CompressHorizontal = ({ tooltipPlacement = "top" }) => {
     <Tooltip title="Compress Horizontally" arrow placement={tooltipPlacement}>
       <Box sx={styles.icon} onClick={handleClick}>
         <SvgIcon
-          sx={{ transform: "rotate(90deg)" }}
+          sx={{ ...styles.svg, transform: "rotate(90deg)" }}
           component={CompressIcon} // Pass component directly
           inheritViewBox // Ensures SVG retains its own viewBox
         />

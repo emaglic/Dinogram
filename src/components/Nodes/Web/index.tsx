@@ -22,7 +22,7 @@ const WebNode = ({ selected, type, data }) => {
         <iframe
           className={"nodrag"}
           style={{ width: "100%", height: "100%", border: "none" }}
-          src={data.src}
+          src={data.url}
         />
       </BaseNode>
     </>

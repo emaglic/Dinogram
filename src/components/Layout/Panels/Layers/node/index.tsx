@@ -30,7 +30,7 @@ const NodeLayer = ({ node, modifierKeys }) => {
     dispatch(
       updateNodeData({
         id: node.id,
-        data: { ...node.data, ...dataItem },
+        data: dataItem,
       })
     );
   };

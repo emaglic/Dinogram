@@ -15,6 +15,7 @@ const getNewRichTextNode = (nodes: ChartNode[]) => {
       },
       iconKey: "richText",
       label: `Rich Text [${nodes.length}]`,
+      content: "",
     },
     type: "richText",
   };

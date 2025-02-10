@@ -36,12 +36,12 @@ const OpenProjectDialog = () => {
     setDialogOpen(false);
   };
 
-  const handleLoadProject = (projectName: string) => {
-    if (!projectName) return;
-    const project = loadLSJSON(projectName, null);
+  const handleLoadProject = (projectId: string) => {
+    const project = loadLSJSON(projectId, null);
     setDialogOpen(false);
     if (!project) return;
     const { chart, ...projectProps } = project;
+    dispatch(setManifest(manifest));
     dispatch(updateProject(projectProps));
     dispatch(replaceChart(chart));
   };
