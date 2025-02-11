@@ -1,53 +1,70 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ChartNode } from "@/types/chart/nodes";
 import { EdgeType } from "@/types/chart/edges";
 import { RootState } from "@/state/store";
 import { addEdge, applyNodeChanges, applyEdgeChanges } from "@xyflow/react";
 import getNewChart from "@/base/chart";
+import { isEqual } from "lodash";
+
+interface ChartState {
+  nodes: ChartNode[];
+  edges: EdgeType[];
+  timestamp: number;
+}
 
 interface ChartHistoryState {
-  history: { nodes: ChartNode[]; edges: EdgeType[]; timestamp: number }[]; // ⏳ Add timestamp
+  history: ChartState[];
   currentIndex: number;
   undoLimit: number;
+  historyLockUntil: number | null; // ⏳ Prevents edits for a short period after undo/redo
+  historyCooldownMs: number; // ⏳ Configurable cooldown period
 }
 
 const initialState: ChartHistoryState = {
-  history: [getNewChart()], // Start with an initial chart state
+  history: [{ ...getNewChart(), timestamp: Date.now() }],
   currentIndex: 0,
   undoLimit: 100,
+  historyLockUntil: null,
+  historyCooldownMs: 500, // 🕒 1-second cooldown after undo/redo
 };
 
+// ✅ Only allow a new history entry if it's a true user edit
 const pushToHistory = (
   state: ChartHistoryState,
   newEntry: { nodes: ChartNode[]; edges: EdgeType[] }
 ) => {
   const newTimestamp = Date.now();
 
-  // 🚀 Check if the new state is already in history (not just last entry)
-  const isDuplicate = state.history.some(
-    (entry) =>
-      JSON.stringify(entry.nodes) === JSON.stringify(newEntry.nodes) &&
-      JSON.stringify(entry.edges) === JSON.stringify(newEntry.edges)
-  );
-
-  if (isDuplicate) {
-    return; // 🚨 Don't add identical state to history
+  // ⏳ Skip history updates during the cooldown period
+  if (state.historyLockUntil && newTimestamp < state.historyLockUntil) {
+    // console.log("⏳ Skipping history update (Cooldown active)");
+    return;
   }
 
-  // 🚀 Preserve redo history unless making a NEW change
+  const latest = state.history[state.currentIndex];
+
+  // 🔹 Prevent duplicate states
+  if (isEqual({ nodes: latest.nodes, edges: latest.edges }, newEntry)) {
+    // console.log("🔄 Skipping duplicate state.");
+    return;
+  }
+
+  // ✅ If this edit is NOT caused by undo/redo, clear redo history
   if (state.currentIndex < state.history.length - 1) {
+    // console.log("✂️ Clearing redo history (User Edit Detected)");
     state.history = state.history.slice(0, state.currentIndex + 1);
   }
 
-  // 🔹 If history exceeds the limit, remove the oldest entry
+  // ✅ Maintain undo limit
   if (state.history.length >= state.undoLimit) {
     state.history.shift();
-    state.currentIndex--; // 🔹 Adjust index to match the new history length
+    state.currentIndex--; // Adjust index after shift
   }
 
-  // ✅ Add new entry with a timestamp
+  // ✅ Add new entry
   state.history.push({ ...newEntry, timestamp: newTimestamp });
   state.currentIndex = state.history.length - 1;
+  state.historyLockUntil = null; // Reset cooldown
 };
 
 const chartSlice = createSlice({
@@ -135,20 +152,36 @@ const chartSlice = createSlice({
       const updatedNodes = state.history[state.currentIndex].nodes.map(
         (node) => {
           const updatedNode = action.payload.find(
-            (newNode) => newNode.id === node.id
+            (newNode: ChartNode) => newNode.id === node.id
           );
           return updatedNode
             ? {
                 ...node,
-                ...updatedNode, // Spread top-level properties
+                ...updatedNode,
                 data: {
-                  ...node.data, // Preserve existing data
-                  ...updatedNode.data, // Override only updated fields
+                  ...node.data,
+                  ...updatedNode.data,
                 },
               }
             : node;
         }
       );
+      pushToHistory(state, {
+        nodes: updatedNodes,
+        edges: state.history[state.currentIndex].edges,
+      });
+    },
+    deleteNodes: (state, action: PayloadAction<ChartNode[]> | undefined) => {
+      let updatedNodes = state.history[state.currentIndex].nodes;
+      if (action?.payload) {
+        const idsToDelete = new Set(action.payload.map((node) => node.id));
+        updatedNodes = updatedNodes.filter((node) => !idsToDelete.has(node.id));
+      } else {
+        updatedNodes = state.history[state.currentIndex].nodes.filter(
+          (node) => !node.selected
+        );
+      }
+
       pushToHistory(state, {
         nodes: updatedNodes,
         edges: state.history[state.currentIndex].edges,
@@ -174,13 +207,16 @@ const chartSlice = createSlice({
     },
     undo: (state) => {
       if (state.currentIndex > 0) {
-        state.currentIndex--; // ✅ Only move the index, do not modify history
+        // console.log("↩️ UNDO Fired!");
+        state.currentIndex--;
+        state.historyLockUntil = Date.now() + state.historyCooldownMs; // 🕒 Start cooldown
       }
     },
-
     redo: (state) => {
       if (state.currentIndex < state.history.length - 1) {
-        state.currentIndex++; // ✅ Only move index, do not modify history
+        // console.log("🔁 REDO Fired!");
+        state.currentIndex++;
+        state.historyLockUntil = Date.now() + state.historyCooldownMs; // 🕒 Start cooldown
       }
     },
   },
@@ -195,18 +231,21 @@ export const {
   createNode,
   updateNode,
   updateNodes,
+  deleteNodes,
   updateNodeData,
   replaceChart,
   undo,
   redo,
 } = chartSlice.actions;
 
-export const selectChart = (state: RootState) =>
+export const selectChart = (state: RootState): ChartState =>
   state.chart.history[state.chart.currentIndex];
-export const selectNodes = (state: RootState) =>
+export const selectNodes = (state: RootState): ChartNode[] =>
   state.chart.history[state.chart.currentIndex].nodes;
-export const selectEdges = (state: RootState) =>
+export const selectEdges = (state: RootState): EdgeType[] =>
   state.chart.history[state.chart.currentIndex].edges;
 
-export const selectChartHistory = (state: RootState) => state.chart.history;
+export const selectChartHistory = (state: RootState): ChartState[] =>
+  state.chart.history;
+
 export default chartSlice.reducer;

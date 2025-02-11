@@ -10,7 +10,7 @@ const DragAndDropItem = ({ children, id }) => {
   const style = {
     transition,
     transform: CSS.Transform.toString(transform),
-    cursor: "move",
+    cursor: "auto",
   };
 
   return (

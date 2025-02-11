@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import Chart from "../Chart";
@@ -13,11 +13,18 @@ import FloatingControlBar from "../Controls/Left";
 import OpenProjectDialog from "@/components/Settings/OpenProjectDialog";
 import { selectManifest } from "@/state/Chart/manifestSlice";
 import { selectProject } from "@/state/Chart/projectSlice";
-import { selectChart, selectChartHistory } from "@/state/Chart/chartSlice";
+import {
+  redo,
+  selectChart,
+  selectChartHistory,
+  undo,
+} from "@/state/Chart/chartSlice";
 import { useLSSaveManifest, useLSSaveProject } from "@/hooks/LocalStorage/save";
 import TopControls from "../Controls/Top";
 import StateSaver from "@/components/Settings/StateSaver";
 import Sidebar from "@/components/Layout/Sidebar";
+import useKeyboard from "@/hooks/useKeyboard";
+import KeyboardEvents from "@/components/Settings/KeyboardEvents";
 
 const Main = () => {
   const theme = useTheme();
@@ -26,11 +33,9 @@ const Main = () => {
   const [leftPanelExpanded, setLeftPanelExpanded] = useState(true);
   const [rightPanelExpanded, setRightPanelExpanded] = useState(true);
 
-  const chart = useSelector(selectChartHistory);
-  console.log("chart: ", chart);
-
   return (
     <>
+      <KeyboardEvents />
       <StateSaver />
       <OpenProjectDialog />
       <Box sx={styles.container}>

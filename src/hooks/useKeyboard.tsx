@@ -4,6 +4,7 @@ interface ModifierKeys {
   alt: boolean;
   ctrl: boolean;
   shift: boolean;
+  z: boolean;
 }
 
 const useKeyboard = (ref: React.RefObject<HTMLElement>) => {
@@ -11,6 +12,7 @@ const useKeyboard = (ref: React.RefObject<HTMLElement>) => {
     alt: false,
     ctrl: false,
     shift: false,
+    z: false,
   });
 
   useEffect(() => {
@@ -21,6 +23,7 @@ const useKeyboard = (ref: React.RefObject<HTMLElement>) => {
         alt: evt.altKey,
         ctrl: evt.ctrlKey,
         shift: evt.shiftKey,
+        z: evt.code === "KeyZ" ? true : false,
       });
     };
 

@@ -6,7 +6,6 @@ import { selectProject } from "@/state/Chart/projectSlice";
 import { selectChart } from "@/state/Chart/chartSlice";
 
 const StateSaver = () => {
-  const dispatch = useDispatch();
   const manifest = useSelector(selectManifest);
   const project = useSelector(selectProject);
   const chart = useSelector(selectChart);

@@ -46,6 +46,9 @@ const Styles = (theme: Theme) => ({
   interactive: {
     cursor: "pointer",
   },
+  disabled: {
+    cursor: "auto",
+  },
 });
 
 export default Styles;
