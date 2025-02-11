@@ -5,7 +5,6 @@ import { ShapeNodeData } from "@/types/chart/nodes/shape";
 import shapeMap from "@/map/shape-map";
 
 const getNewShapeNode = (nodes: ChartNode[], shape: ShapeNodeData) => {
-  console.log("shape: ", shape);
   const baseNode = getBaseNode(nodes);
 
   return {

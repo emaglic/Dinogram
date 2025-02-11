@@ -8,12 +8,13 @@ import { onSelectNode, updateNodeOrder } from "@/state/Chart/chartSlice";
 import NodeLayer from "@/components/Layout/Panels/Layers/node";
 import { DragAndDrop, DragAndDropItem } from "@/components/DragAndDrop";
 import useKeyboard from "@/hooks/useKeyboard";
+import { selectNodes } from "@/state/Chart/chartSlice";
 
 const LayersPanel = () => {
   const theme = useTheme();
   const styles = Styles(theme);
   const dispatch = useDispatch();
-  const nodes = useSelector((state: RootState) => state.chart.nodes);
+  const nodes = useSelector(selectNodes);
   const [localLayers, setLocalLayers] = useState([...nodes].reverse());
   const containerRef = useRef<HTMLDivElement | null>(null);
 

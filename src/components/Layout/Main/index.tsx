@@ -13,10 +13,9 @@ import FloatingControlBar from "../Controls/Left";
 import OpenProjectDialog from "@/components/Settings/OpenProjectDialog";
 import { selectManifest } from "@/state/Chart/manifestSlice";
 import { selectProject } from "@/state/Chart/projectSlice";
-import { selectChart } from "@/state/Chart/chartSlice";
+import { selectChart, selectChartHistory } from "@/state/Chart/chartSlice";
 import { useLSSaveManifest, useLSSaveProject } from "@/hooks/LocalStorage/save";
 import TopControls from "../Controls/Top";
-import { updateHistory } from "@/state/Chart/settingsSlice";
 import StateSaver from "@/components/Settings/StateSaver";
 import Sidebar from "@/components/Layout/Sidebar";
 
@@ -26,6 +25,9 @@ const Main = () => {
 
   const [leftPanelExpanded, setLeftPanelExpanded] = useState(true);
   const [rightPanelExpanded, setRightPanelExpanded] = useState(true);
+
+  const chart = useSelector(selectChartHistory);
+  console.log("chart: ", chart);
 
   return (
     <>

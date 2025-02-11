@@ -4,7 +4,6 @@ import { useLSSaveManifest, useLSSaveProject } from "@/hooks/LocalStorage/save";
 import { selectManifest } from "@/state/Chart/manifestSlice";
 import { selectProject } from "@/state/Chart/projectSlice";
 import { selectChart } from "@/state/Chart/chartSlice";
-import { updateHistory } from "@/state/Chart/settingsSlice";
 
 const StateSaver = () => {
   const dispatch = useDispatch();
@@ -14,10 +13,6 @@ const StateSaver = () => {
 
   useLSSaveManifest(manifest);
   useLSSaveProject(project, chart);
-
-  useEffect(() => {
-    dispatch(updateHistory(chart));
-  }, [chart]);
 
   return null;
 };

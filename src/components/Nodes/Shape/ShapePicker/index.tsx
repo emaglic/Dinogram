@@ -16,12 +16,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { createNode } from "@/state/Chart/chartSlice";
 import { RootState } from "@/state/store";
 import getNewShapeNode from "@/base/nodes/shape";
+import { selectNodes } from "@/state/Chart/chartSlice";
 
 const ShapePicker = () => {
   const theme = useTheme();
   const styles = Styles(theme);
   const dispatch = useDispatch();
-  const nodes = useSelector((state: RootState) => state.chart.nodes);
+  const nodes = useSelector(selectNodes);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleClose = () => {

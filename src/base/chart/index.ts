@@ -5,6 +5,7 @@ const getNewChart = () => {
   return {
     nodes: <ChartNode[]>[],
     edges: <EdgeType[]>[],
+    timestamp: Date.now(),
   };
 };
 

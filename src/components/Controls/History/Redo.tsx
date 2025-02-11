@@ -8,7 +8,7 @@ import RedoIcon from "@mui/icons-material/Redo";
 import Styles from "../index.style";
 
 import { Box, Tooltip } from "@mui/material";
-import { selectChart, updateNodes } from "@/state/Chart/chartSlice";
+import { redo } from "@/state/Chart/chartSlice";
 
 const Redo = ({ tooltipPlacement = "top" }) => {
   const theme = useTheme();
@@ -19,7 +19,7 @@ const Redo = ({ tooltipPlacement = "top" }) => {
   //const { nodes } = useSelectedChartElements(chart);
 
   const handleClick = () => {
-    // dispatch(updateNodes(updatedNodes));
+    dispatch(redo());
   };
 
   return (

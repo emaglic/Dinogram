@@ -14,6 +14,7 @@ import {
   updateNodes,
 } from "@/state/Chart/chartSlice";
 import { selectHistory } from "@/state/Chart/settingsSlice";
+import { undo } from "@/state/Chart/chartSlice";
 
 const Undo = ({ tooltipPlacement = "top" }) => {
   const theme = useTheme();
@@ -23,7 +24,9 @@ const Undo = ({ tooltipPlacement = "top" }) => {
   const history = useSelector(selectHistory);
   //const { nodes } = useSelectedChartElements(chart);
 
-  const handleClick = () => {};
+  const handleClick = () => {
+    dispatch(undo());
+  };
 
   return (
     <Tooltip title="Undo" arrow placement={tooltipPlacement}>
