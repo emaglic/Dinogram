@@ -21,11 +21,6 @@ const Settings = () => {
   const project = useSelector(selectProject);
 
   const handleChange = (data) => {
-    console.log("data: ", data);
-    //if (isDragging) return;
-    // if (JSON.stringify(data) === JSON.stringify(element)) return;
-    // const diffs = compareObjects<ProjectState>(project, data);
-
     dispatch(updateManifest(data));
     dispatch(updateProject(data));
   };

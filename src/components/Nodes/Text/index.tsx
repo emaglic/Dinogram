@@ -12,8 +12,6 @@ const TextNode = ({ selected, type, data }) => {
   const theme = useTheme();
   const styles = Styles(theme);
 
-  console.log("data: ", data);
-
   const bgColor = data?.fill?.color;
   const bgOpacity = data?.fill?.opacity ? data?.fill?.opacity / 100 : 1;
 

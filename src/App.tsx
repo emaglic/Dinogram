@@ -14,9 +14,7 @@ import { useMediaQuery } from "@mui/material";
 
 function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  console.log("prefersDarkMode: ", prefersDarkMode.toString());
   const mode = useSelector(selectProject).mode;
-  console.log("mode: ", mode);
 
   const theme = useMemo(
     () =>
