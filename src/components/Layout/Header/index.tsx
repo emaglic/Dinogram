@@ -15,7 +15,13 @@ const Header = () => {
   return (
     <AppBar position="relative">
       <Toolbar>
-        <ShapeSVG sx={styles.logo} component={logo} fill={{ color: "#fff" }} />
+        <ShapeSVG
+          sx={styles.logo}
+          component={logo}
+          fill={{ color: "#fff" }}
+          width="2rem"
+          height="2rem"
+        />
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Dinogram
         </Typography>

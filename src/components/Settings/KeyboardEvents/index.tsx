@@ -8,7 +8,6 @@ const KeyboardEvents = () => {
   const keys = useKeyboardGlobal();
 
   useEffect(() => {
-    console.log("keys: ", keys);
     if (keys.ctrl && keys.z) {
       if (keys.shift) {
         dispatch(redo());

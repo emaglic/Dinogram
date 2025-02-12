@@ -3,11 +3,8 @@ import { Theme } from "@mui/system/createTheme";
 
 const Styles = (theme: Theme) => ({
   logo: {
-    height: "2rem",
-    width: "2rem",
-    marginRight: "10px",
+    marginRight: "0.5rem",
     color: "#fff",
-    transform: "scaleX(-1)",
   },
 });
 
