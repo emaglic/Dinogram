@@ -48,7 +48,7 @@ const NodeLayer = ({ node, modifierKeys }) => {
 
   const handleDelete = (evt) => {
     evt.stopPropagation();
-    if (!node.data.visible && !node.data.locked) {
+    if (node.data.visible && !node.data.locked) {
       dispatch(deleteNodes([node]));
     }
   };

@@ -178,7 +178,7 @@ const chartSlice = createSlice({
         updatedNodes = updatedNodes.filter((node) => !idsToDelete.has(node.id));
       } else {
         updatedNodes = state.history[state.currentIndex].nodes.filter(
-          (node) => !node.selected
+          (node) => !node.selected || node.data.locked || !node.data.visible
         );
       }
 
