@@ -4,7 +4,8 @@ import { EdgeType } from "@/types/chart/edges";
 import { RootState } from "@/state/store";
 import { addEdge, applyNodeChanges, applyEdgeChanges } from "@xyflow/react";
 import getNewChart from "@/base/chart";
-import { isEqual } from "lodash";
+import { create, isEqual } from "lodash";
+import getBaseEdge from "@/base/edges/baseEdge";
 
 interface ChartState {
   nodes: ChartNode[];
@@ -71,6 +72,8 @@ const chartSlice = createSlice({
   name: "chart",
   initialState,
   reducers: {
+    // Node Reducers
+    // ===============================================
     onNodesChange: (state, action) => {
       const updatedNodes = applyNodeChanges(
         action.payload,
@@ -79,26 +82,6 @@ const chartSlice = createSlice({
       pushToHistory(state, {
         nodes: updatedNodes,
         edges: state.history[state.currentIndex].edges,
-      });
-    },
-    onEdgesChange: (state, action) => {
-      const updatedEdges = applyEdgeChanges(
-        action.payload,
-        state.history[state.currentIndex].edges
-      );
-      pushToHistory(state, {
-        nodes: state.history[state.currentIndex].nodes,
-        edges: updatedEdges,
-      });
-    },
-    onConnect: (state, action) => {
-      const updatedEdges = addEdge(
-        action.payload,
-        state.history[state.currentIndex].edges
-      );
-      pushToHistory(state, {
-        nodes: state.history[state.currentIndex].nodes,
-        edges: updatedEdges,
       });
     },
     onSelectNode: (state, action) => {
@@ -198,6 +181,131 @@ const chartSlice = createSlice({
         edges: state.history[state.currentIndex].edges,
       });
     },
+
+    // Edge Reducers
+    // ===============================================
+    onConnect: (state, action) => {
+      console.log("action.payload: ", action.payload);
+      const edges = state.history[state.currentIndex].edges;
+      const updatedEdges = addEdge(
+        { ...action.payload, ...getBaseEdge(edges), type: "straight" },
+        state.history[state.currentIndex].edges
+      );
+      pushToHistory(state, {
+        nodes: state.history[state.currentIndex].nodes,
+        edges: updatedEdges,
+      });
+    },
+    onEdgesChange: (state, action) => {
+      console.log("action.payload: ", action.payload);
+      const updatedEdges = applyEdgeChanges(
+        action.payload,
+        state.history[state.currentIndex].edges
+      );
+      pushToHistory(state, {
+        nodes: state.history[state.currentIndex].nodes,
+        edges: updatedEdges,
+      });
+    },
+    onSelectEdge: (state, action) => {
+      const { id, modifierKeys } = action.payload;
+      const updatedEdges = state.history[state.currentIndex].edges.map(
+        (edge) => ({
+          ...edge,
+          selected:
+            edge.id === id
+              ? !edge.selected
+              : !modifierKeys?.ctrl
+              ? false
+              : edge.selected,
+        })
+      );
+      pushToHistory(state, {
+        nodes: state.history[state.currentIndex].nodes,
+        edges: updatedEdges,
+      });
+    },
+    updateEdgeOrder: (state, action) => {
+      pushToHistory(state, {
+        nodes: state.history[state.currentIndex].nodes,
+        edges: action.payload,
+      });
+    },
+    createEdge: (state, action) => {
+      const newEdge = action.payload;
+      const updatedEdges = [
+        ...state.history[state.currentIndex].edges.map((edge) => ({
+          ...edge,
+          selected: false,
+        })),
+        newEdge,
+      ];
+      pushToHistory(state, {
+        nodes: state.history[state.currentIndex].nodes,
+        edges: updatedEdges,
+      });
+    },
+    updateEdge: (state, action) => {
+      const updatedEdges = state.history[state.currentIndex].edges.map((edge) =>
+        edge.id === action.payload.id ? action.payload : edge
+      );
+      pushToHistory(state, {
+        nodes: state.history[state.currentIndex].nodes,
+        edges: updatedEdges,
+      });
+    },
+    updateEdges: (state, action) => {
+      const updatedEdges = state.history[state.currentIndex].edges.map(
+        (edge) => {
+          const updatedEdge = action.payload.find(
+            (newEdge) => newEdge.id === edge.id
+          );
+          return updatedEdge
+            ? {
+                ...edge,
+                ...updatedEdge,
+                data: {
+                  ...edge.data,
+                  ...updatedEdge.data,
+                },
+              }
+            : edge;
+        }
+      );
+      pushToHistory(state, {
+        nodes: state.history[state.currentIndex].nodes,
+        edges: updatedEdges,
+      });
+    },
+    deleteEdges: (state, action) => {
+      let updatedEdges = state.history[state.currentIndex].edges;
+      if (action?.payload) {
+        const idsToDelete = new Set(action.payload.map((edge) => edge.id));
+        updatedEdges = updatedEdges.filter((edge) => !idsToDelete.has(edge.id));
+      } else {
+        updatedEdges = state.history[state.currentIndex].edges.filter(
+          (edge) => !edge.selected || edge.data.locked || !edge.data.visible
+        );
+      }
+      pushToHistory(state, {
+        nodes: state.history[state.currentIndex].nodes,
+        edges: updatedEdges,
+      });
+    },
+    updateEdgeData: (state, action) => {
+      const updatedEdges = state.history[state.currentIndex].edges.map((edge) =>
+        edge.id === action.payload.id
+          ? { ...edge, data: { ...edge.data, ...action.payload.data } }
+          : edge
+      );
+      pushToHistory(state, {
+        nodes: state.history[state.currentIndex].nodes,
+        edges: updatedEdges,
+      });
+    },
+
+    // Global Actions
+    // ===============================================
     replaceChart: (state, action) => {
       const newEntry = {
         nodes: action.payload.nodes,
@@ -224,8 +332,6 @@ const chartSlice = createSlice({
 
 export const {
   onNodesChange,
-  onEdgesChange,
-  onConnect,
   onSelectNode,
   updateNodeOrder,
   createNode,
@@ -233,6 +339,17 @@ export const {
   updateNodes,
   deleteNodes,
   updateNodeData,
+
+  onEdgesChange,
+  onConnect,
+  onSelectEdge,
+  updateEdgeOrder,
+  createEdge,
+  updateEdge,
+  updateEdges,
+  deleteEdges,
+  updateEdgeData,
+
   replaceChart,
   undo,
   redo,

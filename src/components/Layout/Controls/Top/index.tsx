@@ -28,8 +28,8 @@ const TopControls = () => {
   const theme = useTheme();
   const styles = Styles(theme);
   const chart = useSelector(selectChart);
-  const { nodes, edges } = useSelectedChartElements(chart);
-  const selectedChartElements = [...nodes, ...edges];
+  const { nodes } = useSelectedChartElements(chart);
+  const selectedChartElements = nodes;
 
   return (
     <Box sx={styles.container}>

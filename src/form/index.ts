@@ -12,14 +12,17 @@ import webUischema from "./uischemas/web.uischema";
 import settingsSchema from "./schemas/settings.schema";
 import settingsUIschema from "./uischemas/settings.uischema";
 
-const schemaDefinitions = {
+const other = {
+  settings: {
+    schema: settingsSchema,
+    uischema: settingsUIschema,
+  },
+};
+
+const nodes = {
   node: {
     schema: baseNodeSchema,
     uischema: baseNodeUISchema,
-  },
-  edge: {
-    schema: baseEdgeSchema,
-    uischema: baseEdgeUISchema,
   },
   shape: {
     schema: shapeSchema,
@@ -33,10 +36,19 @@ const schemaDefinitions = {
     schema: webSchema,
     uischema: webUischema,
   },
-  settings: {
-    schema: settingsSchema,
-    uischema: settingsUIschema,
+};
+
+const edges = {
+  edge: {
+    schema: baseEdgeSchema,
+    uischema: baseEdgeUISchema,
   },
+};
+
+const schemaDefinitions = {
+  ...nodes,
+  ...edges,
+  ...other,
 };
 
 export default schemaDefinitions;

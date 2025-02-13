@@ -5,7 +5,7 @@ import {
   materialCells,
 } from "@jsonforms/material-renderers";
 import { useDispatch, useSelector } from "react-redux";
-import { updateNode } from "@/state/Chart/chartSlice";
+import { updateEdge, updateNode } from "@/state/Chart/chartSlice";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
@@ -34,16 +34,20 @@ const ElementProperties = ({ selectedChartElements }) => {
   ];
 
   const schemas = schemaGenerator
-    .setBase("node")
+    .setBase(element.data.type)
     .setElement(element.type)
     .getSchema();
   const schema = schemas.schema;
   const uischema = schemas.uischema;
 
-  const handleChange = (data) => {
+  const handleChange = (newData) => {
     if (isDragging) return;
     // if (JSON.stringify(data) === JSON.stringify(element)) return;
-    dispatch(updateNode(data));
+    if (element.data.type === "node") {
+      dispatch(updateNode(newData));
+    } else if (element.data.type === "edge") {
+      dispatch(updateEdge(newData));
+    }
   };
 
   return (

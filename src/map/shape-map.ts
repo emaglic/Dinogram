@@ -3,6 +3,7 @@ import Circle from "@/assets/svg/circle.svg?react";
 import Square from "@/assets/svg/square.svg?react";
 import Triangle from "@/assets/svg/triangle.svg?react";
 import FormatSizeIcon from "@mui/icons-material/FormatSize";
+import AirlineStopsIcon from "@mui/icons-material/AirlineStops";
 
 import {
   AcUnit as AcUnitIcon,
@@ -105,6 +106,13 @@ import {
 } from "@mui/icons-material";
 
 export default {
+  // Edges
+  airlineStopsIcon: {
+    key: "airlineStopsIcon",
+    label: "Airline Stops Icon",
+    icon: AirlineStopsIcon,
+  },
+
   // Basic Shapes
   home: { key: "home", label: "Home", icon: Home },
   square: { key: "square", label: "Square", icon: Square },

@@ -19,10 +19,6 @@ import {
 import { node } from "slate";
 import getNewChart from "@/base/chart";
 
-const sortNodes = (nodes) => {
-  return [...nodes].sort((a, b) => a.data.zIndex - b.data.zIndex);
-};
-
 const initialNodes: ChartNode[] = [
   /* {
     id: "1",

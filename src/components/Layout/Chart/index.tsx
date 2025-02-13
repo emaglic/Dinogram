@@ -12,6 +12,7 @@ import {
 
 import "@xyflow/react/dist/style.css";
 import { nodeTypes } from "@/components/Nodes";
+import { edgeTypes } from "@/components/Edges";
 import { setDragging } from "@/state/Chart/settingsSlice";
 import { selectProject } from "@/state/Chart/projectSlice";
 import { useMediaQuery } from "@mui/material";
@@ -31,6 +32,7 @@ function Chart() {
       nodes={nodes}
       edges={edges}
       nodeTypes={nodeTypes}
+      edgeTypes={edgeTypes}
       colorMode={colorMode}
       onNodesChange={(evt) => dispatch(onNodesChange(evt))}
       onEdgesChange={(evt) => dispatch(onEdgesChange(evt))}

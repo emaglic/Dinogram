@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { deleteNodes, redo, undo } from "@/state/Chart/chartSlice";
+import { deleteEdges, deleteNodes, redo, undo } from "@/state/Chart/chartSlice";
 import useKeyboardGlobal from "@/hooks/useKeyboardGlobal";
 
 const KeyboardEvents = () => {
@@ -17,6 +17,7 @@ const KeyboardEvents = () => {
     }
     if (keys.delete) {
       dispatch(deleteNodes());
+      dispatch(deleteEdges());
     }
   }, [keys]); // Re-run effect when keys change
 

@@ -14,6 +14,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { Box } from "@mui/material";
 
 const getLayerPosition = (items, id) =>
   items.findIndex((item) => item.id === id);
@@ -45,18 +46,20 @@ const DragAndDrop = ({ children, items, handleDragEnd }) => {
   );
 
   return (
-    <DndContext
-      sensors={sensors}
-      onDragStart={() => {
-        setIsDragging(true);
-      }}
-      onDragEnd={internalHandleDragEnd}
-      collisionDetection={closestCorners}
-    >
-      <SortableContext items={items} strategy={verticalListSortingStrategy}>
-        {children}
-      </SortableContext>
-    </DndContext>
+    <Box sx={{ height: "100%", overflowY: "auto" }} data-id="DragAndDrop">
+      <DndContext
+        sensors={sensors}
+        onDragStart={() => {
+          setIsDragging(true);
+        }}
+        onDragEnd={internalHandleDragEnd}
+        collisionDetection={closestCorners}
+      >
+        <SortableContext items={items} strategy={verticalListSortingStrategy}>
+          {children}
+        </SortableContext>
+      </DndContext>
+    </Box>
   );
 };
 
