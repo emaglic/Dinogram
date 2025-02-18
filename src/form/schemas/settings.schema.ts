@@ -1,10 +1,22 @@
+import shapeMap from "@/map/shape-map";
+
 export default {
   type: "object",
   properties: {
     mode: {
       type: "string",
       description: "Please select a mode",
-      enum: ["light", "dark"],
+      options: {
+        defaultValue: "light",
+      },
+      enum: [
+        {
+          value: "light",
+          label: "Light",
+          startIcon: shapeMap["lightMode"].icon,
+        },
+        { value: "dark", label: "Dark", startIcon: shapeMap["darkMode"].icon },
+      ],
     },
     name: {
       label: "Project Name",

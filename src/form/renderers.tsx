@@ -1,6 +1,9 @@
 import ColorPickerControl, {
   colorPickerControlTester,
 } from "@/components/Form/ColorPickerControl";
+import CustomSelectControl, {
+  CustomSelectTester,
+} from "@/components/Form/CustomSelectControl";
 import CustomTextFieldControl, {
   CustomTextFieldTester,
 } from "@/components/Form/CustomTextFieldControl";
@@ -12,9 +15,10 @@ import {
 
 export const renderers = [
   ...materialRenderers,
-  { tester: headerTester, renderer: HeaderRenderer },
-  { tester: colorPickerControlTester, renderer: ColorPickerControl },
-  { tester: CustomTextFieldTester, renderer: CustomTextFieldControl },
+  { renderer: HeaderRenderer, tester: headerTester },
+  { renderer: ColorPickerControl, tester: colorPickerControlTester },
+  { renderer: CustomTextFieldControl, tester: CustomTextFieldTester },
+  { renderer: CustomSelectControl, tester: CustomSelectTester },
 ];
 
 export const materialCells = _materialCells;

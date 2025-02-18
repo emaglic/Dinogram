@@ -7,6 +7,7 @@ import Styles from "./index.style";
 import {
   onSelectNode,
   selectEdges,
+  updateEdgeOrder,
   updateNodeOrder,
 } from "@/state/Chart/chartSlice";
 import NodeLayer from "@/components/Layout/Panels/Layers/Nodes/NodeLayer";
@@ -28,7 +29,7 @@ const LayersPanel = () => {
       return { ...item, data: { ...item.data, zIndex: index } };
     });
 
-    dispatch(updateNodeOrder(updatedArray));
+    dispatch(updateEdgeOrder(updatedArray));
   };
 
   useEffect(() => {

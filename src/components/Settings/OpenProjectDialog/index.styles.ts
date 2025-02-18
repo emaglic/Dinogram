@@ -7,6 +7,12 @@ const Styles = (theme: Theme) => ({
     flexDirection: "column",
     gap: "1rem",
   },
+  titleContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "1rem 0",
+  },
 });
 
 export default Styles;

@@ -5,6 +5,7 @@ import { useTheme } from "@mui/material/styles";
 import Styles from "./index.styles";
 import ShapeSVG from "./ShapeSVG";
 import shapeMap from "@/map/shape-map";
+import hexToRgba from "@/utils/hexToRgba";
 
 const minWidth = 25;
 const minHeight = 25;
@@ -28,6 +29,10 @@ const ShapeNode = ({ selected, type, data }) => {
             ...styles.container,
             minWidth: `${minWidth}px`,
             minHeight: `${minHeight}px`,
+            border: `${data.stroke.width}px solid ${hexToRgba(
+              data.stroke.color,
+              data.stroke.opacity / 100
+            )}`,
           }}
         >
           <ShapeSVG
@@ -35,7 +40,7 @@ const ShapeNode = ({ selected, type, data }) => {
             width={"100%"}
             height={"100%"}
             fill={data.fill}
-            stroke={data.stroke}
+            // stroke={data.stroke}
           />
           {data.showLabel && <Box sx={styles.text}>{data.label}</Box>}
         </Box>

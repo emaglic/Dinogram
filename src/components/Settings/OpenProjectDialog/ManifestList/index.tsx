@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.styles";
+import { DateTime } from "luxon";
 
 const ManifestList = ({ manifest, handleLoadProject }) => {
   const theme = useTheme();
@@ -26,7 +27,11 @@ const ManifestList = ({ manifest, handleLoadProject }) => {
           key={item.name}
         >
           <Typography>{item.name}</Typography>
-          <Typography>{item.createdDate}</Typography>
+          <Typography>
+            {DateTime.fromISO(item.createdDate, { zone: "utc" })
+              .toLocal()
+              .toFormat("yyyy/MM/dd hh:mm:ss a")}
+          </Typography>
         </Box>
       ))}
     </Box>

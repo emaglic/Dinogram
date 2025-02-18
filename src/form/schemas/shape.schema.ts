@@ -6,7 +6,12 @@ export default {
         iconKey: {
           type: "string",
           description: "Please select the shape of the element",
-          enum: Object.keys(shapeMap),
+          enum: Object.values(shapeMap).map((shape) => ({
+            value: shape.key,
+            label: shape.label,
+            startIcon: shape.icon,
+          })),
+          // home: { key: "home", label: "Home", icon: Home },
         },
         showLabel: {
           type: "boolean",

@@ -65,6 +65,7 @@ const ColorPicker = ({ label, value, updateValue }: Props) => {
           fullWidth
           size="small"
           value={color || ""}
+          onBlur={(evt) => updateValue(evt.target.value)}
           onChange={(evt) => handleSetColor(evt.target.value)}
           placeholder=""
           startAdornment={
@@ -88,6 +89,7 @@ const ColorPicker = ({ label, value, updateValue }: Props) => {
           className={styles.popover}
           color={color}
           disableAlpha={true}
+          onBlur={(color) => updateValue(color.hex)}
           onChange={(color) => handleSetColor(color.hex)}
         />
       </Popover>

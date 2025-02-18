@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { JsonForms } from "@jsonforms/react";
-import {
-  materialRenderers,
-  materialCells,
-} from "@jsonforms/material-renderers";
+import { materialRenderers } from "@jsonforms/material-renderers";
 import { useDispatch, useSelector } from "react-redux";
 import { updateEdge, updateNode } from "@/state/Chart/chartSlice";
 import { Box } from "@mui/material";
@@ -18,6 +15,7 @@ import CustomTextFieldControl, {
   CustomTextFieldTester,
 } from "@/components/Form/CustomTextFieldControl";
 import HeaderRenderer, { headerTester } from "@/components/Form/HeaderRenderer";
+import { renderers, materialCells } from "@/form/renderers";
 
 const ElementProperties = ({ selectedChartElements }) => {
   const theme = useTheme();
@@ -26,12 +24,12 @@ const ElementProperties = ({ selectedChartElements }) => {
   const element = selectedChartElements[0];
   const isDragging = useSelector(selectIsDragging);
 
-  const renderers = [
+  /*   const renderers = [
     ...materialRenderers,
     { tester: headerTester, renderer: HeaderRenderer },
     { tester: colorPickerControlTester, renderer: ColorPickerControl },
     { tester: CustomTextFieldTester, renderer: CustomTextFieldControl },
-  ];
+  ]; */
 
   const schemas = schemaGenerator
     .setBase(element.data.type)

@@ -3,7 +3,11 @@ import {
   Input,
   InputAdornment,
   InputLabel,
+  ListItemIcon,
+  Menu,
+  MenuItem,
   OutlinedInput,
+  Select,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -37,39 +41,21 @@ export interface CustomTextFieldProps {
   };
 }
 
-const getInputAdornment = (
-  adornmentProps: InputAdornmentType,
-  position: "start" | "end"
-) => {
-  if (!adornmentProps) return undefined;
-  const { type, value } = adornmentProps;
-  let Content = undefined;
-  if (type === "icon") {
-    Content = shapeMap[value];
-  } else {
-    Content = <Typography>{value}</Typography>;
-  }
-  return Content ? (
-    <InputAdornment position={position}>{Content}</InputAdornment>
-  ) : undefined;
-};
-
 const CustomTextField = ({
   label,
   value,
   updateValue,
   type,
-  options,
+  selectOptions,
+  uiSchemaOptions,
+  schemaOptions,
   updateType = UpdateType.CHANGE,
 }: CustomTextFieldProps) => {
-  const [inputValue, setInputValue] = useState(value);
+  const [inputValue, setInputValue] = useState(
+    value || schemaOptions?.defaultValue || ""
+  );
   const debounceValue = useDebounce(inputValue);
-  const startAdornment = getInputAdornment(options?.startAdornment, "start");
-  const endAdornment = getInputAdornment(options?.endAdornment, "end");
   const [isFocused, setIsFocused] = useState(false);
-
-  let componentType =
-    type === "number" || type === "integer" ? "number" : "text";
 
   useEffect(() => {
     if (!isFocused) {
@@ -78,7 +64,7 @@ const CustomTextField = ({
   }, [value, isFocused]);
 
   const handleUpdateValue = (newValue) => {
-    updateValue(componentType === "number" ? parseFloat(newValue) : newValue);
+    updateValue(newValue);
   };
 
   useEffect(() => {
@@ -91,7 +77,7 @@ const CustomTextField = ({
     <Box
       sx={{
         width: "100%",
-        margin: options?.margin || "0 0 0.5rem 0",
+        margin: uiSchemaOptions?.margin || "0 0 0.5rem 0",
       }}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
@@ -99,22 +85,62 @@ const CustomTextField = ({
       <InputLabel htmlFor="custom-text-field" sx={{ fontSize: "0.875rem" }}>
         {label}
       </InputLabel>
-      <OutlinedInput
-        id="custom-text-field"
+      <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
         fullWidth
         size="small"
         value={inputValue}
-        startAdornment={startAdornment}
-        endAdornment={endAdornment}
-        type={componentType}
-        onBlur={(evt) => {
-          handleUpdateValue(evt.target.value);
+        sx={{
+          "& .MuiSelect-select": {
+            display: "grid",
+            gridTemplateColumns: "24px 1fr",
+            gap: "1rem",
+            alignItems: "center",
+          },
         }}
         onChange={(evt) => {
           setInputValue(evt.target.value);
         }}
-        placeholder={options?.placeholder || ""}
-      />
+      >
+        {selectOptions.map((opt) => (
+          <MenuItem
+            key={opt.value}
+            sx={{ display: "flex", alignItems: "center" }}
+            value={opt.value}
+          >
+            {opt.startIcon ? (
+              <ListItemIcon>
+                <opt.startIcon />
+              </ListItemIcon>
+            ) : null}
+
+            {opt.label}
+            {opt.endIcon ? (
+              <ListItemIcon>
+                <opt.endIcon />
+              </ListItemIcon>
+            ) : null}
+          </MenuItem>
+        ))}
+      </Select>
+
+      {/* <OutlinedInput
+          id="custom-text-field"
+          fullWidth
+          size="small"
+          value={inputValue}
+          startAdornment={startAdornment}
+          endAdornment={endAdornment}
+          type={componentType}
+          onBlur={(evt) => {
+            handleUpdateValue(evt.target.value);
+          }}
+          onChange={(evt) => {
+            setInputValue(evt.target.value);
+          }}
+          placeholder={options?.placeholder || ""}
+        /> */}
     </Box>
   );
 };

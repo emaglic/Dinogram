@@ -1,13 +1,19 @@
-import {
+import CustomEdge from "./CustomEdge";
+
+/* import {
   StraightEdge,
   BezierEdge,
   SimpleBezierEdge,
   SmoothStepEdge,
-} from "./CustomEdge";
+} from "./CustomEdge"; */
 
-export const edgeTypes = {
+/* export const edgeTypes = {
   straight: StraightEdge,
   bezier: BezierEdge,
   simpleBezier: SimpleBezierEdge,
   smoothStep: SmoothStepEdge,
+}; */
+
+export const edgeTypes = {
+  customEdge: CustomEdge,
 };

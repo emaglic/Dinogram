@@ -21,10 +21,20 @@ interface Props extends EdgeProps {
     | typeof getStraightPath;
 }
 
-const CustomEdge = ({ pathMethod, ...props }: Props) => {
+const getPathMethod = (type) => {
+  const path = {
+    bezier: getBezierPath,
+    simpleBezier: getSimpleBezierPath,
+    smoothStep: getSmoothStepPath,
+    straight: getStraightPath,
+  };
+  return path[type];
+};
+
+const CustomEdge = (props) => {
   const theme = useTheme();
 
-  console.log("props: ", props);
+  const pathMethod = getPathMethod(props.data.pathType);
 
   const {
     id,
@@ -49,16 +59,25 @@ const CustomEdge = ({ pathMethod, ...props }: Props) => {
 
   return (
     <>
+      {selected ? (
+        <path
+          d={edgePath}
+          fill="none"
+          stroke={theme.palette.primary.main}
+          strokeWidth={data.stroke.width + 8} // Slightly thicker than the main stroke
+          style={{ position: "absolute" }}
+        />
+      ) : null}
+
       <path
         id={id}
         d={edgePath}
         fill="none"
-        stroke={
-          selected ? theme.palette.primary.main : theme.palette.text.primary
-        }
-        strokeWidth={4} // Change the thickness here
+        stroke={data.stroke.color}
+        strokeWidth={data.stroke.width} // Change the thickness here
         style={{
           ...style,
+          opacity: data.stroke.opacity / 100,
           display: props.data.visible ? "block" : "none",
         }}
         markerEnd={markerEnd}
@@ -70,18 +89,4 @@ const CustomEdge = ({ pathMethod, ...props }: Props) => {
   );
 };
 
-export const StraightEdge = (props: EdgeProps) => {
-  return <CustomEdge pathMethod={getStraightPath} {...props} />;
-};
-
-export const BezierEdge = (props: EdgeProps) => {
-  <CustomEdge pathMethod={getBezierPath} {...props} />;
-};
-
-export const SimpleBezierEdge = (props: EdgeProps) => {
-  <CustomEdge pathMethod={getSimpleBezierPath} {...props} />;
-};
-
-export const SmoothStepEdge = (props: EdgeProps) => {
-  <CustomEdge pathMethod={getSmoothStepPath} {...props} />;
-};
+export default CustomEdge;

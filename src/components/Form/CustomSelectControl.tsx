@@ -10,10 +10,10 @@ import {
   optionIs,
   schemaMatches,
 } from "@jsonforms/core";
-import CustomTextField, {
+import CustomSelect, {
   CustomTextFieldProps,
   UpdateType,
-} from "@/components/Form/CustomComponents/CustomTextField";
+} from "@/components/Form/CustomComponents/CustomSelect";
 
 interface Props {
   data: any;
@@ -31,33 +31,32 @@ interface Props {
   };
 }
 
-const CustomTextFieldControl = ({
+const CustomSelectControl = ({
   data,
   handleChange,
   path,
   uischema,
   schema,
 }: Props) => (
-  <CustomTextField
+  <CustomSelect
     type={schema.type}
     label={uischema.label}
     value={data}
     updateType={schema.options?.updateType || UpdateType.CHANGE}
-    options={uischema.options}
+    uiSchemaOptions={uischema.options}
+    schemaOptions={schema.options}
+    selectOptions={schema.enum}
     updateValue={(newValue: string) => handleChange(path, newValue)}
   />
 );
 
-export default withJsonFormsControlProps(CustomTextFieldControl);
+export default withJsonFormsControlProps(CustomSelectControl);
 
 const hasEnum = schemaMatches(
   (schema) => schema.enum !== undefined && Array.isArray(schema.enum)
 );
 
-export const CustomTextFieldTester = rankWith(
+export const CustomSelectTester = rankWith(
   3, //increase rank as needed
-  and(
-    or(schemaTypeIs("string"), schemaTypeIs("number")), // Matches string or number types
-    not(hasEnum) // Ensures format is NOT "select"
-  )
+  hasEnum
 );

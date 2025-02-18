@@ -4,6 +4,9 @@ const getNewProject = (name: string) => {
   return {
     id: uuidv4(),
     name: name,
+    mode: window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light",
     projectDescription: "",
     createdDate: new Date().toISOString(),
     lastUpdated: new Date().toISOString(),

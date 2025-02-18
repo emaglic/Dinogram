@@ -23,9 +23,6 @@ export default {
       label: "Mode",
       type: "Control",
       scope: "#/properties/mode",
-      options: {
-        fieldType: "select",
-      },
     },
   ],
 };

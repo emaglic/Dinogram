@@ -188,7 +188,7 @@ const chartSlice = createSlice({
       console.log("action.payload: ", action.payload);
       const edges = state.history[state.currentIndex].edges;
       const updatedEdges = addEdge(
-        { ...action.payload, ...getBaseEdge(edges), type: "straight" },
+        { ...action.payload, ...getBaseEdge(edges), type: "customEdge" },
         state.history[state.currentIndex].edges
       );
       pushToHistory(state, {
@@ -197,7 +197,7 @@ const chartSlice = createSlice({
       });
     },
     onEdgesChange: (state, action) => {
-      console.log("action.payload: ", action.payload);
+      console.log(`action.payload (${Date.now()}): `, action.payload);
       const updatedEdges = applyEdgeChanges(
         action.payload,
         state.history[state.currentIndex].edges

@@ -16,7 +16,7 @@ const Styles = (theme: Theme) => ({
     gap: "1rem",
     padding: "1rem",
     width: "100%",
-    border: `1px solid ${theme.palette.primary.main}`,
+    borderBottom: `1px solid`,
   },
   item: {
     display: "grid",
@@ -25,7 +25,7 @@ const Styles = (theme: Theme) => ({
     padding: "1rem",
     width: "100%",
     cursor: "pointer",
-    border: `1px solid ${theme.palette.primary.main}`,
+
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.primary.contrastText,

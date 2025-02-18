@@ -4,7 +4,8 @@ import Square from "@/assets/svg/square.svg?react";
 import Triangle from "@/assets/svg/triangle.svg?react";
 import FormatSizeIcon from "@mui/icons-material/FormatSize";
 import AirlineStopsIcon from "@mui/icons-material/AirlineStops";
-
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 import {
   AcUnit as AcUnitIcon,
   Article as ArticleIcon,
@@ -112,6 +113,10 @@ export default {
     label: "Airline Stops Icon",
     icon: AirlineStopsIcon,
   },
+
+  // Mode
+  lightMode: { key: "lightMode", label: "Light Mode", icon: LightModeIcon },
+  darkMode: { key: "darkMode", label: "Dark Mode", icon: DarkModeIcon },
 
   // Basic Shapes
   home: { key: "home", label: "Home", icon: Home },

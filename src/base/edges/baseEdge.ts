@@ -10,8 +10,14 @@ const getBaseEdge = (edges: EdgeNode[]) => {
       zIndex: edges.length,
       showBaseNodeHeader: false,
       type: "edge",
+      pathType: "straight",
       visible: true,
       locked: false,
+      stroke: {
+        color: "#000000",
+        width: 1,
+        opacity: 100,
+      },
     },
     selected: true,
   };

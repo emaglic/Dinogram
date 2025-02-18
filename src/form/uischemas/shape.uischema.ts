@@ -13,15 +13,14 @@ export default {
     },
     {
       type: "Control",
-      scope: "#/properties/data/properties/showLabel",
+      label: "Shape",
+      scope: "#/properties/data/properties/iconKey",
     },
     {
       type: "Control",
-      scope: "#/properties/data/properties/iconKey",
-      options: {
-        fieldType: "select",
-      },
+      scope: "#/properties/data/properties/showLabel",
     },
+
     {
       type: "VerticalLayout",
       elements: [

@@ -38,8 +38,6 @@ const BaseNode = ({
   const styles = Styles(theme);
   const [hovered, setHovered] = useState(false);
 
-  const autoSize = data?.baseNodeComponent?.autoSize || false;
-
   return (
     <Box
       sx={styles.container(
@@ -55,7 +53,16 @@ const BaseNode = ({
         <NodeHeader label={label} />
       ) : null}
 
-      {selected && <NodeResizer minWidth={minWidth} minHeight={minHeight} />}
+      {selected && (
+        <NodeResizer
+          minWidth={minWidth}
+          minHeight={minHeight}
+          handleStyle={{
+            width: "10px",
+            height: "10px",
+          }}
+        />
+      )}
 
       <Handle
         className={hovered ? classes.handle : classes.handleHidden}

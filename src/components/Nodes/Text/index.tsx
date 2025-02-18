@@ -13,10 +13,12 @@ const TextNode = ({ selected, type, data }) => {
   const styles = Styles(theme);
 
   const bgColor = data?.fill?.color;
-  const bgOpacity = data?.fill?.opacity ? data?.fill?.opacity / 100 : 1;
+  const bgOpacity =
+    typeof data?.fill?.opacity === "number" ? data?.fill?.opacity / 100 : 1;
 
   const brdrColor = data?.stroke?.color;
-  const brdrOpacity = data?.stroke?.opacity ? data?.stroke?.opacity / 100 : 1;
+  const brdrOpacity =
+    typeof data?.stroke?.opacity === "number" ? data?.stroke?.opacity / 100 : 1;
 
   const backgroundColor = bgColor
     ? hexToRgba(bgColor, bgOpacity)
@@ -50,7 +52,7 @@ const TextNode = ({ selected, type, data }) => {
               sx={{ color: data?.text?.color || "#000000" }}
               variant={data.text.size}
             >
-              Text Node
+              {data.label}
             </Typography>
           </Box>
         </BaseNode>

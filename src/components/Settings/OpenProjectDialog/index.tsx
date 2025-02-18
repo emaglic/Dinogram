@@ -18,6 +18,8 @@ import { updateProject } from "@/state/Chart/projectSlice";
 import getNewChart from "@/base/chart";
 import { replaceChart } from "@/state/Chart/chartSlice";
 import { setManifest, updateManifest } from "@/state/Chart/manifestSlice";
+import ShapeSVG from "@/components/Nodes/Shape/ShapeSVG";
+import logo from "@/assets/logo.svg?react";
 
 const OpenProjectDialog = () => {
   const theme = useTheme();
@@ -48,14 +50,27 @@ const OpenProjectDialog = () => {
 
   return (
     <Dialog sx={styles.container} open={dialogOpen}>
-      <DialogTitle>Project Settings</DialogTitle>
-      <DialogContent>
+      <Box sx={styles.titleContainer}>
+        <ShapeSVG
+          component={logo}
+          fill={{ color: "#fff" }}
+          width="4rem"
+          height="4rem"
+        />
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          Dinogram
+        </Typography>
+        <Divider sx={{ width: "100%", marginTop: "1rem" }} />
+      </Box>
+
+      <DialogContent
+        sx={{
+          padding: "0px 1.25rem 1.25rem 1.25rem",
+        }}
+      >
         <Box sx={styles.contentContainer}>
           {manifest && manifest.length ? (
             <>
-              <Typography textAlign="center" variant={"h6"}>
-                Open Existing Project
-              </Typography>
               <ManifestList
                 manifest={manifest}
                 handleLoadProject={handleLoadProject}

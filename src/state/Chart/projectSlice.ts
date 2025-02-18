@@ -1,3 +1,4 @@
+import getNewProject from "@/base/project";
 import { RootState } from "../store";
 import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
@@ -11,14 +12,16 @@ export interface ProjectState {
   mode: "light" | "dark";
 }
 
-const initialValues: ProjectState = {
+/* const initialValues: ProjectState = {
   id: "",
   name: "",
   projectDescription: "",
   createdDate: "",
   lastUpdated: "",
-  mode: undefined,
-};
+  mode: "light",
+}; */
+
+const initialValues: ProjectState = getNewProject("");
 
 const projectSlice = createSlice({
   name: "project",

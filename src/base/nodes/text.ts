@@ -26,7 +26,7 @@ const getNewTextNode = (nodes: ChartNode[]) => {
       },
       fill: {
         color: "#ffffff",
-        opacity: 100,
+        opacity: 0,
       },
       stroke: {
         width: 0,

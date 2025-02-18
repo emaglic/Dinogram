@@ -24,15 +24,12 @@ export default {
           },
         },
         {
-          type: "Control",
-          scope: "#/properties/data/properties/text/properties/size",
-          options: {
-            fieldType: "select",
-          },
-        },
-        {
           type: "HorizontalLayout",
           elements: [
+            {
+              type: "Control",
+              scope: "#/properties/data/properties/text/properties/size",
+            },
             {
               type: "Control",
               scope: "#/properties/data/properties/text/properties/color",
