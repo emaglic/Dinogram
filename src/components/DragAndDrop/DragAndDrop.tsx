@@ -46,7 +46,10 @@ const DragAndDrop = ({ children, items, handleDragEnd }) => {
   );
 
   return (
-    <Box sx={{ height: "100%", overflowY: "auto" }} data-id="DragAndDrop">
+    <Box
+      sx={{ height: "100%", overflowY: "auto", overflowX: "hidden" }}
+      data-id="DragAndDrop"
+    >
       <DndContext
         sensors={sensors}
         onDragStart={() => {

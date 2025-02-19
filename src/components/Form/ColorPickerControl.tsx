@@ -1,6 +1,6 @@
 import { withJsonFormsControlProps } from "@jsonforms/react";
 import ColorPicker from "@/components/Controls/ColorPicker";
-import { rankWith, scopeEndsWith } from "@jsonforms/core";
+import { or, rankWith, scopeEndsWith } from "@jsonforms/core";
 
 interface RatingControlProps {
   data: any;
@@ -26,5 +26,5 @@ export default withJsonFormsControlProps(ColorPickerControl);
 
 export const colorPickerControlTester = rankWith(
   3, //increase rank as needed
-  scopeEndsWith("color")
+  or(scopeEndsWith("color"), scopeEndsWith("backgroundColor"))
 );

@@ -40,7 +40,7 @@ const ShapePicker = () => {
         <Tooltip
           placement="right"
           arrow
-          title={`Create Shape Node`}
+          title={`Create Shape Element`}
           key={`shape-Shape`}
         >
           <SquareIcon

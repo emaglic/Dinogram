@@ -79,6 +79,7 @@ const chartSlice = createSlice({
         action.payload,
         state.history[state.currentIndex].nodes
       );
+
       pushToHistory(state, {
         nodes: updatedNodes,
         edges: state.history[state.currentIndex].edges,
@@ -97,9 +98,18 @@ const chartSlice = createSlice({
               : node.selected,
         })
       );
+
+      // Clear all selected edges when selecting a node
+      const updatedEdges = state.history[state.currentIndex].edges.map(
+        (edge) => ({
+          ...edge,
+          selected: false,
+        })
+      );
+
       pushToHistory(state, {
         nodes: updatedNodes,
-        edges: state.history[state.currentIndex].edges,
+        edges: updatedEdges,
       });
     },
     updateNodeOrder: (state, action) => {
@@ -185,10 +195,14 @@ const chartSlice = createSlice({
     // Edge Reducers
     // ===============================================
     onConnect: (state, action) => {
-      console.log("action.payload: ", action.payload);
       const edges = state.history[state.currentIndex].edges;
       const updatedEdges = addEdge(
-        { ...action.payload, ...getBaseEdge(edges), type: "customEdge" },
+        {
+          ...action.payload,
+          ...getBaseEdge(edges),
+          type: "customEdge",
+          selected: true,
+        },
         state.history[state.currentIndex].edges
       );
       pushToHistory(state, {
@@ -197,11 +211,11 @@ const chartSlice = createSlice({
       });
     },
     onEdgesChange: (state, action) => {
-      console.log(`action.payload (${Date.now()}): `, action.payload);
       const updatedEdges = applyEdgeChanges(
         action.payload,
         state.history[state.currentIndex].edges
       );
+
       pushToHistory(state, {
         nodes: state.history[state.currentIndex].nodes,
         edges: updatedEdges,
@@ -220,8 +234,17 @@ const chartSlice = createSlice({
               : edge.selected,
         })
       );
+
+      // Clear all selected nodes when selecting an edge
+      const updatedNodes = state.history[state.currentIndex].nodes.map(
+        (node) => ({
+          ...node,
+          selected: false,
+        })
+      );
+
       pushToHistory(state, {
-        nodes: state.history[state.currentIndex].nodes,
+        nodes: updatedNodes,
         edges: updatedEdges,
       });
     },

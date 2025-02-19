@@ -1,16 +1,16 @@
 import { v4 as uuidv4 } from "uuid";
 import getBaseNode from "./baseNode";
+import { getDefaultThemeModeColor } from "../utils";
 import { ChartNode } from "@/types/chart/nodes";
 import { ShapeNodeData } from "@/types/chart/nodes/shape";
-import shapeMap from "@/map/shape-map";
 
 const getNewShapeNode = (nodes: ChartNode[], shape: ShapeNodeData) => {
   const baseNode = getBaseNode(nodes);
 
   return {
     ...baseNode,
-    width: 50,
-    height: 50,
+    width: 100,
+    height: 100,
     data: {
       ...baseNode.data,
       baseNodeComponent: {
@@ -21,12 +21,12 @@ const getNewShapeNode = (nodes: ChartNode[], shape: ShapeNodeData) => {
       // shape: shape.key,
       iconKey: shape.key,
       fill: {
-        color: "#000000",
+        color: getDefaultThemeModeColor(),
         opacity: 100,
       },
       stroke: {
         width: 0,
-        color: "#000000",
+        color: getDefaultThemeModeColor(),
         opacity: 100,
       },
     },

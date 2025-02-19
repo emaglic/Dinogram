@@ -6,6 +6,10 @@ import FormatSizeIcon from "@mui/icons-material/FormatSize";
 import AirlineStopsIcon from "@mui/icons-material/AirlineStops";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+import ImageIcon from "@mui/icons-material/Image";
+import MovieIcon from "@mui/icons-material/Movie";
+import DrawIcon from "@mui/icons-material/Draw";
+
 import {
   AcUnit as AcUnitIcon,
   Article as ArticleIcon,
@@ -188,4 +192,9 @@ export default {
   pieChart: { key: "pieChart", label: "Pie Chart", icon: PieChartIcon },
   barChart: { key: "barChart", label: "Bar Chart", icon: BarChartIcon },
   tableChart: { key: "tableChart", label: "Table Chart", icon: TableChartIcon },
+
+  // Media & Files
+  image: { key: "image", label: "Image", icon: ImageIcon },
+  movie: { key: "movie", label: "Movie", icon: MovieIcon },
+  draw: { key: "draw", label: "Draw", icon: DrawIcon },
 };

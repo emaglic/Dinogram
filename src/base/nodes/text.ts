@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import getBaseNode from "./baseNode";
+import { getDefaultThemeModeColor } from "../utils";
 import { ChartNode } from "@/types/chart/nodes";
 import { ShapeNodeData } from "@/types/chart/nodes/shape";
 import shapeMap from "@/map/shape-map";
@@ -9,8 +10,8 @@ const getNewTextNode = (nodes: ChartNode[]) => {
 
   return {
     ...baseNode,
-    width: 50,
-    height: 50,
+    width: 200,
+    height: 75,
     data: {
       ...baseNode.data,
       baseNodeComponent: {
@@ -21,16 +22,16 @@ const getNewTextNode = (nodes: ChartNode[]) => {
       iconKey: "text",
       text: {
         size: "h1",
-        color: "#000000",
+        color: getDefaultThemeModeColor(),
         opacity: 100,
       },
       fill: {
-        color: "#ffffff",
+        color: getDefaultThemeModeColor(),
         opacity: 0,
       },
       stroke: {
         width: 0,
-        color: "#000000",
+        color: getDefaultThemeModeColor(),
         opacity: 100,
       },
     },

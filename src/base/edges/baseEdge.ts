@@ -1,5 +1,5 @@
-import { ChartNode } from "@/types/chart/nodes";
 import { v4 as uuidv4 } from "uuid";
+import { getDefaultThemeModeColor } from "../utils";
 
 const getBaseEdge = (edges: EdgeNode[]) => {
   return {
@@ -14,7 +14,7 @@ const getBaseEdge = (edges: EdgeNode[]) => {
       visible: true,
       locked: false,
       stroke: {
-        color: "#000000",
+        color: getDefaultThemeModeColor(),
         width: 1,
         opacity: 100,
       },

@@ -16,7 +16,7 @@ const getNewWebNode = (nodes: ChartNode[]) => {
       },
       iconKey: "web",
       label: `Web [${nodes.length}]`,
-      url: "https://",
+      url: "",
     },
     type: "web",
   };

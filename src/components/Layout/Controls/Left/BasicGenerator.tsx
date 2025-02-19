@@ -22,7 +22,7 @@ const BasicNodeGenerator = ({ type, label, Icon, defaultData }) => {
     <Tooltip
       placement="right"
       arrow
-      title={`Create ${label} Node`}
+      title={`Create ${label} Element`}
       key={`${type}-${label}`}
     >
       <Icon sx={{ cursor: "pointer" }} onClick={() => handleCreateNode()} />

@@ -6,8 +6,8 @@ const getNewRichTextNode = (nodes: ChartNode[]) => {
   const baseNode = getBaseNode(nodes);
   return {
     ...baseNode,
-    width: 400,
-    height: 200,
+    width: 640,
+    height: 360,
     data: {
       ...baseNode.data,
       baseNodeComponent: {

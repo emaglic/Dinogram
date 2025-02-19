@@ -9,11 +9,13 @@ import "./dark-mode.css";
 import BaseNode from "../BaseNode";
 import useDebounce from "@/hooks/useDebounce";
 import { updateNodeData } from "@/state/Chart/chartSlice";
+import { selectIsDragging } from "@/state/Chart/settingsSlice";
 
 const RichTextNode = ({ selected, type, data, id }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
+  const isDragging = useSelector(selectIsDragging);
   const ref = useRef<ReactQuill | null>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [value, setValue] = useState(data?.content || "");
@@ -46,7 +48,7 @@ const RichTextNode = ({ selected, type, data, id }) => {
         minHeight={200}
       >
         <Box
-          className={"nodrag"}
+          className={isDragging ? undefined : "nodrag"}
           sx={{
             //margin: "1rem",
             backgroundColor: "#fff",
