@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { selectProject } from "./state/Chart/projectSlice";
 import { useMediaQuery } from "@mui/material";
 import { getMuiThemeMode, setMuiThemeMode } from "./themeMode"; // Import global functions
+import mainTheme from "./themes/main";
 
 function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -19,11 +20,12 @@ function App() {
 
   const theme = useMemo(
     () =>
-      createTheme({
+      /* createTheme({
         palette: {
           mode: mode ? mode : prefersDarkMode.toString() ? "dark" : "light",
         },
-      }),
+      }), */
+      mainTheme(mode, prefersDarkMode),
     [mode]
   );
 

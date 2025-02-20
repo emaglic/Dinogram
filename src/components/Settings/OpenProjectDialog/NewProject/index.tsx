@@ -13,11 +13,13 @@ const NewProject = ({ handleCreateNewProject }) => {
       </Typography>
       <Box sx={styles.input}>
         <TextField
+          size="small"
           fullWidth
           value={value}
           onChange={(evt) => setValue(evt.target.value)}
         />
         <Button
+          size="small"
           variant="contained"
           onClick={() => {
             handleCreateNewProject(value);

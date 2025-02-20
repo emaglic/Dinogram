@@ -23,8 +23,10 @@ const LayersPanel = () => {
   const edges = useSelector(selectEdges);
   const [localLayers, setLocalLayers] = useState([...edges].reverse());
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleDragEnd = (array) => {
+    setIsDragging(false);
     const updatedArray = [...array].reverse().map((item, index) => {
       return { ...item, data: { ...item.data, zIndex: index } };
     });
@@ -39,11 +41,19 @@ const LayersPanel = () => {
   const modifierKeys = useKeyboard(containerRef);
 
   return (
-    <DragAndDrop items={localLayers} handleDragEnd={handleDragEnd}>
+    <DragAndDrop
+      items={localLayers}
+      handleDragEnd={handleDragEnd}
+      hoistDraggingState={setIsDragging}
+    >
       <Box ref={containerRef} sx={styles.container}>
         {localLayers.map((edge) => (
           <DragAndDropItem key={edge.id} id={edge.id}>
-            <EdgeLayer modifierKeys={modifierKeys} edge={edge} />
+            <EdgeLayer
+              modifierKeys={modifierKeys}
+              edge={edge}
+              isDragging={isDragging}
+            />
           </DragAndDropItem>
         ))}
       </Box>

@@ -18,7 +18,7 @@ const Header = () => {
         <ShapeSVG
           sx={styles.logo}
           component={logo}
-          fill={{ color: "#fff" }}
+          fill={{ color: theme.palette.text.primary }}
           width="2rem"
           height="2rem"
         />

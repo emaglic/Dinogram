@@ -5,6 +5,7 @@ import {
   OutlinedInput,
   Slider,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import React, { useRef, useState, useEffect } from "react";
 import DragHandleIcon from "@mui/icons-material/DragHandle";
@@ -12,7 +13,9 @@ import { useTheme } from "@mui/material/styles";
 import Styles from "./FreehandCanvas.style";
 import { useSelector } from "react-redux";
 import { selectIsDragging } from "@/state/Chart/settingsSlice";
-
+import BrushIcon from "@mui/icons-material/Brush";
+import EraseIcon from "@mui/icons-material/AutoFixNormal";
+import DeleteIcon from "@mui/icons-material/Delete";
 const FreehandCanvas = ({
   imageBase64,
   onChange,
@@ -71,6 +74,7 @@ const FreehandCanvas = ({
   };
 
   const startDrawing = (e) => {
+    if (!selected) return;
     setDrawing(true);
     const { x, y } = getMouseCoordinates(e);
 
@@ -132,23 +136,69 @@ const FreehandCanvas = ({
         <Box sx={styles.controlContainer}>
           <DragHandleIcon />
           <Box sx={styles.controlContainerInner}>
-            <OutlinedInput
-              fullWidth
+            <Box
               sx={{
-                width: "1.5rem",
-                height: "1.5rem",
-                cursor: "pointer",
-                padding: 0,
-                "& input": { padding: 0, width: "100%", height: "100%" },
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
-              type="color"
-              size="small"
-              value={color}
-              onChange={(e) => {
-                setColor(e.target.value);
+            >
+              <Tooltip title="Color" placement="top" arrow>
+                <OutlinedInput
+                  fullWidth
+                  sx={{
+                    width: "1.5rem",
+                    height: "1.5rem",
+                    cursor: "pointer",
+                    padding: 0,
+                    "& input": { padding: 0, width: "100%", height: "100%" },
+                  }}
+                  type="color"
+                  size="small"
+                  value={color}
+                  onChange={(e) => {
+                    setColor(e.target.value);
+                  }}
+                  disabled={mode === "erase"}
+                />
+              </Tooltip>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
-              disabled={mode === "erase"}
-            />
+            >
+              <Tooltip title="Draw" placement="top" arrow>
+                <BrushIcon
+                  onClick={() => setMode("draw")}
+                  sx={{
+                    opacity: mode === "draw" ? 0.5 : 1,
+                    cursor: mode === "draw" ? "default" : "pointer",
+                  }}
+                />
+              </Tooltip>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Tooltip title="Erase" placement="top" arrow>
+                <EraseIcon
+                  onClick={() => setMode("erase")}
+                  sx={{
+                    opacity: mode === "erase" ? 0.5 : 1,
+                    cursor: mode === "erase" ? "default" : "pointer",
+                    transform: "scale(-1)",
+                  }}
+                />
+              </Tooltip>
+            </Box>
+
             <Box
               className="nodrag"
               sx={{
@@ -160,41 +210,37 @@ const FreehandCanvas = ({
                 alignItems: "center",
               }}
             >
-              <Slider
-                aria-label="Volume"
-                min={1}
-                max={50}
-                value={thickness}
-                onChange={(evt) => setThickness(parseInt(evt.target.value, 10))}
-              />
+              <Tooltip title="Brush Size" placement="top" arrow>
+                <Slider
+                  aria-label="Volume"
+                  color="secondary"
+                  min={1}
+                  max={50}
+                  value={thickness}
+                  onChange={(evt) =>
+                    setThickness(parseInt(evt.target.value, 10))
+                  }
+                />
+              </Tooltip>
             </Box>
 
-            <Button
-              onClick={() => setMode("draw")}
-              variant="contained"
-              disabled={mode === "draw"}
-              size="small"
-              startIcon="🖌"
+            <Box
+              sx={{
+                marginLeft: "auto",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
-              Draw
-            </Button>
-            <Button
-              onClick={() => setMode("erase")}
-              variant="contained"
-              disabled={mode === "erase"}
-              size="small"
-              startIcon="🧼"
-            >
-              Erase
-            </Button>
-            <Button
-              onClick={clearCanvas}
-              variant="contained"
-              size="small"
-              startIcon="🗑"
-            >
-              Clear
-            </Button>
+              <Tooltip title="Clear" placement="top" arrow>
+                <DeleteIcon
+                  onClick={clearCanvas}
+                  sx={{
+                    cursor: "pointer",
+                  }}
+                />
+              </Tooltip>
+            </Box>
           </Box>
           <DragHandleIcon />
         </Box>
@@ -206,7 +252,7 @@ const FreehandCanvas = ({
           width: "100%",
           height: "100%",
 
-          cursor: mode === "erase" ? "cell" : "crosshair",
+          cursor: selected ? (mode === "erase" ? "cell" : "crosshair") : "grab",
           background:
             backgroundColor === "transparent" ? "none" : backgroundColor, // ✅ Set correct background
         }}

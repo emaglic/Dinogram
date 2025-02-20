@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   closestCorners,
   DndContext,
@@ -19,7 +19,12 @@ import { Box } from "@mui/material";
 const getLayerPosition = (items, id) =>
   items.findIndex((item) => item.id === id);
 
-const DragAndDrop = ({ children, items, handleDragEnd }) => {
+const DragAndDrop = ({
+  children,
+  items,
+  handleDragEnd,
+  hoistDraggingState,
+}) => {
   const [isDragging, setIsDragging] = useState(false);
 
   const internalHandleDragEnd = (evt) => {
@@ -44,6 +49,10 @@ const DragAndDrop = ({ children, items, handleDragEnd }) => {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
+
+  useEffect(() => {
+    hoistDraggingState(isDragging);
+  }, [isDragging]);
 
   return (
     <Box

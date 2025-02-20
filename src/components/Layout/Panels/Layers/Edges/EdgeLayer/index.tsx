@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
-import { Box, Checkbox, Typography } from "@mui/material";
+import { Box, Checkbox, Tooltip, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import {
   onSelectNode,
@@ -20,8 +20,9 @@ import LockOpenIcon from "@mui/icons-material/LockOpen";
 import shapeMap from "@/map/shape-map";
 import ShapeSVG from "@/components/Nodes/Shape/ShapeSVG";
 import { deleteNodes } from "@/state/Chart/chartSlice";
+import constrainText from "@/utils/constrainText";
 
-const EdgeLayer = ({ edge, modifierKeys }) => {
+const EdgeLayer = ({ edge, modifierKeys, isDragging }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const styles = Styles(theme);
@@ -62,7 +63,19 @@ const EdgeLayer = ({ edge, modifierKeys }) => {
           sx={styles.icon}
           component={shapeMap[edge.data.iconKey].icon}
         />
-        <Typography variant="caption">{edge.data.label}</Typography>
+        <Tooltip
+          title={
+            !isDragging && edge.data.label.length > 17 ? edge.data.label : ""
+          }
+          placement="right"
+          arrow
+          enterDelay={700}
+          leaveDelay={0}
+        >
+          <Typography variant="caption" sx={{ cursor: "default" }}>
+            {constrainText(edge.data.label, 17)}
+          </Typography>
+        </Tooltip>
       </Box>
       <Box sx={styles.right}>
         <Box

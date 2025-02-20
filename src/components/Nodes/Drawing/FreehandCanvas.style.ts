@@ -8,10 +8,7 @@ const Styles = (theme: Theme) => ({
     alignItems: "center",
     gap: "1rem",
     width: "100%",
-    backgroundColor:
-      theme.palette.mode === "dark"
-        ? theme.palette.grey[700]
-        : theme.palette.grey[300],
+    backgroundColor: theme.palette.primary.main,
     padding: "0.5rem",
   },
   controlContainerInner: {
