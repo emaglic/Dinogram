@@ -8,7 +8,7 @@ import hexToRgba from "@/utils/hexToRgba";
 const minWidth = 10;
 const minHeight = 10;
 
-const TextNode = ({ selected, type, data }) => {
+const TextNode = ({ id, selected, type, data }) => {
   const theme = useTheme();
   const styles = Styles(theme);
 
@@ -32,6 +32,7 @@ const TextNode = ({ selected, type, data }) => {
     return (
       <>
         <BaseNode
+          id={id}
           type={type}
           data={data}
           label={data.label}

@@ -12,7 +12,7 @@ import { selectIsDragging } from "@/state/Chart/settingsSlice";
 const minWidth = 10;
 const minHeight = 10;
 
-const ImageNode = ({ selected, type, data }) => {
+const ImageNode = ({ id, selected, type, data }) => {
   const theme = useTheme();
   const styles = Styles(theme);
 
@@ -22,6 +22,7 @@ const ImageNode = ({ selected, type, data }) => {
 
   return (
     <BaseNode
+      id={id}
       type={type}
       data={data}
       label={data.label}

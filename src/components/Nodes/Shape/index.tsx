@@ -10,13 +10,14 @@ import hexToRgba from "@/utils/hexToRgba";
 const minWidth = 25;
 const minHeight = 25;
 
-const ShapeNode = ({ selected, type, data }) => {
+const ShapeNode = ({ id, selected, type, data }) => {
   const theme = useTheme();
   const styles = Styles(theme);
 
   return (
     <>
       <BaseNode
+        id={id}
         type={type}
         data={data}
         label={data.label}

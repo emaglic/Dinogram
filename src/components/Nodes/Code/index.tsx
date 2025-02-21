@@ -54,6 +54,7 @@ const CodeNode = ({ id, selected, type, data }) => {
 
   return (
     <BaseNode
+      id={id}
       type={type}
       data={data}
       label={data.label}

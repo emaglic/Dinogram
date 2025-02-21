@@ -8,7 +8,7 @@ import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
 import shapeMap from "@/map/shape-map";
 
-const WebNode = ({ selected, type, data }) => {
+const WebNode = ({ id, selected, type, data }) => {
   const theme = useTheme();
   const styles = Styles(theme);
   const isDragging = useSelector(selectIsDragging);
@@ -18,6 +18,7 @@ const WebNode = ({ selected, type, data }) => {
   return (
     <>
       <BaseNode
+        id={id}
         data={data}
         type={type}
         label={data.label}

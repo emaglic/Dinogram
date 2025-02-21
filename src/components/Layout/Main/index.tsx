@@ -13,12 +13,7 @@ import FloatingControlBar from "../Controls/Left";
 import OpenProjectDialog from "@/components/Settings/OpenProjectDialog";
 import { selectManifest } from "@/state/Chart/manifestSlice";
 import { selectProject } from "@/state/Chart/projectSlice";
-import {
-  redo,
-  selectChart,
-  selectChartHistory,
-  undo,
-} from "@/state/Chart/chartSlice";
+import { redo, selectChart, undo } from "@/state/Chart/chartSlice";
 import { useLSSaveManifest, useLSSaveProject } from "@/hooks/LocalStorage/save";
 import TopControls from "../Controls/Top";
 import StateSaver from "@/components/Settings/StateSaver";

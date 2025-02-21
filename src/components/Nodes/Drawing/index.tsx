@@ -46,6 +46,7 @@ const RichTextNode = ({ selected, type, data, id }) => {
 
   return (
     <BaseNode
+      id={id}
       type={type}
       data={data}
       label={data.label}

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ChartNode } from "@/types/chart/nodes";
 import { EdgeType } from "@/types/chart/edges";
 import { RootState } from "@/state/store";
@@ -6,6 +6,7 @@ import { addEdge, applyNodeChanges, applyEdgeChanges } from "@xyflow/react";
 import getNewChart from "@/base/chart";
 import { create, isEqual } from "lodash";
 import getBaseEdge from "@/base/edges/baseEdge";
+import { v4 as uuidv4 } from "uuid";
 
 interface ChartState {
   nodes: ChartNode[];
@@ -159,6 +160,38 @@ const chartSlice = createSlice({
             : node;
         }
       );
+      pushToHistory(state, {
+        nodes: updatedNodes,
+        edges: state.history[state.currentIndex].edges,
+      });
+    },
+    duplicateNodes: (state, action: PayloadAction<ChartNode[]>) => {
+      console.log("action.payload: ", action.payload);
+      let updatedNodes = state.history[state.currentIndex].nodes.map(
+        (node) => ({
+          ...node,
+          selected: false,
+        })
+      );
+
+      if (action.payload) {
+        const newNodes = action.payload.map((node) => {
+          return {
+            ...node,
+            id: uuidv4(),
+            position: {
+              ...node.position,
+              x: node.position.x + 10,
+              y: node.position.y + 10,
+            },
+            data: {
+              ...node.data,
+              label: `${node.data.label}`,
+            },
+          };
+        });
+        updatedNodes = [...updatedNodes, ...newNodes];
+      }
       pushToHistory(state, {
         nodes: updatedNodes,
         edges: state.history[state.currentIndex].edges,
@@ -360,6 +393,7 @@ export const {
   createNode,
   updateNode,
   updateNodes,
+  duplicateNodes,
   deleteNodes,
   updateNodeData,
 
@@ -378,14 +412,33 @@ export const {
   redo,
 } = chartSlice.actions;
 
-export const selectChart = (state: RootState): ChartState =>
+/* export const selectChart = (state: RootState): ChartState =>
   state.chart.history[state.chart.currentIndex];
 export const selectNodes = (state: RootState): ChartNode[] =>
   state.chart.history[state.chart.currentIndex].nodes;
 export const selectEdges = (state: RootState): EdgeType[] =>
-  state.chart.history[state.chart.currentIndex].edges;
-
+  state.chart.history[state.chart.currentIndex].edges; 
 export const selectChartHistory = (state: RootState): ChartState[] =>
   state.chart.history;
+*/
+
+export const selectChart = createSelector(
+  (state: RootState) => state.chart,
+  (chart) => chart.history[chart.currentIndex]
+);
+
+export const selectNodes = createSelector(selectChart, (chart) => chart.nodes);
+
+export const selectEdges = createSelector(selectChart, (chart) => chart.edges);
+
+export const selectNodeById = createSelector(
+  [selectNodes, (_: RootState, id: string) => id],
+  (nodes, id) => nodes.find((node) => node.id === id)
+);
+
+export const selectEdgeById = createSelector(
+  [selectEdges, (_: RootState, id: string) => id],
+  (edges, id) => edges.find((edge) => edge.id === id)
+);
 
 export default chartSlice.reducer;
