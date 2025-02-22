@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { MouseEvent } from "react";
 import { useTheme } from "@mui/material/styles";
-import { Box, Checkbox, Tooltip, Typography } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  onSelectNode,
-  updateNodeOrder,
-  updateNodeData,
-} from "@/state/Chart/chartSlice";
-import Styles, { NodeStyles } from "./index.style";
-import { NodeIconMap } from "@/map/icon-map";
+import { Box, Tooltip, Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { onSelectNode, updateNodeData } from "@/state/Chart/chartSlice";
+import Styles from "./index.style";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -19,10 +14,22 @@ import shapeMap from "@/map/shape-map";
 import ShapeSVG from "@/components/Nodes/Shape/ShapeSVG";
 import { deleteNodes } from "@/state/Chart/chartSlice";
 import constrainText from "@/utils/constrainText";
-import ContextMenu from "@/components/Controls/ContextMenu";
-import useContextMenu from "@/hooks/useContextMenu";
+import { ChartNode } from "@/types/chart/nodes";
+import { KeyboardKeysType } from "@/state/Chart/settingsSlice";
 
-const NodeLayer = ({ node, keyboardKeys, isDragging, onContextMenu }) => {
+interface Props {
+  node: ChartNode;
+  keyboardKeys: KeyboardKeysType;
+  isDragging: boolean;
+  onContextMenu: (evt: MouseEvent<HTMLElement>) => void;
+}
+
+const NodeLayer = ({
+  node,
+  keyboardKeys,
+  isDragging,
+  onContextMenu,
+}: Props) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const styles = Styles(theme);
@@ -31,7 +38,10 @@ const NodeLayer = ({ node, keyboardKeys, isDragging, onContextMenu }) => {
     dispatch(onSelectNode({ id: node.id, keyboardKeys }));
   };
 
-  const handleUpdateData = (evt, dataItem) => {
+  const handleUpdateData = (
+    evt: MouseEvent,
+    dataItem: Partial<ChartNode["data"]>
+  ) => {
     evt.stopPropagation();
     dispatch(
       updateNodeData({
@@ -41,15 +51,15 @@ const NodeLayer = ({ node, keyboardKeys, isDragging, onContextMenu }) => {
     );
   };
 
-  const handleVisibility = (evt) => {
+  const handleVisibility = (evt: MouseEvent) => {
     handleUpdateData(evt, { visible: !node.data.visible });
   };
 
-  const handleLocking = (evt) => {
+  const handleLocking = (evt: MouseEvent) => {
     handleUpdateData(evt, { locked: !node.data.locked });
   };
 
-  const handleDelete = (evt) => {
+  const handleDelete = (evt: MouseEvent) => {
     evt.stopPropagation();
     if (node.data.visible && !node.data.locked) {
       dispatch(deleteNodes([node]));
@@ -60,16 +70,16 @@ const NodeLayer = ({ node, keyboardKeys, isDragging, onContextMenu }) => {
     <>
       <Box
         onClick={handleSelected}
-        onContextMenu={(evt) => {
-          if (onContextMenu) onContextMenu(evt);
-        }}
+        onContextMenu={onContextMenu}
         sx={{ ...styles.container(node) }}
       >
         {/* <Checkbox checked={node.selected} onChange={handleClicked} /> */}
         <Box sx={styles.left}>
           <ShapeSVG
             sx={styles.icon}
-            component={shapeMap[node.data.iconKey].icon}
+            component={
+              shapeMap[node.data.iconKey as keyof typeof shapeMap].icon
+            }
           />
           <Tooltip
             title={

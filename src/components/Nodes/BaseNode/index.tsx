@@ -7,8 +7,9 @@ import Styles from "./index.styles";
 import classes from "./index.module.css";
 import useContextMenu from "@/hooks/useContextMenu";
 import ContextMenu from "@/components/Controls/ContextMenu";
-import { useSelector } from "react-redux";
-import { selectNodeById } from "@/state/Chart/chartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { onSelectNode, selectNodeById } from "@/state/Chart/chartSlice";
+import { selectKeyboardKeys } from "@/state/Chart/settingsSlice";
 
 interface Props {
   id: string;
@@ -40,16 +41,18 @@ const BaseNode = ({
   type,
   data,
 }: Props) => {
+  const dispatch = useDispatch();
+  const keyboardKeys = useSelector(selectKeyboardKeys);
   const theme = useTheme();
   const styles = Styles(theme);
   const [hovered, setHovered] = useState(false);
   const node = useSelector((state) => selectNodeById(state, id));
-  const [
-    handleContextMenuOpen,
-    handleContextMenuClose,
-    contextMenuPosition,
-    contextMenuPayload,
-  ] = useContextMenu();
+
+  const handleSelectNode = () => {
+    if (node && !node.selected) {
+      dispatch(onSelectNode({ id: node.id, keyboardKeys }));
+    }
+  };
 
   return (
     <>
@@ -62,9 +65,7 @@ const BaseNode = ({
         className={`${data?.locked || !data?.visible ? "nodrag" : undefined}`}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        onContextMenu={(evt) => {
-          handleContextMenuOpen(evt, node);
-        }}
+        onContextMenu={handleSelectNode}
       >
         {data?.baseNodeComponent?.showHeader ? (
           <NodeHeader label={label} />
@@ -132,11 +133,11 @@ const BaseNode = ({
         />
         {children}
       </Box>
-      <ContextMenu
+      {/* <ContextMenu
         position={contextMenuPosition}
         handleClose={handleContextMenuClose}
         payload={contextMenuPayload}
-      />
+      /> */}
     </>
   );
 };

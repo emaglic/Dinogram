@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import AlignHorizontalRightIcon from "@mui/icons-material/AlignHorizontalRight";
 import { useTheme } from "@mui/material/styles";
 import Styles from "../index.style";
-
-import { Box, Tooltip } from "@mui/material";
+import { Box, Tooltip, TooltipProps } from "@mui/material";
 import { selectSelectedNodes, updateNodes } from "@/state/Chart/chartSlice";
 
-const AlignRight = ({ tooltipPlacement = "top" }) => {
+interface Props {
+  tooltipPlacement?: TooltipProps["placement"];
+}
+
+const AlignRight = ({ tooltipPlacement = "top" }: Props) => {
   const theme = useTheme();
   const styles = Styles(theme);
   const dispatch = useDispatch();

@@ -1,4 +1,13 @@
-const getToDuplicate = (nodes, edges, payload) => {
+import { ChartEdge } from "@/types/chart/edges";
+import { ChartNode } from "@/types/chart/nodes";
+
+type Payload = ChartNode | ChartNode[] | ChartEdge | ChartEdge[];
+
+const getToDuplicate = (
+  nodes: ChartNode[],
+  edges: ChartEdge[],
+  payload: Payload
+) => {
   let wrappedPayload = null;
   if (payload) {
     if (Array.isArray(payload)) wrappedPayload = payload;

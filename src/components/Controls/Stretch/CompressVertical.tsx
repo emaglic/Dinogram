@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import CompressIcon from "@/assets/svg/compress.svg?react";
 import { useTheme } from "@mui/material/styles";
 import Styles from "../index.style";
-
-import { Box, SvgIcon, Tooltip } from "@mui/material";
+import { Box, SvgIcon, Tooltip, TooltipProps } from "@mui/material";
 import { selectSelectedNodes, updateNodes } from "@/state/Chart/chartSlice";
 
-const CompressHorizontal = ({ tooltipPlacement = "top" }) => {
+interface Props {
+  tooltipPlacement?: TooltipProps["placement"];
+}
+
+const CompressHorizontal = ({ tooltipPlacement = "top" }: Props) => {
   const theme = useTheme();
   const styles = Styles(theme);
   const dispatch = useDispatch();

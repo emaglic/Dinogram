@@ -2,12 +2,17 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import Styles from "../index.style";
-import { Box, Tooltip } from "@mui/material";
+import { Box, Tooltip, TooltipProps } from "@mui/material";
 import { selectSelectedNodes, updateNodes } from "@/state/Chart/chartSlice";
 import DistributeVerticalIcon from "@/assets/svg/distribute-vertical.svg?react";
 import SvgIcon from "@mui/material/SvgIcon";
+import { ChartNode } from "@/types/chart/nodes";
 
-const DistributeVertical = ({ tooltipPlacement = "top" }) => {
+interface Props {
+  tooltipPlacement?: TooltipProps["placement"];
+}
+
+const DistributeVertical = ({ tooltipPlacement = "top" }: Props) => {
   const theme = useTheme();
   const styles = Styles(theme);
   const dispatch = useDispatch();
@@ -26,7 +31,7 @@ const DistributeVertical = ({ tooltipPlacement = "top" }) => {
     const spaceBetween = vertSpace - occupiedSpace;
     const spaceBetweenEach = spaceBetween / (nodes.length - 1);
 
-    const updatedNodes = [];
+    const updatedNodes: ChartNode[] = [];
 
     let currentY = minY;
     [...nodes]

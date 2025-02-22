@@ -18,19 +18,3 @@ export interface BaseNodeData {
   locked: boolean;
   iconKey: string;
 }
-
-interface RichTextNodeData extends BaseNodeData {}
-
-interface WebNodeData extends BaseNodeData {
-  src: string;
-}
-
-interface ShapeNodeData extends BaseNodeData {
-  shape: string;
-}
-
-type RichTextNode = Node<RichTextNodeData>;
-type WebNode = Node<WebNodeData>;
-type ShapeNode = Node<ShapeNodeData>;
-
-export type ChartNode = WebNode | RichTextNode | ShapeNode;

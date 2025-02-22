@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import { getDefaultThemeModeColor } from "../utils";
+import { ChartEdge } from "@/types/chart/edges";
 
-const getBaseEdge = (edges: EdgeNode[]) => {
+const getBaseEdge = (edges: ChartEdge[]) => {
   return {
     id: uuidv4(),
     data: {

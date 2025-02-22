@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
+import React, { MouseEvent } from "react";
 import { useTheme } from "@mui/material/styles";
-import { Box, Checkbox, Tooltip, Typography } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
+import { Box, Tooltip, Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
 import {
-  onSelectNode,
-  updateNodeOrder,
-  updateNodeData,
   updateEdgeData,
   deleteEdges,
   onSelectEdge,
@@ -19,10 +16,17 @@ import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import shapeMap from "@/map/shape-map";
 import ShapeSVG from "@/components/Nodes/Shape/ShapeSVG";
-import { deleteNodes } from "@/state/Chart/chartSlice";
 import constrainText from "@/utils/constrainText";
+import { KeyboardKeysType } from "@/state/Chart/settingsSlice";
+import { ChartEdge } from "@/types/chart/edges";
 
-const EdgeLayer = ({ edge, keyboardKeys, isDragging }) => {
+interface Props {
+  edge: ChartEdge;
+  keyboardKeys: KeyboardKeysType;
+  isDragging: boolean;
+}
+
+const EdgeLayer = ({ edge, keyboardKeys, isDragging }: Props) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const styles = Styles(theme);
@@ -31,7 +35,10 @@ const EdgeLayer = ({ edge, keyboardKeys, isDragging }) => {
     dispatch(onSelectEdge({ id: edge.id, keyboardKeys }));
   };
 
-  const handleUpdateData = (evt, dataItem) => {
+  const handleUpdateData = (
+    evt: MouseEvent,
+    dataItem: Partial<ChartEdge["data"]>
+  ) => {
     evt.stopPropagation();
     dispatch(
       updateEdgeData({
@@ -41,15 +48,15 @@ const EdgeLayer = ({ edge, keyboardKeys, isDragging }) => {
     );
   };
 
-  const handleVisibility = (evt) => {
+  const handleVisibility = (evt: MouseEvent) => {
     handleUpdateData(evt, { visible: !edge.data.visible });
   };
 
-  const handleLocking = (evt) => {
+  const handleLocking = (evt: MouseEvent) => {
     handleUpdateData(evt, { locked: !edge.data.locked });
   };
 
-  const handleDelete = (evt) => {
+  const handleDelete = (evt: MouseEvent) => {
     evt.stopPropagation();
     if (edge.data.visible && !edge.data.locked) {
       dispatch(deleteEdges([edge]));
@@ -61,7 +68,7 @@ const EdgeLayer = ({ edge, keyboardKeys, isDragging }) => {
       <Box sx={styles.left}>
         <ShapeSVG
           sx={styles.icon}
-          component={shapeMap[edge.data.iconKey].icon}
+          component={shapeMap[edge.data.iconKey as keyof typeof shapeMap].icon}
         />
         <Tooltip
           title={

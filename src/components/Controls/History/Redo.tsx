@@ -4,10 +4,14 @@ import { useTheme } from "@mui/material/styles";
 import RedoIcon from "@mui/icons-material/Redo";
 import Styles from "../index.style";
 
-import { Box, Tooltip } from "@mui/material";
+import { Box, Tooltip, TooltipProps } from "@mui/material";
 import { redo } from "@/state/Chart/chartSlice";
 
-const Redo = ({ tooltipPlacement = "top" }) => {
+interface Props {
+  tooltipPlacement?: TooltipProps["placement"];
+}
+
+const Redo = ({ tooltipPlacement = "top" }: Props) => {
   const theme = useTheme();
   const styles = Styles(theme);
   const dispatch = useDispatch();

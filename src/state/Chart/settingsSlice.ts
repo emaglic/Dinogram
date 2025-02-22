@@ -1,6 +1,18 @@
+import { ChartNode } from "@/types/chart/nodes";
 import { RootState } from "../store";
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import _ from "lodash";
+import { ChartEdge } from "@/types/chart/edges";
+
+type KeyboardKeyValue = 0 | 1 | 2;
+interface KeyboardKeys {
+  [key: string]: KeyboardKeyValue;
+}
+
+interface Clipboard {
+  nodes: ChartNode[];
+  edges: ChartEdge[];
+}
 
 const initialValues = {
   isDragging: false,
@@ -12,10 +24,11 @@ const initialValues = {
     z: 0,
     c: 0,
     v: 0,
-  },
+  } as KeyboardKeys,
   clipboard: {
     nodes: [],
-  },
+    edges: [],
+  } as Clipboard,
 };
 
 const settingsSlice = createSlice({
@@ -29,18 +42,24 @@ const settingsSlice = createSlice({
       state.keyboardKeys = action.payload;
     },
     setClipboard: (state, action) => {
-      state.clipboard.nodes = action.payload;
+      state.clipboard.nodes = action.payload.nodes;
+      state.clipboard.edges = action.payload.edges;
     },
   },
 });
 
-export const { setDragging, setKeyboardKeys } = settingsSlice.actions;
+// Export Types
+export type KeyboardKeysType = typeof initialValues.keyboardKeys;
 
+// Export Reducer Actions
+export const { setDragging, setKeyboardKeys, setClipboard } =
+  settingsSlice.actions;
+
+// Export Selectors
 export const selectIsDragging = (state: RootState) => state.settings.isDragging;
-
 export const selectKeyboardKeys = (state: RootState) =>
   state.settings.keyboardKeys;
-
 export const selectClipboard = (state: RootState) => state.settings.clipboard;
 
+// Export Reducer
 export default settingsSlice.reducer;

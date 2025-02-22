@@ -51,9 +51,18 @@ const useKeyboard = () => {
 
   const updateKeyState = (code: string, value: number) => {
     const keyUpdate = getUpdatedKeyState(code, value);
-    if (Object.keys(keyUpdate).length > 0) {
-      setKeys((prev) => ({ ...prev, ...keyUpdate }));
-    }
+    if (Object.keys(keyUpdate).length === 0) return;
+
+    // Get the key being updated (e.g. 'alt', 'ctrl', etc.)
+    const key = Object.keys(keyUpdate)[0] as keyof KeyboardState;
+
+    setKeys((prev) => {
+      // Only update if the value actually changes
+      if (prev[key] === keyUpdate[key]) {
+        return prev;
+      }
+      return { ...prev, ...keyUpdate };
+    });
   };
 
   // Dispatch updated keys state whenever it changes.
@@ -81,7 +90,7 @@ const useKeyboard = () => {
     };
   }, []);
 
-  return null; // Optionally, you could return the keys state here if needed.
+  return keys;
 };
 
 export default useKeyboard;

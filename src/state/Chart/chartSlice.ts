@@ -1,6 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ChartNode } from "@/types/chart/nodes";
-import { EdgeType } from "@/types/chart/edges";
+import { ChartEdge } from "@/types/chart/edges";
 import { RootState } from "@/state/store";
 import { addEdge, applyNodeChanges, applyEdgeChanges } from "@xyflow/react";
 import getNewChart from "@/base/chart";
@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 
 interface ChartState {
   nodes: ChartNode[];
-  edges: EdgeType[];
+  edges: ChartEdge[];
   timestamp: number;
 }
 
@@ -33,7 +33,7 @@ const initialState: ChartHistoryState = {
 // ✅ Only allow a new history entry if it's a true user edit
 const pushToHistory = (
   state: ChartHistoryState,
-  newEntry: { nodes: ChartNode[]; edges: EdgeType[] }
+  newEntry: { nodes: ChartNode[]; edges: ChartEdge[] }
 ) => {
   const newTimestamp = Date.now();
 
@@ -165,6 +165,58 @@ const chartSlice = createSlice({
         edges: state.history[state.currentIndex].edges,
       });
     },
+    pasteNodes: (
+      state,
+      action: PayloadAction<{
+        nodes: ChartNode[];
+        position: { x: number; y: number };
+      }>
+    ) => {
+      // Deselect all current nodes.
+      let updatedNodes = state.history[state.currentIndex].nodes.map(
+        (node) => ({
+          ...node,
+          selected: false,
+        })
+      );
+
+      const { nodes, position } = action.payload;
+
+      if (nodes && nodes.length > 0) {
+        // Determine the minimum x and y values among the nodes to be pasted.
+        const minX = Math.min(...nodes.map((node) => node.position.x));
+        const minY = Math.min(...nodes.map((node) => node.position.y));
+
+        const newNodes = nodes.map((node, index) => {
+          const offsetX = node.position.x - minX;
+          const offsetY = node.position.y - minY;
+
+          return {
+            ...node,
+            id: uuidv4(), // Generate a new id for the pasted node.
+            selected: true,
+            // Calculate the new position so that the first node's offset is (0,0)
+            // and other nodes keep their spacing, scaled by a factor of 2.
+            position: {
+              x: position.x + offsetX * 1,
+              y: position.y + offsetY * 1,
+            },
+            data: {
+              ...node.data,
+              label: `${node.data.label}`,
+              zIndex: updatedNodes.length + index,
+            },
+          };
+        });
+        updatedNodes = [...updatedNodes, ...newNodes];
+      }
+
+      pushToHistory(state, {
+        nodes: updatedNodes,
+        edges: state.history[state.currentIndex].edges,
+      });
+    },
+
     duplicateNodes: (state, action: PayloadAction<ChartNode[]>) => {
       console.log("action.payload: ", action.payload);
       let updatedNodes = state.history[state.currentIndex].nodes.map(
@@ -317,7 +369,7 @@ const chartSlice = createSlice({
         edges: updatedEdges,
       });
     },
-    updateEdges: (state, action?: PayloadAction<EdgeType[]> | undefined) => {
+    updateEdges: (state, action?: PayloadAction<ChartEdge[]> | undefined) => {
       const updatedEdges = state.history[state.currentIndex].edges.map(
         (edge) => {
           const updatedEdge = action?.payload.find(
@@ -341,7 +393,7 @@ const chartSlice = createSlice({
       });
     },
     deleteEdges: {
-      reducer: (state, action: PayloadAction<EdgeType[] | undefined>) => {
+      reducer: (state, action: PayloadAction<ChartEdge[] | undefined>) => {
         let updatedEdges = state.history[state.currentIndex].edges;
         if (action?.payload) {
           const idsToDelete = new Set(action.payload.map((edge) => edge.id));
@@ -358,7 +410,7 @@ const chartSlice = createSlice({
           edges: updatedEdges,
         });
       },
-      prepare: (payload?: EdgeType[]) => ({ payload }),
+      prepare: (payload?: ChartEdge[]) => ({ payload }),
     },
     updateEdgeData: (state, action) => {
       const updatedEdges = state.history[state.currentIndex].edges.map((edge) =>
@@ -405,6 +457,7 @@ export const {
   createNode,
   updateNode,
   updateNodes,
+  pasteNodes,
   duplicateNodes,
   deleteNodes,
   updateNodeData,
@@ -428,7 +481,7 @@ export const {
   state.chart.history[state.chart.currentIndex];
 export const selectNodes = (state: RootState): ChartNode[] =>
   state.chart.history[state.chart.currentIndex].nodes;
-export const selectEdges = (state: RootState): EdgeType[] =>
+export const selectEdges = (state: RootState): ChartEdge[] =>
   state.chart.history[state.chart.currentIndex].edges; 
 export const selectChartHistory = (state: RootState): ChartState[] =>
   state.chart.history;

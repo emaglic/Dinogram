@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, MouseEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -10,6 +10,7 @@ import { selectNodes } from "@/state/Chart/chartSlice";
 import useContextMenu from "@/hooks/useContextMenu";
 import ContextMenu from "@/components/Controls/ContextMenu";
 import { selectKeyboardKeys } from "@/state/Chart/settingsSlice";
+import { ChartNode } from "@/types/chart/nodes";
 
 const LayersPanel = () => {
   const keyboardKeys = useSelector(selectKeyboardKeys);
@@ -28,7 +29,7 @@ const LayersPanel = () => {
     contextMenuPayload,
   ] = useContextMenu();
 
-  const handleDragEnd = (array) => {
+  const handleDragEnd = (array: ChartNode[]) => {
     const updatedArray = [...array].reverse().map((item, index) => {
       return { ...item, data: { ...item.data, zIndex: index } };
     });
@@ -56,7 +57,7 @@ const LayersPanel = () => {
           {localLayers.map((node) => (
             <DragAndDropItem key={node.id} id={node.id}>
               <NodeLayer
-                onContextMenu={(evt) => {
+                onContextMenu={(evt: MouseEvent<HTMLElement>): void => {
                   handleContextMenuOpen(evt, node);
                 }}
                 keyboardKeys={keyboardKeys}

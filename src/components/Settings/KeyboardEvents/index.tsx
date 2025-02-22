@@ -3,23 +3,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteEdges, deleteNodes, redo, undo } from "@/state/Chart/chartSlice";
 import useKeyboard from "@/hooks/useKeyboard";
 import { selectKeyboardKeys } from "@/state/Chart/settingsSlice";
+import keyboardPatterns, { PatternLabel } from "./keyboardPatterns";
 
 const KeyboardEvents = () => {
-  useKeyboard();
+  const keys = useKeyboard();
   const dispatch = useDispatch();
-  const keys = useSelector(selectKeyboardKeys);
+
+  const hasPattern = (pattern: PatternLabel) => {
+    return keyboardPatterns(pattern, keys);
+  };
 
   useEffect(() => {
-    if (keys.ctrl && keys.z === 1) {
-      if (keys.shift) {
-        dispatch(redo());
-      } else {
-        dispatch(undo());
-      }
+    if (hasPattern("copy")) {
+      console.log("copy");
+      return;
     }
-    if (keys.delete === 1) {
+
+    if (hasPattern("paste")) {
+      console.log("paste");
+    }
+
+    if (hasPattern("redo")) {
+      dispatch(redo());
+      return;
+    }
+
+    if (hasPattern("undo")) {
+      dispatch(undo());
+      return;
+    }
+
+    if (hasPattern("delete")) {
       dispatch(deleteNodes());
       dispatch(deleteEdges());
+      return;
     }
   }, [keys]); // Re-run effect when keys change
 

@@ -1,6 +1,6 @@
 import { BaseNodeData, Node } from "./base";
 
-export interface ShapeNodeData extends BaseNodeData {
+interface ShapeNodeData extends BaseNodeData {
   shape: string;
 }
 

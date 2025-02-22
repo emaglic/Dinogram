@@ -4,10 +4,14 @@ import ExpandIcon from "@/assets/svg/expand.svg?react";
 import { useTheme } from "@mui/material/styles";
 import Styles from "../index.style";
 
-import { Box, SvgIcon, Tooltip } from "@mui/material";
+import { Box, SvgIcon, Tooltip, TooltipProps } from "@mui/material";
 import { selectSelectedNodes, updateNodes } from "@/state/Chart/chartSlice";
 
-const ExpandVertical = ({ tooltipPlacement = "top" }) => {
+interface Props {
+  tooltipPlacement?: TooltipProps["placement"];
+}
+
+const ExpandVertical = ({ tooltipPlacement = "top" }: Props) => {
   const theme = useTheme();
   const styles = Styles(theme);
   const dispatch = useDispatch();

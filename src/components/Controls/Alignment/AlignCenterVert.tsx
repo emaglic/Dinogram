@@ -1,18 +1,21 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AlignVerticalCenterIcon from "@mui/icons-material/AlignVerticalCenter";
-import useSelectedChartElements from "@/hooks/useGetSelected";
 import { useTheme } from "@mui/material/styles";
 import Styles from "../index.style";
 
-import { Box, Tooltip } from "@mui/material";
+import { Box, Tooltip, TooltipProps } from "@mui/material";
 import {
   selectChart,
   selectSelectedNodes,
   updateNodes,
 } from "@/state/Chart/chartSlice";
 
-const AlignCenterVert = ({ tooltipPlacement = "top" }) => {
+interface Props {
+  tooltipPlacement?: TooltipProps["placement"];
+}
+
+const AlignCenterVert = ({ tooltipPlacement = "top" }: Props) => {
   const theme = useTheme();
   const styles = Styles(theme);
   const dispatch = useDispatch();

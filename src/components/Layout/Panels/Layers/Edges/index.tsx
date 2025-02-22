@@ -7,6 +7,7 @@ import { selectEdges, updateEdgeOrder } from "@/state/Chart/chartSlice";
 import { DragAndDrop, DragAndDropItem } from "@/components/DragAndDrop";
 import EdgeLayer from "./EdgeLayer";
 import { selectKeyboardKeys } from "@/state/Chart/settingsSlice";
+import { ChartEdge } from "@/types/chart/edges";
 
 const LayersPanel = () => {
   const keyboardKeys = useSelector(selectKeyboardKeys);
@@ -18,7 +19,7 @@ const LayersPanel = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const handleDragEnd = (array) => {
+  const handleDragEnd = (array: ChartEdge[]) => {
     setIsDragging(false);
     const updatedArray = [...array].reverse().map((item, index) => {
       return { ...item, data: { ...item.data, zIndex: index } };

@@ -2,12 +2,17 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import Styles from "../index.style";
-import { Box, Tooltip } from "@mui/material";
+import { Box, Tooltip, TooltipProps } from "@mui/material";
 import { selectSelectedNodes, updateNodes } from "@/state/Chart/chartSlice";
 import DistributeHorizontalIcon from "@/assets/svg/distribute-horizontal.svg?react";
 import SvgIcon from "@mui/material/SvgIcon";
+import { ChartNode } from "@/types/chart/nodes";
 
-const DistributeHorizontal = ({ tooltipPlacement = "top" }) => {
+interface Props {
+  tooltipPlacement?: TooltipProps["placement"];
+}
+
+const DistributeHorizontal = ({ tooltipPlacement = "top" }: Props) => {
   const theme = useTheme();
   const styles = Styles(theme);
   const dispatch = useDispatch();
@@ -24,7 +29,7 @@ const DistributeHorizontal = ({ tooltipPlacement = "top" }) => {
     const spaceBetween = horzSpace - occupiedSpace;
     const spaceBetweenEach = spaceBetween / (nodes.length - 1);
 
-    const updatedNodes = [];
+    const updatedNodes: ChartNode[] = [];
 
     let currentX = minX;
     [...nodes]
