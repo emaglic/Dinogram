@@ -1,12 +1,14 @@
-import useSelectedChartElements from "@/hooks/useGetSelected";
-import { selectChart } from "@/state/Chart/chartSlice";
-import { Box, Typography } from "@mui/material";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import ElementProperties from "@/components/Layout/Panels/LayerSettings/LayerProps";
+import { useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
-import Styles from "./index.style";
+import { Box, Typography } from "@mui/material";
+import {
+  selectSelectedEdges,
+  selectSelectedNodes,
+} from "@/state/Chart/chartSlice";
+import ElementProperties from "@/components/Layout/Panels/LayerSettings/LayerProps";
 import MultiLayerOpts from "./MultiLayerOpts";
+import Styles from "./index.style";
 
 const getContent = (nodes, edges) => {
   const theme = useTheme();
@@ -35,7 +37,7 @@ const getContent = (nodes, edges) => {
   if (edges.length && nodes.length) {
     return (
       <Box sx={styles.innerContainer}>
-        <Typography>Invalid Selection</Typography>
+        <Typography>Incompatible Selection</Typography>
       </Box>
     );
   }
@@ -46,9 +48,8 @@ const getContent = (nodes, edges) => {
 const LayerSettings = () => {
   const theme = useTheme();
   const styles = Styles(theme);
-  const chart = useSelector(selectChart);
-  const { nodes, edges } = useSelectedChartElements(chart);
-  // const selectedChartElements = [...nodes, ...edges];
+  const nodes = useSelector(selectSelectedNodes);
+  const edges = useSelector(selectSelectedEdges);
 
   return <Box sx={styles.container}>{getContent(nodes, edges)}</Box>;
 };

@@ -12,31 +12,22 @@ import ContentPaste from "@mui/icons-material/ContentPaste";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import Cloud from "@mui/icons-material/Cloud";
 import { Menu } from "@mui/material";
-import useSelectedChartElements from "@/hooks/useGetSelected";
+import { getToDuplicate } from "@/utils/context-menu";
+
 import {
   duplicateNodes,
-  selectChart,
-  updateNodes,
+  selectSelectedEdges,
+  selectSelectedNodes,
 } from "@/state/Chart/chartSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { getToDuplicate } from "@/utils/context-menu";
 
 const ContextMenu = ({ position, handleClose, payload }) => {
   const dispatch = useDispatch();
-  const chart = useSelector(selectChart);
-  const { nodes, edges } = useSelectedChartElements(chart);
-
+  const nodes = useSelector(selectSelectedNodes);
+  const edges = useSelector(selectSelectedEdges);
   const handleDuplicate = () => {
-    // console.log("payload", payload);
-    if (payload) {
-      dispatch(duplicateNodes([payload]));
-    }
-    handleClose();
-  };
-
-  const handleDuplicateSelected = () => {
-    // const [dupNodes] = getToDuplicate(nodes, edges);
-    dispatch(duplicateNodes(nodes));
+    const [dupNodes] = getToDuplicate(nodes, edges, payload);
+    dispatch(duplicateNodes(dupNodes));
     handleClose();
   };
 
@@ -61,18 +52,6 @@ const ContextMenu = ({ position, handleClose, payload }) => {
             sx={{ color: "text.secondary", marginLeft: "0.5rem" }}
           >
             CTRL + D
-          </Typography> */}
-        </MenuItem>
-        <MenuItem onClick={handleDuplicateSelected}>
-          <ListItemIcon>
-            <FileCopyIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Duplicate Selected</ListItemText>
-          {/* <Typography
-            variant="body2"
-            sx={{ color: "text.secondary", marginLeft: "0.5rem" }}
-          >
-            CTRL + SHIFT + D
           </Typography> */}
         </MenuItem>
         {/* <MenuItem>

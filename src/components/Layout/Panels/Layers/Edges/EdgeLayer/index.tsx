@@ -22,13 +22,13 @@ import ShapeSVG from "@/components/Nodes/Shape/ShapeSVG";
 import { deleteNodes } from "@/state/Chart/chartSlice";
 import constrainText from "@/utils/constrainText";
 
-const EdgeLayer = ({ edge, modifierKeys, isDragging }) => {
+const EdgeLayer = ({ edge, keyboardKeys, isDragging }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const styles = Styles(theme);
 
   const handleSelected = () => {
-    dispatch(onSelectEdge({ id: edge.id, modifierKeys }));
+    dispatch(onSelectEdge({ id: edge.id, keyboardKeys }));
   };
 
   const handleUpdateData = (evt, dataItem) => {

@@ -87,14 +87,14 @@ const chartSlice = createSlice({
       });
     },
     onSelectNode: (state, action) => {
-      const { id, modifierKeys } = action.payload;
+      const { id, keyboardKeys } = action.payload;
       const updatedNodes = state.history[state.currentIndex].nodes.map(
         (node) => ({
           ...node,
           selected:
             node.id === id
               ? !node.selected
-              : !modifierKeys?.ctrl
+              : !keyboardKeys?.ctrl
               ? false
               : node.selected,
         })
@@ -175,10 +175,11 @@ const chartSlice = createSlice({
       );
 
       if (action.payload) {
-        const newNodes = action.payload.map((node) => {
+        const newNodes = action.payload.map((node, index) => {
           return {
             ...node,
             id: uuidv4(),
+            selected: true,
             position: {
               ...node.position,
               x: node.position.x + 10,
@@ -187,6 +188,7 @@ const chartSlice = createSlice({
             data: {
               ...node.data,
               label: `${node.data.label}`,
+              zIndex: updatedNodes.length + index,
             },
           };
         });
@@ -197,21 +199,26 @@ const chartSlice = createSlice({
         edges: state.history[state.currentIndex].edges,
       });
     },
-    deleteNodes: (state, action: PayloadAction<ChartNode[]> | undefined) => {
-      let updatedNodes = state.history[state.currentIndex].nodes;
-      if (action?.payload) {
-        const idsToDelete = new Set(action.payload.map((node) => node.id));
-        updatedNodes = updatedNodes.filter((node) => !idsToDelete.has(node.id));
-      } else {
-        updatedNodes = state.history[state.currentIndex].nodes.filter(
-          (node) => !node.selected || node.data.locked || !node.data.visible
-        );
-      }
+    deleteNodes: {
+      reducer: (state, action: PayloadAction<ChartNode[] | undefined>) => {
+        let updatedNodes = state.history[state.currentIndex].nodes;
+        if (action?.payload) {
+          const idsToDelete = new Set(action.payload.map((node) => node.id));
+          updatedNodes = updatedNodes.filter(
+            (node) => !idsToDelete.has(node.id)
+          );
+        } else {
+          updatedNodes = state.history[state.currentIndex].nodes.filter(
+            (node) => !node.selected || node.data.locked || !node.data.visible
+          );
+        }
 
-      pushToHistory(state, {
-        nodes: updatedNodes,
-        edges: state.history[state.currentIndex].edges,
-      });
+        pushToHistory(state, {
+          nodes: updatedNodes,
+          edges: state.history[state.currentIndex].edges,
+        });
+      },
+      prepare: (payload?: ChartNode[]) => ({ payload }),
     },
     updateNodeData: (state, action) => {
       const updatedNodes = state.history[state.currentIndex].nodes.map((node) =>
@@ -255,14 +262,14 @@ const chartSlice = createSlice({
       });
     },
     onSelectEdge: (state, action) => {
-      const { id, modifierKeys } = action.payload;
+      const { id, keyboardKeys } = action.payload;
       const updatedEdges = state.history[state.currentIndex].edges.map(
         (edge) => ({
           ...edge,
           selected:
             edge.id === id
               ? !edge.selected
-              : !modifierKeys?.ctrl
+              : !keyboardKeys?.ctrl
               ? false
               : edge.selected,
         })
@@ -310,10 +317,10 @@ const chartSlice = createSlice({
         edges: updatedEdges,
       });
     },
-    updateEdges: (state, action) => {
+    updateEdges: (state, action?: PayloadAction<EdgeType[]> | undefined) => {
       const updatedEdges = state.history[state.currentIndex].edges.map(
         (edge) => {
-          const updatedEdge = action.payload.find(
+          const updatedEdge = action?.payload.find(
             (newEdge) => newEdge.id === edge.id
           );
           return updatedEdge
@@ -333,20 +340,25 @@ const chartSlice = createSlice({
         edges: updatedEdges,
       });
     },
-    deleteEdges: (state, action) => {
-      let updatedEdges = state.history[state.currentIndex].edges;
-      if (action?.payload) {
-        const idsToDelete = new Set(action.payload.map((edge) => edge.id));
-        updatedEdges = updatedEdges.filter((edge) => !idsToDelete.has(edge.id));
-      } else {
-        updatedEdges = state.history[state.currentIndex].edges.filter(
-          (edge) => !edge.selected || edge.data.locked || !edge.data.visible
-        );
-      }
-      pushToHistory(state, {
-        nodes: state.history[state.currentIndex].nodes,
-        edges: updatedEdges,
-      });
+    deleteEdges: {
+      reducer: (state, action: PayloadAction<EdgeType[] | undefined>) => {
+        let updatedEdges = state.history[state.currentIndex].edges;
+        if (action?.payload) {
+          const idsToDelete = new Set(action.payload.map((edge) => edge.id));
+          updatedEdges = updatedEdges.filter(
+            (edge) => !idsToDelete.has(edge.id)
+          );
+        } else {
+          updatedEdges = state.history[state.currentIndex].edges.filter(
+            (edge) => !edge.selected || edge.data.locked || !edge.data.visible
+          );
+        }
+        pushToHistory(state, {
+          nodes: state.history[state.currentIndex].nodes,
+          edges: updatedEdges,
+        });
+      },
+      prepare: (payload?: EdgeType[]) => ({ payload }),
     },
     updateEdgeData: (state, action) => {
       const updatedEdges = state.history[state.currentIndex].edges.map((edge) =>
@@ -439,6 +451,14 @@ export const selectNodeById = createSelector(
 export const selectEdgeById = createSelector(
   [selectEdges, (_: RootState, id: string) => id],
   (edges, id) => edges.find((edge) => edge.id === id)
+);
+
+export const selectSelectedNodes = createSelector(selectNodes, (nodes) =>
+  nodes.filter((node) => node.selected)
+);
+
+export const selectSelectedEdges = createSelector(selectEdges, (edges) =>
+  edges.filter((edge) => edge.selected)
 );
 
 export default chartSlice.reducer;

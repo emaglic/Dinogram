@@ -1,21 +1,23 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteEdges, deleteNodes, redo, undo } from "@/state/Chart/chartSlice";
-import useKeyboardGlobal from "@/hooks/useKeyboardGlobal";
+import useKeyboard from "@/hooks/useKeyboard";
+import { selectKeyboardKeys } from "@/state/Chart/settingsSlice";
 
 const KeyboardEvents = () => {
+  useKeyboard();
   const dispatch = useDispatch();
-  const keys = useKeyboardGlobal();
+  const keys = useSelector(selectKeyboardKeys);
 
   useEffect(() => {
-    if (keys.ctrl && keys.z) {
+    if (keys.ctrl && keys.z === 1) {
       if (keys.shift) {
         dispatch(redo());
       } else {
         dispatch(undo());
       }
     }
-    if (keys.delete) {
+    if (keys.delete === 1) {
       dispatch(deleteNodes());
       dispatch(deleteEdges());
     }

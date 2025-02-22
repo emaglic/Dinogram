@@ -1,11 +1,8 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
-import { Box, Typography } from "@mui/material";
-import useSelectedChartElements from "@/hooks/useGetSelected";
-import UndoIcon from "@mui/icons-material/Undo";
-import RedoIcon from "@mui/icons-material/Redo";
+import { Box } from "@mui/material";
 import {
   AlignTop,
   AlignBottom,
@@ -22,14 +19,12 @@ import {
   Undo,
   Redo,
 } from "@/components/Controls";
-import { selectChart } from "@/state/Chart/chartSlice";
+import { selectSelectedNodes } from "@/state/Chart/chartSlice";
 
 const TopControls = () => {
   const theme = useTheme();
   const styles = Styles(theme);
-  const chart = useSelector(selectChart);
-  const { nodes } = useSelectedChartElements(chart);
-  const selectedChartElements = nodes;
+  const nodes = useSelector(selectSelectedNodes);
 
   return (
     <Box sx={styles.container}>
@@ -37,7 +32,7 @@ const TopControls = () => {
         <Undo />
         <Redo />
       </Box>
-      {selectedChartElements.length > 1 && (
+      {nodes.length > 1 && (
         <>
           <Box sx={styles.section}>
             <AlignLeft />

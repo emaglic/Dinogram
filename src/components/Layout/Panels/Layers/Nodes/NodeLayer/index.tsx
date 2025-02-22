@@ -22,13 +22,13 @@ import constrainText from "@/utils/constrainText";
 import ContextMenu from "@/components/Controls/ContextMenu";
 import useContextMenu from "@/hooks/useContextMenu";
 
-const NodeLayer = ({ node, modifierKeys, isDragging, onContextMenu }) => {
+const NodeLayer = ({ node, keyboardKeys, isDragging, onContextMenu }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const styles = Styles(theme);
 
   const handleSelected = () => {
-    dispatch(onSelectNode({ id: node.id, modifierKeys }));
+    dispatch(onSelectNode({ id: node.id, keyboardKeys }));
   };
 
   const handleUpdateData = (evt, dataItem) => {

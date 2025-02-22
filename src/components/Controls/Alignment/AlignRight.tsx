@@ -1,20 +1,18 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AlignHorizontalRightIcon from "@mui/icons-material/AlignHorizontalRight";
-import useSelectedChartElements from "@/hooks/useGetSelected";
 import { useTheme } from "@mui/material/styles";
 import Styles from "../index.style";
 
 import { Box, Tooltip } from "@mui/material";
-import { selectChart, updateNodes } from "@/state/Chart/chartSlice";
+import { selectSelectedNodes, updateNodes } from "@/state/Chart/chartSlice";
 
 const AlignRight = ({ tooltipPlacement = "top" }) => {
   const theme = useTheme();
   const styles = Styles(theme);
   const dispatch = useDispatch();
 
-  const chart = useSelector(selectChart);
-  const { nodes } = useSelectedChartElements(chart);
+  const nodes = useSelector(selectSelectedNodes);
 
   const handleClick = () => {
     const maxX = Math.max(...nodes.map((node) => node.position.x + node.width));

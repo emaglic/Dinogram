@@ -1,22 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
-import { RootState } from "../../../../state/store";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
-import {
-  onSelectNode,
-  selectEdges,
-  updateEdgeOrder,
-  updateNodeOrder,
-} from "@/state/Chart/chartSlice";
-import NodeLayer from "@/components/Layout/Panels/Layers/Nodes/NodeLayer";
+import { selectEdges, updateEdgeOrder } from "@/state/Chart/chartSlice";
 import { DragAndDrop, DragAndDropItem } from "@/components/DragAndDrop";
-import useKeyboard from "@/hooks/useKeyboard";
-import { selectNodes } from "@/state/Chart/chartSlice";
 import EdgeLayer from "./EdgeLayer";
+import { selectKeyboardKeys } from "@/state/Chart/settingsSlice";
 
 const LayersPanel = () => {
+  const keyboardKeys = useSelector(selectKeyboardKeys);
   const theme = useTheme();
   const styles = Styles(theme);
   const dispatch = useDispatch();
@@ -38,8 +31,6 @@ const LayersPanel = () => {
     setLocalLayers([...edges].reverse());
   }, [edges]);
 
-  const modifierKeys = useKeyboard(containerRef);
-
   return (
     <DragAndDrop
       items={localLayers}
@@ -50,7 +41,7 @@ const LayersPanel = () => {
         {localLayers.map((edge) => (
           <DragAndDropItem key={edge.id} id={edge.id}>
             <EdgeLayer
-              modifierKeys={modifierKeys}
+              keyboardKeys={keyboardKeys}
               edge={edge}
               isDragging={isDragging}
             />

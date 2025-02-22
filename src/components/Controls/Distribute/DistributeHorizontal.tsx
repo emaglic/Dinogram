@@ -1,10 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useSelectedChartElements from "@/hooks/useGetSelected";
 import { useTheme } from "@mui/material/styles";
 import Styles from "../index.style";
 import { Box, Tooltip } from "@mui/material";
-import { selectChart, updateNodes } from "@/state/Chart/chartSlice";
+import { selectSelectedNodes, updateNodes } from "@/state/Chart/chartSlice";
 import DistributeHorizontalIcon from "@/assets/svg/distribute-horizontal.svg?react";
 import SvgIcon from "@mui/material/SvgIcon";
 
@@ -13,8 +12,7 @@ const DistributeHorizontal = ({ tooltipPlacement = "top" }) => {
   const styles = Styles(theme);
   const dispatch = useDispatch();
 
-  const chart = useSelector(selectChart);
-  const { nodes } = useSelectedChartElements(chart);
+  const nodes = useSelector(selectSelectedNodes);
 
   const handleClick = () => {
     const minX = Math.min(...nodes.map((node) => node.position.x));

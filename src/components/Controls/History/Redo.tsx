@@ -1,9 +1,6 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import AlignVerticalBottomIcon from "@mui/icons-material/AlignVerticalBottom";
-import useSelectedChartElements from "@/hooks/useGetSelected";
+import { useDispatch } from "react-redux";
 import { useTheme } from "@mui/material/styles";
-import UndoIcon from "@mui/icons-material/Undo";
 import RedoIcon from "@mui/icons-material/Redo";
 import Styles from "../index.style";
 
@@ -14,9 +11,6 @@ const Redo = ({ tooltipPlacement = "top" }) => {
   const theme = useTheme();
   const styles = Styles(theme);
   const dispatch = useDispatch();
-
-  //const chart = useSelector(selectChart);
-  //const { nodes } = useSelectedChartElements(chart);
 
   const handleClick = () => {
     dispatch(redo());

@@ -1,24 +1,14 @@
-import React, { useState, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import Chart from "../Chart";
 import Header from "../Header";
 import Styles from "./index.styles";
-
 import { Box } from "@mui/material";
-import { RootState } from "@/state/store";
-import LeftPanel from "../LeftPanel";
-import RightPanel from "../RightPanel";
 import FloatingControlBar from "../Controls/Left";
 import OpenProjectDialog from "@/components/Settings/OpenProjectDialog";
-import { selectManifest } from "@/state/Chart/manifestSlice";
-import { selectProject } from "@/state/Chart/projectSlice";
-import { redo, selectChart, undo } from "@/state/Chart/chartSlice";
-import { useLSSaveManifest, useLSSaveProject } from "@/hooks/LocalStorage/save";
 import TopControls from "../Controls/Top";
 import StateSaver from "@/components/Settings/StateSaver";
 import Sidebar from "@/components/Layout/Sidebar";
-import useKeyboard from "@/hooks/useKeyboard";
 import KeyboardEvents from "@/components/Settings/KeyboardEvents";
 
 const Main = () => {

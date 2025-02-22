@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
-import { RootState } from "../../../../state/store";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
-import { onSelectNode, updateNodeOrder } from "@/state/Chart/chartSlice";
+import { updateNodeOrder } from "@/state/Chart/chartSlice";
 import NodeLayer from "@/components/Layout/Panels/Layers/Nodes/NodeLayer";
 import { DragAndDrop, DragAndDropItem } from "@/components/DragAndDrop";
-import useKeyboard from "@/hooks/useKeyboard";
 import { selectNodes } from "@/state/Chart/chartSlice";
 import useContextMenu from "@/hooks/useContextMenu";
 import ContextMenu from "@/components/Controls/ContextMenu";
+import { selectKeyboardKeys } from "@/state/Chart/settingsSlice";
 
 const LayersPanel = () => {
+  const keyboardKeys = useSelector(selectKeyboardKeys);
   const theme = useTheme();
   const styles = Styles(theme);
   const dispatch = useDispatch();
@@ -40,8 +40,6 @@ const LayersPanel = () => {
     setLocalLayers([...nodes].reverse());
   }, [nodes]);
 
-  const modifierKeys = useKeyboard(containerRef);
-
   return (
     <>
       <ContextMenu
@@ -61,7 +59,7 @@ const LayersPanel = () => {
                 onContextMenu={(evt) => {
                   handleContextMenuOpen(evt, node);
                 }}
-                modifierKeys={modifierKeys}
+                keyboardKeys={keyboardKeys}
                 node={node}
                 isDragging={isDragging}
               />
