@@ -88,7 +88,7 @@ function Chart() {
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
           colorMode={colorMode}
-          onNodesChange={(evt) => dispatch(handleNodesChange(evt))}
+          onNodesChange={(evt) => dispatch(onNodesChange([evt, dragLockAxis]))}
           onEdgesChange={(evt) => dispatch(onEdgesChange(evt))}
           onNodeDragStart={(evt) => {
             onNodeDragStart(evt);

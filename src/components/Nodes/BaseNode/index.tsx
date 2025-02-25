@@ -8,9 +8,18 @@ import classes from "./index.module.css";
 import useContextMenu from "@/hooks/useContextMenu";
 import ContextMenu from "@/components/Controls/ContextMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { onSelectNode, selectNodeById } from "@/state/Chart/chartSlice";
-import { selectKeyboardKeys } from "@/state/Settings/settingsSlice";
+import {
+  onNodesChange,
+  onSelectNode,
+  selectNodeById,
+} from "@/state/Chart/chartSlice";
+import {
+  selectDragLockAxis,
+  selectKeyboardKeys,
+  setDragLockAxis,
+} from "@/state/Settings/settingsSlice";
 import { RootState } from "@/state/store";
+import { set } from "lodash";
 
 interface Props {
   id: string;
@@ -48,11 +57,49 @@ const BaseNode = ({
   const styles = Styles(theme);
   const [hovered, setHovered] = useState(false);
   const node = useSelector((state: RootState) => selectNodeById(state, id));
+  const dragLockAxis = useSelector(selectDragLockAxis);
+
+  const [startingResizeMousePos, setStartingResizeMousePos] = useState({
+    x: 0,
+    y: 0,
+  });
 
   const handleSelectNode = () => {
     if (node && !node.selected) {
       dispatch(onSelectNode({ id: node.id, keyboardKeys }));
     }
+  };
+
+  const onResizeStart = (evt) => {
+    if (evt.sourceEvent.shiftKey) {
+      // Lock axis based on initial drag movement
+      dispatch(setDragLockAxis(null)); // Reset previous lock
+    }
+    setStartingResizeMousePos({ x: evt.x, y: evt.y });
+  };
+
+  const onResize = (evt, node) => {
+    if (!evt.sourceEvent.shiftKey) {
+      dispatch(setDragLockAxis(null));
+      return;
+    }
+
+    // Determine initial drag direction
+    if (dragLockAxis === null) {
+      if (
+        Math.abs(evt.x - startingResizeMousePos.x) >
+        Math.abs(evt.y - startingResizeMousePos.y)
+      ) {
+        dispatch(setDragLockAxis("x"));
+      } else {
+        dispatch(setDragLockAxis("y"));
+      }
+    }
+  };
+
+  const onResizeEnd = (evt) => {
+    setStartingResizeMousePos({ x: evt.x, y: evt.y });
+    dispatch(setDragLockAxis(null));
   };
 
   return (
@@ -74,6 +121,9 @@ const BaseNode = ({
 
         {selected && (
           <NodeResizer
+            onResizeStart={onResizeStart}
+            onResize={onResize}
+            onResizeEnd={onResizeEnd}
             minWidth={minWidth}
             minHeight={minHeight}
             handleStyle={{

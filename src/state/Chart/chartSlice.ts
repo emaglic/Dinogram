@@ -12,7 +12,11 @@ import getNewChart from "@/base/chart";
 import { create, isEqual } from "lodash";
 import getBaseEdge from "@/base/edges/baseEdge";
 import { v4 as uuidv4 } from "uuid";
-import handleNodesChangeThunk from "@/state/Chart/extra-reducers/handleNodesChange";
+import {
+  handleDragLockAxis,
+  handleUpdateDimensions,
+  handleDimensionsLockAxis,
+} from "@/state/Chart/utils";
 
 interface ChartState {
   nodes: ChartNode[];
@@ -35,40 +39,6 @@ const initialState: ChartHistoryState = {
   historyLockUntil: null,
   historyCooldownMs: 500, // 🕒 1-second cooldown after undo/redo
 };
-
-// ✅ Async thunk to handle node changes while accessing another slice
-/* export const handleNodesChange = createAsyncThunk(
-  "chart/handleNodesChange",
-  async (payload, { getState }) => {
-    const state = getState(); // Get full Redux state
-
-    const dragLockAxis = state.settings.dragLockAxis; // ✅ Access "shift" state
-    const currentNodes = state.chart.history[state.chart.currentIndex].nodes;
-    const currentEdges = state.chart.history[state.chart.currentIndex].edges;
-
-    const updatedPayload = payload.map((p) => {
-      if (p.type === "position" && dragLockAxis) {
-        const oldPayload = currentNodes.find((n) => n.id === p.id);
-        if (!oldPayload) return p;
-        return {
-          ...p,
-          position: {
-            x: dragLockAxis === "y" ? oldPayload.position.x : p.position.x,
-            y: dragLockAxis === "x" ? oldPayload.position.y : p.position.y,
-          },
-        };
-      }
-      return p;
-    });
-
-    const updatedNodes = applyNodeChanges(updatedPayload, currentNodes);
-
-    return {
-      nodes: updatedNodes,
-      edges: currentEdges,
-    };
-  }
-); */
 
 // ✅ Only allow a new history entry if it's a true user edit
 const pushToHistory = (
@@ -120,11 +90,25 @@ const chartSlice = createSlice({
     // Node Reducers
     // ===============================================
     onNodesChange: (state, action) => {
-      console.log("action.payload: ", action.payload);
-      const updatedNodes = applyNodeChanges(
-        action.payload,
-        state.history[state.currentIndex].nodes
-      );
+      const [payload, dragLockAxis] = action.payload;
+
+      let currentNodes = state.history[state.currentIndex].nodes;
+
+      const updatedPayload = payload.map((p) => {
+        let returnValue = handleDragLockAxis(p, currentNodes, dragLockAxis);
+        // NEED TO FIX THIS
+        /* returnValue = handleDimensionsLockAxis(
+          returnValue,
+          currentNodes,
+          dragLockAxis
+        ); */
+        return returnValue;
+      });
+
+      // NEED TO FIX THIS
+      currentNodes = handleUpdateDimensions(payload, currentNodes);
+
+      const updatedNodes = applyNodeChanges(updatedPayload, currentNodes);
 
       pushToHistory(state, {
         nodes: updatedNodes,
@@ -494,16 +478,6 @@ const chartSlice = createSlice({
       }
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(handleNodesChangeThunk.fulfilled, (state, action) => {
-      // ✅ Update Redux state with modified nodes & edges
-      state.history.push({
-        nodes: action.payload.nodes,
-        edges: action.payload.edges,
-      });
-      state.currentIndex++;
-    });
-  },
 });
 
 export const {
@@ -532,8 +506,6 @@ export const {
   undo,
   redo,
 } = chartSlice.actions;
-
-export const handleNodesChange = handleNodesChangeThunk;
 
 /* export const selectChart = (state: RootState): ChartState =>
   state.chart.history[state.chart.currentIndex];
