@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEdges, deleteNodes, redo, undo } from "@/state/Chart/chartSlice";
 import useKeyboard from "@/hooks/useKeyboard";
-import { selectKeyboardKeys } from "@/state/Chart/settingsSlice";
+import { selectKeyboardKeys } from "@/state/Settings/settingsSlice";
 import keyboardPatterns, { PatternLabel } from "./keyboardPatterns";
 
 const KeyboardEvents = () => {

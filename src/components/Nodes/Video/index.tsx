@@ -7,7 +7,7 @@ import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
 import shapeMap from "@/map/shape-map";
 import { useSelector } from "react-redux";
-import { selectIsDragging } from "@/state/Chart/settingsSlice";
+import { selectIsDragging } from "@/state/Settings/settingsSlice";
 
 const minWidth = 10;
 const minHeight = 10;

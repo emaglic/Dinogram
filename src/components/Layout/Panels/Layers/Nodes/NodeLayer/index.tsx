@@ -15,7 +15,7 @@ import ShapeSVG from "@/components/Nodes/Shape/ShapeSVG";
 import { deleteNodes } from "@/state/Chart/chartSlice";
 import constrainText from "@/utils/constrainText";
 import { ChartNode } from "@/types/chart/nodes";
-import { KeyboardKeysType } from "@/state/Chart/settingsSlice";
+import { KeyboardKeysType } from "@/state/Settings/settingsSlice";
 
 interface Props {
   node: ChartNode;

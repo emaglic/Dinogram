@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLSSaveManifest, useLSSaveProject } from "@/hooks/LocalStorage/save";
-import { selectManifest } from "@/state/Chart/manifestSlice";
-import { selectProject } from "@/state/Chart/projectSlice";
+import { selectManifest } from "@/state/Manifest/manifestSlice";
+import { selectProject } from "@/state/Project/projectSlice";
 import { selectChart } from "@/state/Chart/chartSlice";
 
 const StateSaver = () => {

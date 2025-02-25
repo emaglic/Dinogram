@@ -29,6 +29,7 @@ const initialValues = {
     nodes: [],
     edges: [],
   } as Clipboard,
+  dragLockAxis: null,
 };
 
 const settingsSlice = createSlice({
@@ -45,6 +46,9 @@ const settingsSlice = createSlice({
       state.clipboard.nodes = action.payload.nodes;
       state.clipboard.edges = action.payload.edges;
     },
+    setDragLockAxis: (state, action) => {
+      state.dragLockAxis = action.payload;
+    },
   },
 });
 
@@ -52,7 +56,7 @@ const settingsSlice = createSlice({
 export type KeyboardKeysType = typeof initialValues.keyboardKeys;
 
 // Export Reducer Actions
-export const { setDragging, setKeyboardKeys, setClipboard } =
+export const { setDragging, setKeyboardKeys, setClipboard, setDragLockAxis } =
   settingsSlice.actions;
 
 // Export Selectors
@@ -60,6 +64,8 @@ export const selectIsDragging = (state: RootState) => state.settings.isDragging;
 export const selectKeyboardKeys = (state: RootState) =>
   state.settings.keyboardKeys;
 export const selectClipboard = (state: RootState) => state.settings.clipboard;
+export const selectDragLockAxis = (state: RootState) =>
+  state.settings.dragLockAxis;
 
 // Export Reducer
 export default settingsSlice.reducer;

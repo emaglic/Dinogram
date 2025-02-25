@@ -6,7 +6,7 @@ import Styles from "./index.style";
 import { selectEdges, updateEdgeOrder } from "@/state/Chart/chartSlice";
 import { DragAndDrop, DragAndDropItem } from "@/components/DragAndDrop";
 import EdgeLayer from "./EdgeLayer";
-import { selectKeyboardKeys } from "@/state/Chart/settingsSlice";
+import { selectKeyboardKeys } from "@/state/Settings/settingsSlice";
 import { ChartEdge } from "@/types/chart/edges";
 
 const LayersPanel = () => {

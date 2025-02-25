@@ -9,7 +9,8 @@ import useContextMenu from "@/hooks/useContextMenu";
 import ContextMenu from "@/components/Controls/ContextMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { onSelectNode, selectNodeById } from "@/state/Chart/chartSlice";
-import { selectKeyboardKeys } from "@/state/Chart/settingsSlice";
+import { selectKeyboardKeys } from "@/state/Settings/settingsSlice";
+import { RootState } from "@/state/store";
 
 interface Props {
   id: string;
@@ -46,7 +47,7 @@ const BaseNode = ({
   const theme = useTheme();
   const styles = Styles(theme);
   const [hovered, setHovered] = useState(false);
-  const node = useSelector((state) => selectNodeById(state, id));
+  const node = useSelector((state: RootState) => selectNodeById(state, id));
 
   const handleSelectNode = () => {
     if (node && !node.selected) {

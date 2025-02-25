@@ -25,7 +25,7 @@ import {
   selectSelectedNodes,
 } from "@/state/Chart/chartSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { selectClipboard, setClipboard } from "@/state/Chart/settingsSlice";
+import { selectClipboard, setClipboard } from "@/state/Settings/settingsSlice";
 
 const ContextMenu = ({ position, handleClose, payload }) => {
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import { setKeyboardKeys } from "@/state/Chart/settingsSlice";
+import { setKeyboardKeys } from "@/state/Settings/settingsSlice";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -72,8 +72,8 @@ const useKeyboard = () => {
 
   useEffect(() => {
     const handleKeyDown = (evt: KeyboardEvent) => {
-      // Use evt.repeat to set the correct value (1 for initial press, 2 for held)
-      const value = evt.repeat ? 2 : 1;
+      // Use evt.repeat to set the correct value (1 for initial press, Date.now() for held)
+      const value = evt.repeat ? Date.now() : 1;
       updateKeyState(evt.code, value);
     };
 

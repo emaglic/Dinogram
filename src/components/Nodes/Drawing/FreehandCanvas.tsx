@@ -12,7 +12,7 @@ import DragHandleIcon from "@mui/icons-material/DragHandle";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./FreehandCanvas.style";
 import { useSelector } from "react-redux";
-import { selectIsDragging } from "@/state/Chart/settingsSlice";
+import { selectIsDragging } from "@/state/Settings/settingsSlice";
 import BrushIcon from "@mui/icons-material/Brush";
 import EraseIcon from "@mui/icons-material/AutoFixNormal";
 import DeleteIcon from "@mui/icons-material/Delete";

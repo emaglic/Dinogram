@@ -9,9 +9,9 @@ import {
   ProjectState,
   selectProject,
   updateProject,
-} from "@/state/Chart/projectSlice";
+} from "@/state/Project/projectSlice";
 import { compareObjects } from "@/utils/getDiffsDeep";
-import { updateManifest } from "@/state/Chart/manifestSlice";
+import { updateManifest } from "@/state/Manifest/manifestSlice";
 import { Box } from "@mui/material";
 
 const Settings = () => {

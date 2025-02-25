@@ -7,7 +7,7 @@ import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
 import schemaGenerator from "@/form/SchemaGenerator";
-import { selectIsDragging } from "@/state/Chart/settingsSlice";
+import { selectIsDragging } from "@/state/Settings/settingsSlice";
 import ColorPickerControl, {
   colorPickerControlTester,
 } from "@/components/Form/ColorPickerControl";

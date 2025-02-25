@@ -14,10 +14,10 @@ import Styles from "./index.styles";
 import NewProject from "./NewProject";
 import getNewProject from "@/base/project";
 import { useDispatch } from "react-redux";
-import { updateProject } from "@/state/Chart/projectSlice";
+import { updateProject } from "@/state/Project/projectSlice";
 import getNewChart from "@/base/chart";
 import { replaceChart } from "@/state/Chart/chartSlice";
-import { setManifest, updateManifest } from "@/state/Chart/manifestSlice";
+import { setManifest, updateManifest } from "@/state/Manifest/manifestSlice";
 import ShapeSVG from "@/components/Nodes/Shape/ShapeSVG";
 import logo from "@/assets/logo.svg?react";
 

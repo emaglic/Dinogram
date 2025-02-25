@@ -1,4 +1,9 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import { ChartNode } from "@/types/chart/nodes";
 import { ChartEdge } from "@/types/chart/edges";
 import { RootState } from "@/state/store";
@@ -7,6 +12,7 @@ import getNewChart from "@/base/chart";
 import { create, isEqual } from "lodash";
 import getBaseEdge from "@/base/edges/baseEdge";
 import { v4 as uuidv4 } from "uuid";
+import handleNodesChangeThunk from "@/state/Chart/extra-reducers/handleNodesChange";
 
 interface ChartState {
   nodes: ChartNode[];
@@ -30,6 +36,40 @@ const initialState: ChartHistoryState = {
   historyCooldownMs: 500, // 🕒 1-second cooldown after undo/redo
 };
 
+// ✅ Async thunk to handle node changes while accessing another slice
+/* export const handleNodesChange = createAsyncThunk(
+  "chart/handleNodesChange",
+  async (payload, { getState }) => {
+    const state = getState(); // Get full Redux state
+
+    const dragLockAxis = state.settings.dragLockAxis; // ✅ Access "shift" state
+    const currentNodes = state.chart.history[state.chart.currentIndex].nodes;
+    const currentEdges = state.chart.history[state.chart.currentIndex].edges;
+
+    const updatedPayload = payload.map((p) => {
+      if (p.type === "position" && dragLockAxis) {
+        const oldPayload = currentNodes.find((n) => n.id === p.id);
+        if (!oldPayload) return p;
+        return {
+          ...p,
+          position: {
+            x: dragLockAxis === "y" ? oldPayload.position.x : p.position.x,
+            y: dragLockAxis === "x" ? oldPayload.position.y : p.position.y,
+          },
+        };
+      }
+      return p;
+    });
+
+    const updatedNodes = applyNodeChanges(updatedPayload, currentNodes);
+
+    return {
+      nodes: updatedNodes,
+      edges: currentEdges,
+    };
+  }
+); */
+
 // ✅ Only allow a new history entry if it's a true user edit
 const pushToHistory = (
   state: ChartHistoryState,
@@ -37,9 +77,13 @@ const pushToHistory = (
 ) => {
   const newTimestamp = Date.now();
 
-  // ⏳ Skip history updates during the cooldown period
+  // ⏳ Write history to currentIndex during cooldown period.
   if (state.historyLockUntil && newTimestamp < state.historyLockUntil) {
     // console.log("⏳ Skipping history update (Cooldown active)");
+    state.history[state.currentIndex] = {
+      ...newEntry,
+      timestamp: newTimestamp,
+    };
     return;
   }
 
@@ -76,6 +120,7 @@ const chartSlice = createSlice({
     // Node Reducers
     // ===============================================
     onNodesChange: (state, action) => {
+      console.log("action.payload: ", action.payload);
       const updatedNodes = applyNodeChanges(
         action.payload,
         state.history[state.currentIndex].nodes
@@ -198,8 +243,8 @@ const chartSlice = createSlice({
             // Calculate the new position so that the first node's offset is (0,0)
             // and other nodes keep their spacing, scaled by a factor of 2.
             position: {
-              x: position.x + offsetX * 1,
-              y: position.y + offsetY * 1,
+              x: position.x + offsetX,
+              y: position.y + offsetY,
             },
             data: {
               ...node.data,
@@ -434,7 +479,8 @@ const chartSlice = createSlice({
       pushToHistory(state, { nodes: newEntry.nodes, edges: newEntry.edges });
     },
     undo: (state) => {
-      if (state.currentIndex > 0) {
+      // Prevent Undoing to 0 index which is the empty chart
+      if (state.currentIndex > 1) {
         // console.log("↩️ UNDO Fired!");
         state.currentIndex--;
         state.historyLockUntil = Date.now() + state.historyCooldownMs; // 🕒 Start cooldown
@@ -447,6 +493,16 @@ const chartSlice = createSlice({
         state.historyLockUntil = Date.now() + state.historyCooldownMs; // 🕒 Start cooldown
       }
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(handleNodesChangeThunk.fulfilled, (state, action) => {
+      // ✅ Update Redux state with modified nodes & edges
+      state.history.push({
+        nodes: action.payload.nodes,
+        edges: action.payload.edges,
+      });
+      state.currentIndex++;
+    });
   },
 });
 
@@ -476,6 +532,8 @@ export const {
   undo,
   redo,
 } = chartSlice.actions;
+
+export const handleNodesChange = handleNodesChangeThunk;
 
 /* export const selectChart = (state: RootState): ChartState =>
   state.chart.history[state.chart.currentIndex];

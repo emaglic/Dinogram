@@ -2,7 +2,7 @@ import React from "react";
 import { AppBar, Toolbar, IconButton, Typography, Button } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProject } from "@/state/Chart/projectSlice";
+import { selectProject } from "@/state/Project/projectSlice";
 import ShapeSVG from "@/components/Nodes/Shape/ShapeSVG";
 import logo from "@/assets/logo.svg?react";
 import { useTheme } from "@mui/material/styles";

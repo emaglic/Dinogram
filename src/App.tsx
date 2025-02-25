@@ -9,7 +9,7 @@ import Main from "./components/Layout/Main";
 import { Provider, useSelector } from "react-redux";
 import { store } from "./state/store";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { selectProject } from "./state/Chart/projectSlice";
+import { selectProject } from "./state/Project/projectSlice";
 import { useMediaQuery } from "@mui/material";
 import { getMuiThemeMode, setMuiThemeMode } from "./themeMode"; // Import global functions
 import mainTheme from "./themes/main";

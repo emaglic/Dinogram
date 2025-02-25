@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import BaseNode from "../BaseNode";
 import useDebounce from "@/hooks/useDebounce";
 import { updateNodeData } from "@/state/Chart/chartSlice";
-import { selectIsDragging } from "@/state/Chart/settingsSlice";
+import { selectIsDragging } from "@/state/Settings/settingsSlice";
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import Styles from "./index.style";
 import { isEqual } from "lodash";

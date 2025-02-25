@@ -9,7 +9,7 @@ import "./dark-mode.css";
 import BaseNode from "../BaseNode";
 import useDebounce from "@/hooks/useDebounce";
 import { updateNodeData } from "@/state/Chart/chartSlice";
-import { selectIsDragging } from "@/state/Chart/settingsSlice";
+import { selectIsDragging } from "@/state/Settings/settingsSlice";
 
 const RichTextNode = ({ selected, type, data, id }) => {
   const theme = useTheme();

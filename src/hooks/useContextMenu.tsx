@@ -1,7 +1,7 @@
 import { onSelectNode } from "@/state/Chart/chartSlice";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectKeyboardKeys } from "@/state/Chart/settingsSlice";
+import { selectKeyboardKeys } from "@/state/Settings/settingsSlice";
 import { ChartNode } from "@/types/chart/nodes";
 import { ChartEdge } from "@/types/chart/edges";
 

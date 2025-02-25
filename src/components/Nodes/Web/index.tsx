@@ -3,7 +3,7 @@ import { Handle, Position, NodeResizer } from "@xyflow/react";
 import { Box, Icon, Typography } from "@mui/material";
 import BaseNode from "../BaseNode";
 import { useSelector } from "react-redux";
-import { selectIsDragging } from "@/state/Chart/settingsSlice";
+import { selectIsDragging } from "@/state/Settings/settingsSlice";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
 import shapeMap from "@/map/shape-map";

@@ -1,4 +1,4 @@
-import { KeyboardKeysType } from "@/state/Chart/settingsSlice";
+import { KeyboardKeysType } from "@/state/Settings/settingsSlice";
 
 export type PatternLabel = "copy" | "paste" | "redo" | "undo" | "delete";
 
@@ -11,10 +11,10 @@ const keyboardPatterns = (pattern: PatternLabel, keys: KeyboardKeysType) => {
       return keys.ctrl && keys.v === 1;
     }
     case "redo": {
-      return keys.ctrl && keys.z === 1 && keys.shift;
+      return keys.ctrl && keys.z && keys.shift;
     }
     case "undo": {
-      return keys.ctrl && keys.z === 1;
+      return keys.ctrl && keys.z;
     }
     case "delete": {
       return keys.delete === 1;

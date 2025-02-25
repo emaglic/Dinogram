@@ -3,13 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Styles from "./index.style";
-import { updateNodeOrder } from "@/state/Chart/chartSlice";
+import { selectNodes, updateNodeOrder } from "@/state/Chart/chartSlice";
 import NodeLayer from "@/components/Layout/Panels/Layers/Nodes/NodeLayer";
 import { DragAndDrop, DragAndDropItem } from "@/components/DragAndDrop";
-import { selectNodes } from "@/state/Chart/chartSlice";
 import useContextMenu from "@/hooks/useContextMenu";
 import ContextMenu from "@/components/Controls/ContextMenu";
-import { selectKeyboardKeys } from "@/state/Chart/settingsSlice";
+import { selectKeyboardKeys } from "@/state/Settings/settingsSlice";
 import { ChartNode } from "@/types/chart/nodes";
 
 const LayersPanel = () => {

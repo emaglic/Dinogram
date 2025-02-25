@@ -17,7 +17,7 @@ import LockOpenIcon from "@mui/icons-material/LockOpen";
 import shapeMap from "@/map/shape-map";
 import ShapeSVG from "@/components/Nodes/Shape/ShapeSVG";
 import constrainText from "@/utils/constrainText";
-import { KeyboardKeysType } from "@/state/Chart/settingsSlice";
+import { KeyboardKeysType } from "@/state/Settings/settingsSlice";
 import { ChartEdge } from "@/types/chart/edges";
 
 interface Props {

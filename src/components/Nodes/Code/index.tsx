@@ -9,7 +9,7 @@ import Editor from "@monaco-editor/react";
 import { useDispatch, useSelector } from "react-redux";
 import useDebounce from "@/hooks/useDebounce";
 import { updateNodeData } from "@/state/Chart/chartSlice";
-import { selectIsDragging } from "@/state/Chart/settingsSlice";
+import { selectIsDragging } from "@/state/Settings/settingsSlice";
 
 const minWidth = 10;
 const minHeight = 10;
