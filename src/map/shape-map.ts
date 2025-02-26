@@ -1,3 +1,4 @@
+import Dinogram from "@/assets/logo.svg?react";
 import Home from "@/assets/svg/home.svg?react";
 import Circle from "@/assets/svg/circle.svg?react";
 import Square from "@/assets/svg/square.svg?react";
@@ -9,6 +10,8 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import ImageIcon from "@mui/icons-material/Image";
 import MovieIcon from "@mui/icons-material/Movie";
 import DrawIcon from "@mui/icons-material/Draw";
+import WarningIcon from "@mui/icons-material/Warning";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 
 import {
   AcUnit as AcUnitIcon,
@@ -193,8 +196,19 @@ export default {
   barChart: { key: "barChart", label: "Bar Chart", icon: BarChartIcon },
   tableChart: { key: "tableChart", label: "Table Chart", icon: TableChartIcon },
 
+  // General
+  warning: { key: "warning", label: "Warning", icon: WarningIcon },
+  warningOutlined: {
+    key: "warningOutlined",
+    label: "Warning Outlined",
+    icon: WarningAmberIcon,
+  },
+
   // Media & Files
   image: { key: "image", label: "Image", icon: ImageIcon },
   movie: { key: "movie", label: "Movie", icon: MovieIcon },
   draw: { key: "draw", label: "Draw", icon: DrawIcon },
+
+  // Dinogram
+  dinogram: { key: "dinogram", label: "Dinogram", icon: Dinogram },
 };

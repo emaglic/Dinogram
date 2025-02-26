@@ -5,7 +5,8 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import Main from "./components/Layout/Main";
+import Main from "./views/Main";
+import Demo from "./views/Demo";
 import { Provider, useSelector } from "react-redux";
 import { store } from "./state/store";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -13,6 +14,9 @@ import { selectProject } from "./state/Project/projectSlice";
 import { useMediaQuery } from "@mui/material";
 import { getMuiThemeMode, setMuiThemeMode } from "./themeMode"; // Import global functions
 import mainTheme from "./themes/main";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import CreateView from "@/views/Create";
+import DemoView from "@/views/Demo";
 
 function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -37,7 +41,12 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Main />
+        <Router>
+          <Routes>
+            <Route path="/" element={<CreateView />} />
+            <Route path="/:demo" element={<DemoView />} />
+          </Routes>
+        </Router>
       </ThemeProvider>
     </>
   );
