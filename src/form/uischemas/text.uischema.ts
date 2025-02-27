@@ -12,24 +12,45 @@ export default {
       },
     },
     {
+      type: "Control",
+      scope: "#/properties/data/properties/text/properties/value",
+      label: "Content",
+      options: {
+        multiline: true,
+      },
+    },
+    {
+      type: "HorizontalLayout",
+      elements: [
+        {
+          type: "Control",
+          label: "Size",
+          scope: "#/properties/data/properties/text/properties/size",
+        },
+        {
+          type: "Control",
+          scope: "#/properties/data/properties/text/properties/align",
+          label: "Align",
+        },
+      ],
+    },
+    {
       type: "VerticalLayout",
       elements: [
         {
           type: "Header",
-          label: "Text",
+          label: "Text ",
           options: {
             variant: "caption",
-
-            margin: "0rem 0 1rem 0",
+            divider: {
+              top: "sub",
+            },
+            margin: "1rem 0 0.5rem 0",
           },
         },
         {
           type: "HorizontalLayout",
           elements: [
-            {
-              type: "Control",
-              scope: "#/properties/data/properties/text/properties/size",
-            },
             {
               type: "Control",
               scope: "#/properties/data/properties/text/properties/color",

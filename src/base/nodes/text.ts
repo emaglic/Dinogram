@@ -21,6 +21,8 @@ const getNewTextNode = (nodes: ChartNode[]) => {
       label: `Text [${nodes.length}]`,
       iconKey: "text",
       text: {
+        value: `Text Content [${nodes.length}]`,
+        align: "left",
         size: "h1",
         color: getDefaultThemeModeColor(),
         opacity: 100,

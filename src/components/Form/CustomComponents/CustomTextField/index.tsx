@@ -30,6 +30,7 @@ export interface CustomTextFieldProps {
   type: "text" | "number" | "integer";
   updateType: UpdateType;
   options?: {
+    multiline?: boolean;
     startAdornment?: InputAdornmentType;
     endAdornment?: InputAdornmentType;
     placeholder?: string;
@@ -101,6 +102,9 @@ const CustomTextField = ({
       </InputLabel>
       <OutlinedInput
         id="custom-text-field"
+        multiline={options?.multiline || false}
+        maxRows={8}
+        minRows={2}
         fullWidth
         size="small"
         value={inputValue}

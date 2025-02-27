@@ -8,7 +8,6 @@ const Styles = (theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    textAlign: "center",
   },
 });
 

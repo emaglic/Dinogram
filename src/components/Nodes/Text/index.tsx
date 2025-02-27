@@ -47,13 +47,14 @@ const TextNode = ({ id, selected, type, data }) => {
               borderColor,
               borderStyle: "solid",
               borderWidth: data?.stroke?.width ? `${data?.stroke?.width}px` : 0,
+              textAlign: data?.text?.align || "left",
             }}
           >
             <Typography
               sx={{ color: data?.text?.color || "#000000" }}
               variant={data.text.size}
             >
-              {data.label}
+              {data.text.value}
             </Typography>
           </Box>
         </BaseNode>
