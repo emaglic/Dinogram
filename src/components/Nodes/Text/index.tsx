@@ -28,38 +28,38 @@ const TextNode = ({ id, selected, type, data }) => {
     ? hexToRgba(brdrColor, brdrOpacity)
     : "transparent";
 
-  if (data?.fill?.color)
-    return (
-      <>
-        <BaseNode
-          id={id}
-          type={type}
-          data={data}
-          label={data.label}
-          selected={selected}
-          minWidth={minWidth}
-          minHeight={minHeight}
+  return (
+    <>
+      <BaseNode
+        id={id}
+        type={type}
+        data={data}
+        label={data.label}
+        selected={selected}
+        minWidth={minWidth}
+        minHeight={minHeight}
+      >
+        <Box
+          sx={{
+            ...styles.container,
+            backgroundColor,
+            borderColor,
+            borderStyle: "solid",
+            borderWidth: data?.stroke?.width ? `${data?.stroke?.width}px` : 0,
+            textAlign: data?.text?.align || "left",
+          }}
         >
-          <Box
-            sx={{
-              ...styles.container,
-              backgroundColor,
-              borderColor,
-              borderStyle: "solid",
-              borderWidth: data?.stroke?.width ? `${data?.stroke?.width}px` : 0,
-              textAlign: data?.text?.align || "left",
-            }}
+          <Typography
+            sx={{ color: data?.text?.color || "#000000", width: "100%" }}
+            variant={data.text.size}
+            component={"div"}
           >
-            <Typography
-              sx={{ color: data?.text?.color || "#000000" }}
-              variant={data.text.size}
-            >
-              {data.text.value}
-            </Typography>
-          </Box>
-        </BaseNode>
-      </>
-    );
+            {data.text.value}
+          </Typography>
+        </Box>
+      </BaseNode>
+    </>
+  );
 };
 
 export default TextNode;

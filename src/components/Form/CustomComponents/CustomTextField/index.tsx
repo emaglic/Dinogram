@@ -46,7 +46,8 @@ const getInputAdornment = (
   const { type, value } = adornmentProps;
   let Content = undefined;
   if (type === "icon") {
-    Content = shapeMap[value];
+    const Icon = shapeMap[value].icon;
+    Content = <Icon />;
   } else {
     Content = <Typography>{value}</Typography>;
   }

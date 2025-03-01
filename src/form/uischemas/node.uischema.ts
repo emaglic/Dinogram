@@ -80,6 +80,21 @@ export default {
       elements: [
         {
           type: "Control",
+          scope: "#/properties/data/properties/rotation",
+          options: {
+            startAdornment: {
+              type: "icon",
+              value: "rotate",
+            },
+          },
+        },
+      ],
+    },
+    {
+      type: "HorizontalLayout",
+      elements: [
+        {
+          type: "Control",
           scope: "#/properties/data/properties/visible",
         },
         {

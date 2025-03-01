@@ -133,7 +133,8 @@ const FreehandCanvas = ({
       }}
     >
       {selected ? (
-        <Box sx={styles.controlContainer}>
+        // Top Control Bar
+        <Box sx={styles.controlContainer} data-id="control-container">
           <DragHandleIcon />
           <Box sx={styles.controlContainerInner}>
             <Box
@@ -251,7 +252,6 @@ const FreehandCanvas = ({
         style={{
           width: "100%",
           height: "100%",
-
           cursor: selected ? (mode === "erase" ? "cell" : "crosshair") : "grab",
           background:
             backgroundColor === "transparent" ? "none" : backgroundColor, // ✅ Set correct background

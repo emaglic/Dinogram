@@ -1,4 +1,5 @@
 import { ChromePicker } from "react-color";
+import { HexColorPicker } from "react-colorful";
 import React, { useState, useEffect } from "react";
 import {
   Box,
@@ -31,6 +32,9 @@ const ColorPicker = ({ label, value, updateValue }: Props) => {
   };
 
   const handleClose = () => {
+    if (anchorEl) {
+      anchorEl.focus();
+    }
     setAnchorEl(null);
   };
 
@@ -81,16 +85,17 @@ const ColorPicker = ({ label, value, updateValue }: Props) => {
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: "bottom",
+          vertical: "top",
           horizontal: "left",
         }}
+        disableAutoFocus
+        disableEnforceFocus
       >
-        <ChromePicker
-          className={styles.popover}
+        <HexColorPicker
+          style={{ overflow: "hidden" }}
           color={color}
-          disableAlpha={true}
-          onBlur={(color) => updateValue(color.hex)}
-          onChange={(color) => handleSetColor(color.hex)}
+          onChange={(color) => handleSetColor(color)}
+          onBlur={() => updateValue(color)}
         />
       </Popover>
     </Box>

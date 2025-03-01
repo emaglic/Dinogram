@@ -1,10 +1,40 @@
 .handle {
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   opacity: 1;
+  z-index: 100;
   /* border: 0px solid transparent; */
 }
 
 .handleHidden {
   opacity: 0;
+}
+
+.rotatableNode {
+  transform-origin: center center;
+  box-sizing: border-box;
+}
+
+.rotatableNode__handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #3367d9;
+  left: 50%;
+  top: -75px;
+  border-radius: 100%;
+  transform: translate(-50%, -50%);
+  cursor: alias;
+  z-index: 100;
+}
+
+.rotatableNode__handle:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 1px;
+  height: 75px;
+  background: #3367d9;
+  left: 10px;
+  top: 5px;
 }

@@ -1,4 +1,5 @@
 import { Theme } from "@mui/system/createTheme";
+import { alpha } from "@mui/system";
 
 const Styles = (theme: Theme) => ({
   controlContainer: {
@@ -8,8 +9,10 @@ const Styles = (theme: Theme) => ({
     alignItems: "center",
     gap: "1rem",
     width: "100%",
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: alpha(theme.palette.primary.main, 1),
     padding: "0.5rem",
+    position: "absolute",
+    boxSizing: "border-box",
   },
   controlContainerInner: {
     display: "flex",

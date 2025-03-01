@@ -15,6 +15,7 @@ const getBaseNode = (nodes: ChartNode[]) => {
       baseNodeComponent: {
         showHeader: true,
       },
+      rotation: 0,
     },
     selected: true,
   };

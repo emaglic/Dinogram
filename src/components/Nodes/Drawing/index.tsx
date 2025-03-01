@@ -64,6 +64,7 @@ const RichTextNode = ({ selected, type, data, id }) => {
           height: "100%",
           overflowY: "hidden",
           display: "flex",
+          position: "relative",
           border: `${data.stroke.width}px solid ${hexToRgba(
             data.stroke.color,
             data.stroke.opacity / 100

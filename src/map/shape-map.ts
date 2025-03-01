@@ -12,6 +12,7 @@ import MovieIcon from "@mui/icons-material/Movie";
 import DrawIcon from "@mui/icons-material/Draw";
 import WarningIcon from "@mui/icons-material/Warning";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 import {
   AcUnit as AcUnitIcon,
@@ -113,7 +114,7 @@ import {
   DashboardCustomize as DashboardCustomizeIcon,
 } from "@mui/icons-material";
 
-export default {
+const icons = {
   // Edges
   airlineStopsIcon: {
     key: "airlineStopsIcon",
@@ -203,6 +204,8 @@ export default {
     label: "Warning Outlined",
     icon: WarningAmberIcon,
   },
+  rotate: { key: "rotate", label: "Rotate", icon: RefreshIcon },
+  refresh: { key: "refresh", label: "Refresh", icon: RefreshIcon },
 
   // Media & Files
   image: { key: "image", label: "Image", icon: ImageIcon },
@@ -212,3 +215,9 @@ export default {
   // Dinogram
   dinogram: { key: "dinogram", label: "Dinogram", icon: Dinogram },
 };
+
+const sortedIcons = Object.fromEntries(
+  Object.entries(icons).sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+);
+
+export default sortedIcons;
